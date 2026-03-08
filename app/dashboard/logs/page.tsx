@@ -1,48 +1,114 @@
+"use client";
+
 import Link from "next/link";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
-import { recentLogs } from "@/components/data";
+import { recentLogs, type LogItem } from "@/components/data";
+import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
+
+type LogsResponse = {
+  logs?: LogItem[];
+};
 
 export default function LogsPage() {
+  const [dateRange, setDateRange] = useState("last_24_hours");
+  const [eventType, setEventType] = useState("");
+  const [source, setSource] = useState("");
+  const [status, setStatus] = useState("");
+  const [query, setQuery] = useState("");
+  const [logs, setLogs] = useState<LogItem[]>(recentLogs);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchLogs = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    const params = new URLSearchParams();
+    if (dateRange) params.set("date_range", dateRange);
+    if (eventType) params.set("event_type", eventType);
+    if (source) params.set("source", source);
+    if (status) params.set("status", status);
+    if (query) params.set("q", query);
+
+    try {
+      const payload = await blocklogRequest<LogsResponse | { data?: LogsResponse }>(
+        `/logs?${params.toString()}`,
+      );
+      const parsed = normalizePayload<LogsResponse>(payload, {}, "data");
+      setLogs(parsed.logs?.length ? parsed.logs : recentLogs);
+    } catch (fetchError) {
+      setError(fetchError instanceof Error ? fetchError.message : "Failed to load logs");
+      setLogs(recentLogs);
+    } finally {
+      setLoading(false);
+    }
+  }, [dateRange, eventType, source, status, query]);
+
+  useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
+
+  async function onFilter(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await fetchLogs();
+  }
+
   return (
     <>
       <DashboardTopBar title="Log Explorer" />
-      <section className="card" style={{ display: "grid", gap: 12 }}>
+      <form className="card" style={{ display: "grid", gap: 12 }} onSubmit={onFilter}>
         <div className="grid grid-2">
           <div>
             <label>Date range</label>
-            <input placeholder="Last 24 hours" />
+            <select value={dateRange} onChange={(event) => setDateRange(event.target.value)}>
+              <option value="last_24_hours">Last 24 hours</option>
+              <option value="last_7_days">Last 7 days</option>
+              <option value="last_30_days">Last 30 days</option>
+            </select>
           </div>
           <div>
             <label>Search</label>
-            <input placeholder="Search hash, user, event" />
+            <input
+              placeholder="Search hash, user, event"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
           </div>
           <div>
             <label>Event type</label>
-            <select>
-              <option>All events</option>
-              <option>user.login</option>
-              <option>payment.created</option>
-            </select>
+            <input
+              placeholder="user.login"
+              value={eventType}
+              onChange={(event) => setEventType(event.target.value)}
+            />
           </div>
           <div>
             <label>Source</label>
-            <select>
-              <option>All sources</option>
-              <option>web-app</option>
-              <option>payments-api</option>
-            </select>
+            <input
+              placeholder="web-app"
+              value={source}
+              onChange={(event) => setSource(event.target.value)}
+            />
           </div>
           <div>
             <label>Status</label>
-            <select>
-              <option>All statuses</option>
-              <option>verified</option>
-              <option>pending</option>
-              <option>failed</option>
+            <select value={status} onChange={(event) => setStatus(event.target.value)}>
+              <option value="">All statuses</option>
+              <option value="verified">verified</option>
+              <option value="pending">pending</option>
+              <option value="failed">failed</option>
             </select>
           </div>
         </div>
-      </section>
+        <div>
+          <button className="btn btn-primary" disabled={loading} type="submit">
+            {loading ? "Loading..." : "Apply filters"}
+          </button>
+        </div>
+      </form>
+
+      {error && <p className="muted">Live API unavailable: {error}</p>}
 
       <section className="table-shell">
         <table>
@@ -57,7 +123,7 @@ export default function LogsPage() {
             </tr>
           </thead>
           <tbody>
-            {recentLogs.map((log) => (
+            {logs.map((log) => (
               <tr key={log.id}>
                 <td>{log.timestamp}</td>
                 <td>

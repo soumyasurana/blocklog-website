@@ -1,4 +1,14 @@
-export const recentLogs = [
+export type LogItem = {
+  id: string;
+  timestamp: string;
+  event: string;
+  source: string;
+  hash: string;
+  status: string;
+  company: string;
+};
+
+export const recentLogs: LogItem[] = [
   {
     id: "log_10021",
     timestamp: "2026-03-08T12:01:22Z",
@@ -36,3 +46,10 @@ export const recentLogs = [
     company: "cmp_84f02",
   },
 ];
+
+export const defaultStats = {
+  logsIngestedToday: 48291,
+  totalLogs: 18044112,
+  verificationFailures: 12,
+  apiRequests: 522902,
+};
