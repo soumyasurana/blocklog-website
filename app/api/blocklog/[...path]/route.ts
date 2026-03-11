@@ -29,6 +29,12 @@ type DemoApiKey = {
 type DemoState = {
   logs: DemoLog[];
   apiKeys: DemoApiKey[];
+  user: {
+    id: string;
+    email: string;
+    full_name: string;
+    company_id: string;
+  };
   settings: {
     company_name: string;
     company_id: string;
@@ -85,6 +91,12 @@ function getDemoState(): DemoState {
           permissions: ["logs:write", "verify:read"],
         },
       ],
+      user: {
+        id: "usr_demo_1",
+        email: "founder@blocklogsecurity.com",
+        full_name: "Blocklog Admin",
+        company_id: "cmp_84f02",
+      },
       settings: {
         company_name: "Acme Financial",
         company_id: "cmp_84f02",
@@ -133,18 +145,94 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     }
   }
 
-  if (resource === "metrics" && id === "overview" && method === "GET") {
+  if (resource === "auth" && id === "me" && method === "GET") {
+    return json({
+      data: state.user,
+    });
+  }
+
+  if (resource === "auth" && id === "api_keys" && method === "GET") {
+    return json({ data: { keys: state.apiKeys } });
+  }
+
+  if (resource === "auth" && id === "api_keys" && method === "POST") {
+    const body = await parseBody(req);
+    const created: DemoApiKey = {
+      id: `key_${Date.now()}`,
+      key_name: String(body.key_name ?? "New API Key"),
+      created_date: new Date().toISOString().slice(0, 10),
+      last_used: "never",
+      permissions: Array.isArray(body.permissions)
+        ? body.permissions.map((entry) => String(entry))
+        : ["logs:write"],
+    };
+    state.apiKeys.unshift(created);
+    return json({ data: created }, 201);
+  }
+
+  if (resource === "auth" && id === "api_keys" && action && method === "DELETE") {
+    state.apiKeys = state.apiKeys.filter((entry) => entry.id !== action);
+    return json({ data: { ok: true } });
+  }
+
+  if (resource === "health" && method === "GET") {
+    return json({ data: { status: "ok", service: "blocklog-api" } });
+  }
+
+  if (resource === "metrics" && method === "GET") {
+    return json({
+      data: {
+        logs_series: [32, 48, 41, 56, 62, 74, 69, 82],
+        api_series: [12, 18, 16, 24, 29, 34, 31, 37],
+        requests_total: 920,
+        ingestion_rate: 128,
+      },
+    });
+  }
+
+  if (resource === "usage" && method === "GET") {
     return json({
       data: {
         logs_ingested_today: state.logs.length * 431,
         total_logs: 18044112,
-        verification_failures: state.logs.filter((log) => log.status === "failed").length,
         verification_requests: 920,
-        ingestion_rate: 128,
+      },
+    });
+  }
+
+  if (resource === "integrity" && id === "status" && method === "GET") {
+    return json({
+      data: {
         integrity_status: "Healthy",
-        logs_series: [32, 48, 41, 56, 62, 74, 69, 82],
-        api_series: [12, 18, 16, 24, 29, 34, 31, 37],
-        recent_logs: state.logs,
+        verification_failures: state.logs.filter((log) => log.status === "failed").length,
+      },
+    });
+  }
+
+  if (resource === "integrity" && id === "report" && method === "GET") {
+    return json({
+      data: {
+        last_scan_at: new Date().toISOString(),
+        issues: state.logs.filter((log) => log.status === "failed").length,
+      },
+    });
+  }
+
+  if (resource === "companies" && id === state.settings.company_id && method === "GET") {
+    return json({
+      data: {
+        company_name: state.settings.company_name,
+        company_id: state.settings.company_id,
+        region: state.settings.region,
+      },
+    });
+  }
+
+  if (resource === "policy" && id === "retention" && method === "GET") {
+    return json({
+      data: {
+        default_days: 365,
+        policy_name: "standard-retention",
       },
     });
   }
@@ -236,7 +324,7 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
-  if (resource === "logs" && id && action === "verify" && method === "POST") {
+  if (resource === "logs" && id && action === "verify" && (method === "POST" || method === "GET")) {
     const log = state.logs.find((entry) => entry.id === id);
     return json({
       data: {
@@ -245,7 +333,7 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
-  if (resource === "verify") {
+  if (resource === "public" && id === "verify" && action && method === "GET") {
     return json({
       data: {
         exists: true,
@@ -256,60 +344,15 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
-  if (resource === "api-keys" && !id && method === "GET") {
-    return json({ data: { keys: state.apiKeys } });
-  }
-
-  if (resource === "api-keys" && !id && method === "POST") {
-    const body = await parseBody(req);
-    const created: DemoApiKey = {
-      id: `key_${Date.now()}`,
-      key_name: String(body.key_name ?? "New API Key"),
-      created_date: new Date().toISOString().slice(0, 10),
-      last_used: "never",
-      permissions: Array.isArray(body.permissions)
-        ? body.permissions.map((entry) => String(entry))
-        : ["logs:write"],
-    };
-    state.apiKeys.unshift(created);
-    return json({ data: created }, 201);
-  }
-
-  if (resource === "api-keys" && id && method === "DELETE") {
-    state.apiKeys = state.apiKeys.filter((entry) => entry.id !== id);
-    return json({ data: { ok: true } });
-  }
-
-  if (resource === "api-keys" && id && action === "regenerate" && method === "POST") {
-    const key = state.apiKeys.find((entry) => entry.id === id);
-    if (key) {
-      key.last_used = "just now";
-    }
-    return json({ data: { ok: true } });
-  }
-
-  if (resource === "company" && id === "settings" && method === "GET") {
-    return json({ data: state.settings });
-  }
-
-  if (resource === "company" && id === "settings" && method === "PUT") {
-    const body = await parseBody(req);
-    state.settings = {
-      ...state.settings,
-      company_name: String(body.company_name ?? state.settings.company_name),
-      region: String(body.region ?? state.settings.region),
-      company_id: state.settings.company_id,
-      api_endpoint: state.settings.api_endpoint,
-    };
-    return json({ data: state.settings });
-  }
-
-  if (resource === "company" && id === "rotate-keys" && method === "POST") {
-    return json({ data: { ok: true } });
-  }
-
-  if (resource === "company" && id === "project" && method === "DELETE") {
-    return json({ data: { ok: true } });
+  if (resource === "verify" && id === "log" && action && method === "GET") {
+    return json({
+      data: {
+        exists: true,
+        hash_valid: true,
+        timestamp_anchored: true,
+        integrity: "VALID",
+      },
+    });
   }
 
   if (resource === "notifications" && method === "GET") {

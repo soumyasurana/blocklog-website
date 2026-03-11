@@ -34,11 +34,14 @@ export default function VerificationToolsPage() {
     setLoading(true);
 
     try {
-      const parsedPayload = payload ? JSON.parse(payload) : null;
+      if (!hash.trim()) {
+        throw new Error("A proof ID or log hash is required.");
+      }
+      if (payload.trim()) {
+        JSON.parse(payload);
+      }
       const response = await blocklogRequest<VerifyResult | { data?: VerifyResult }>(
-        "/verify",
-        "POST",
-        { hash, log: parsedPayload },
+        `/public/verify/${encodeURIComponent(hash.trim())}`,
       );
       setResult(normalizePayload<VerifyResult>(response, defaultResult, "data"));
       setNotice("Verification complete.");

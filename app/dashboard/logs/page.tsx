@@ -36,7 +36,7 @@ export default function LogsPage() {
         `/logs?${params.toString()}`,
       );
       const parsed = normalizePayload<LogsResponse>(payload, {}, "data");
-      setLogs(parsed.logs?.length ? parsed.logs : recentLogs);
+      setLogs(parsed.logs ?? []);
     } catch (fetchError) {
       setError(fetchError instanceof Error ? fetchError.message : "Failed to load logs");
       setLogs(recentLogs);

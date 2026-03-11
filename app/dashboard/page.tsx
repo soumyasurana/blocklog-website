@@ -8,15 +8,21 @@ import { defaultStats, recentLogs, type LogItem } from "@/components/data";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type OverviewResponse = {
-  logs_ingested_today?: number;
-  total_logs?: number;
-  verification_failures?: number;
-  verification_requests?: number;
+  requests_total?: number;
   ingestion_rate?: number;
-  integrity_status?: string;
   logs_series?: number[];
   api_series?: number[];
-  recent_logs?: LogItem[];
+};
+
+type UsageResponse = {
+  logs_ingested_today?: number;
+  total_logs?: number;
+  verification_requests?: number;
+};
+
+type IntegrityResponse = {
+  verification_failures?: number;
+  integrity_status?: string;
 };
 
 const fallbackLogsSeries = [32, 48, 41, 56, 62, 74, 69, 82];
@@ -42,28 +48,40 @@ export default function DashboardHomePage() {
     async function loadOverview() {
       setLoading(true);
       try {
-        const payload = await blocklogRequest<OverviewResponse | { data?: OverviewResponse }>(
-          "/metrics/overview",
+        const [metricsPayload, usagePayload, integrityPayload, logsPayload] = await Promise.all([
+          blocklogRequest<OverviewResponse | { data?: OverviewResponse }>("/metrics"),
+          blocklogRequest<UsageResponse | { data?: UsageResponse }>("/usage"),
+          blocklogRequest<IntegrityResponse | { data?: IntegrityResponse }>(
+            "/integrity/status",
+          ),
+          blocklogRequest<{ logs?: LogItem[] } | { data?: { logs?: LogItem[] } }>("/logs"),
+        ]);
+
+        const metrics = normalizePayload<OverviewResponse>(metricsPayload, {}, "data");
+        const usage = normalizePayload<UsageResponse>(usagePayload, {}, "data");
+        const integrity = normalizePayload<IntegrityResponse>(integrityPayload, {}, "data");
+        const logsResponse = normalizePayload<{ logs?: LogItem[] }>(
+          logsPayload,
+          {},
+          "data",
         );
-        const overview = normalizePayload<OverviewResponse>(payload, {}, "data");
+
         setStats({
-          logsIngestedToday: overview.logs_ingested_today ?? defaultStats.logsIngestedToday,
-          totalLogs: overview.total_logs ?? defaultStats.totalLogs,
+          logsIngestedToday: usage.logs_ingested_today ?? defaultStats.logsIngestedToday,
+          totalLogs: usage.total_logs ?? defaultStats.totalLogs,
           verificationFailures:
-            overview.verification_failures ?? defaultStats.verificationFailures,
-          apiRequests: overview.verification_requests ?? defaultStats.apiRequests,
+            integrity.verification_failures ?? defaultStats.verificationFailures,
+          apiRequests: usage.verification_requests ?? defaultStats.apiRequests,
         });
-        setIntegrityStatus(overview.integrity_status ?? "Healthy");
-        setIngestionRate(overview.ingestion_rate ?? 128);
+        setIntegrityStatus(integrity.integrity_status ?? "Healthy");
+        setIngestionRate(metrics.ingestion_rate ?? 128);
         setLogsSeries(
-          overview.logs_series?.length ? overview.logs_series : fallbackLogsSeries,
+          metrics.logs_series?.length ? metrics.logs_series : fallbackLogsSeries,
         );
         setVerificationSeries(
-          overview.api_series?.length ? overview.api_series : fallbackVerificationSeries,
+          metrics.api_series?.length ? metrics.api_series : fallbackVerificationSeries,
         );
-        if (overview.recent_logs?.length) {
-          setLogs(overview.recent_logs);
-        }
+        setLogs(logsResponse.logs ?? []);
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load overview");
       } finally {

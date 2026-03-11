@@ -46,7 +46,6 @@ export default function LogDetailsPage({
     try {
       const payload = await blocklogRequest<{ result?: string; data?: { result?: string } }>(
         `/logs/${params.id}/verify`,
-        "POST",
       );
       const result = normalizePayload<{ result?: string }>(payload, {}, "data");
       setVerifyMessage(result.result ?? "Integrity check completed.");

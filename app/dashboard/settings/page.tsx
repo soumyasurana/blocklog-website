@@ -1,41 +1,68 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
-type SettingsPayload = {
+type MePayload = {
+  email?: string;
+  full_name?: string;
+  company_id?: string;
+};
+
+type CompanyPayload = {
   company_name?: string;
   company_id?: string;
-  api_endpoint?: string;
   region?: string;
+};
+
+type PolicyPayload = {
+  default_days?: number;
+  policy_name?: string;
 };
 
 const fallback = {
   company_name: "Acme Financial",
   company_id: "cmp_84f02",
-  api_endpoint: "https://api.blocklog.dev/v1",
   region: "us-east-1",
+  email: "founder@blocklogsecurity.com",
+  full_name: "Blocklog Admin",
+  retention_days: 365,
+  policy_name: "standard-retention",
 };
 
 export default function SettingsPage() {
-  const [form, setForm] = useState(fallback);
+  const [details, setDetails] = useState(fallback);
   const [error, setError] = useState<string | null>(null);
-  const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadSettings() {
       try {
-        const payload = await blocklogRequest<SettingsPayload | { data?: SettingsPayload }>(
-          "/company/settings",
-        );
-        const data = normalizePayload<SettingsPayload>(payload, {}, "data");
-        setForm({
-          company_name: data.company_name ?? fallback.company_name,
-          company_id: data.company_id ?? fallback.company_id,
-          api_endpoint: data.api_endpoint ?? fallback.api_endpoint,
-          region: data.region ?? fallback.region,
+        const mePayload = await blocklogRequest<MePayload | { data?: MePayload }>("/auth/me");
+        const me = normalizePayload<MePayload>(mePayload, {}, "data");
+        const companyId = me.company_id ?? fallback.company_id;
+
+        const [companyPayload, policyPayload] = await Promise.all([
+          blocklogRequest<CompanyPayload | { data?: CompanyPayload }>(
+            `/companies/${companyId}`,
+          ),
+          blocklogRequest<PolicyPayload | { data?: PolicyPayload }>(
+            "/policy/retention",
+          ),
+        ]);
+
+        const company = normalizePayload<CompanyPayload>(companyPayload, {}, "data");
+        const policy = normalizePayload<PolicyPayload>(policyPayload, {}, "data");
+
+        setDetails({
+          company_name: company.company_name ?? fallback.company_name,
+          company_id: company.company_id ?? companyId,
+          region: company.region ?? fallback.region,
+          email: me.email ?? fallback.email,
+          full_name: me.full_name ?? fallback.full_name,
+          retention_days: policy.default_days ?? fallback.retention_days,
+          policy_name: policy.policy_name ?? fallback.policy_name,
         });
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load settings");
@@ -47,42 +74,6 @@ export default function SettingsPage() {
     loadSettings();
   }, []);
 
-  async function saveSettings(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError(null);
-    setNotice(null);
-    try {
-      await blocklogRequest("/company/settings", "PUT", form);
-      setNotice("Settings updated.");
-    } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Failed to save settings");
-    }
-  }
-
-  async function rotateKeys() {
-    setError(null);
-    setNotice(null);
-    try {
-      await blocklogRequest("/company/rotate-keys", "POST");
-      setNotice("Keys rotated.");
-    } catch (rotateError) {
-      setError(rotateError instanceof Error ? rotateError.message : "Failed to rotate keys");
-    }
-  }
-
-  async function deleteProject() {
-    setError(null);
-    setNotice(null);
-    try {
-      await blocklogRequest("/company/project", "DELETE");
-      setNotice("Project deleted.");
-    } catch (deleteError) {
-      setError(
-        deleteError instanceof Error ? deleteError.message : "Failed to delete project",
-      );
-    }
-  }
-
   return (
     <>
       <DashboardTopBar title="Company / Project Settings" />
@@ -93,48 +84,33 @@ export default function SettingsPage() {
         </div>
       )}
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
-      {notice && <p className="notice">{notice}</p>}
-      <form className="card" onSubmit={saveSettings}>
+      <section className="card">
         <div className="grid grid-2">
           <div>
             <label>Company name</label>
-            <input
-              value={form.company_name}
-              onChange={(event) => setForm({ ...form, company_name: event.target.value })}
-            />
+            <input value={details.company_name} readOnly />
           </div>
           <div>
             <label>Company ID</label>
-            <input value={form.company_id} readOnly />
-          </div>
-          <div>
-            <label>API endpoint</label>
-            <input value={form.api_endpoint} readOnly />
+            <input value={details.company_id} readOnly />
           </div>
           <div>
             <label>Region</label>
-            <input value={form.region} onChange={(event) => setForm({ ...form, region: event.target.value })} />
+            <input value={details.region} readOnly />
+          </div>
+          <div>
+            <label>Retention policy</label>
+            <input value={`${details.policy_name} (${details.retention_days} days)`} readOnly />
+          </div>
+          <div>
+            <label>Owner</label>
+            <input value={details.full_name} readOnly />
+          </div>
+          <div>
+            <label>Owner email</label>
+            <input value={details.email} readOnly />
           </div>
         </div>
-        <button className="btn btn-primary" style={{ marginTop: 12 }} type="submit">
-          Save settings
-        </button>
-      </form>
-      <section className="grid grid-2" style={{ marginTop: 12 }}>
-        <article className="card">
-          <h2 style={{ marginTop: 0 }}>Rotate keys</h2>
-          <p className="muted">Regenerate all active keys and invalidate old credentials.</p>
-          <button className="btn" onClick={rotateKeys} type="button">
-            Rotate
-          </button>
-        </article>
-        <article className="card">
-          <h2 style={{ marginTop: 0 }}>Delete project</h2>
-          <p className="muted">Permanent action for this project and all related logs.</p>
-          <button className="btn" onClick={deleteProject} type="button">
-            Delete project
-          </button>
-        </article>
       </section>
     </>
   );

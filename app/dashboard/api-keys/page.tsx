@@ -43,12 +43,10 @@ export default function ApiKeysPage() {
     setLoading(true);
     try {
       const payload = await blocklogRequest<ApiKeysPayload | { data?: ApiKeysPayload }>(
-        "/api-keys",
+        "/auth/api_keys",
       );
       const parsed = normalizePayload<ApiKeysPayload>(payload, {}, "data");
-      if (parsed.keys?.length) {
-        setKeys(parsed.keys);
-      }
+      setKeys(parsed.keys ?? []);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Failed to load keys");
     } finally {
@@ -59,13 +57,11 @@ export default function ApiKeysPage() {
   useEffect(() => {
     let active = true;
 
-    blocklogRequest<ApiKeysPayload | { data?: ApiKeysPayload }>("/api-keys")
+    blocklogRequest<ApiKeysPayload | { data?: ApiKeysPayload }>("/auth/api_keys")
       .then((payload) => {
         if (!active) return;
         const parsed = normalizePayload<ApiKeysPayload>(payload, {}, "data");
-        if (parsed.keys?.length) {
-          setKeys(parsed.keys);
-        }
+        setKeys(parsed.keys ?? []);
       })
       .catch((loadError: unknown) => {
         if (!active) return;
@@ -84,7 +80,7 @@ export default function ApiKeysPage() {
     setError(null);
     setNotice(null);
     try {
-      await blocklogRequest("/api-keys", "POST", {
+      await blocklogRequest("/auth/api_keys", "POST", {
         key_name: keyName,
         permissions: permissions.split(",").map((entry) => entry.trim()),
       });
@@ -100,27 +96,11 @@ export default function ApiKeysPage() {
     setError(null);
     setNotice(null);
     try {
-      await blocklogRequest(`/api-keys/${id}`, "DELETE");
+      await blocklogRequest(`/auth/api_keys/${id}`, "DELETE");
       setNotice("API key revoked.");
       await loadKeys();
     } catch (revokeError) {
       setError(revokeError instanceof Error ? revokeError.message : "Failed to revoke key");
-    }
-  }
-
-  async function regenerateKey(id: string) {
-    setError(null);
-    setNotice(null);
-    try {
-      await blocklogRequest(`/api-keys/${id}/regenerate`, "POST");
-      setNotice("API key regenerated.");
-      await loadKeys();
-    } catch (regenerateError) {
-      setError(
-        regenerateError instanceof Error
-          ? regenerateError.message
-          : "Failed to regenerate key",
-      );
     }
   }
 
@@ -179,9 +159,6 @@ export default function ApiKeysPage() {
                   <td>{key.permissions.join(", ")}</td>
                   <td>
                     <div className="button-row">
-                      <button className="btn" onClick={() => regenerateKey(key.id)} type="button">
-                        Regenerate
-                      </button>
                       <button className="btn" onClick={() => revokeKey(key.id)} type="button">
                         Revoke
                       </button>
