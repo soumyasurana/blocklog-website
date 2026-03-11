@@ -9,6 +9,7 @@ type LoginResponse = {
   token?: string;
   api_key?: string;
   company_id?: string;
+  expires_in?: number;
 };
 
 export default function LoginPage() {
@@ -35,8 +36,12 @@ export default function LoginPage() {
         token: session.token,
         apiKey: session.api_key,
         companyId: session.company_id,
-      });
-      router.push("/dashboard");
+      }, session.expires_in ? session.expires_in * 1000 : undefined);
+      const nextPath =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("next")
+          : null;
+      router.push(nextPath || "/dashboard");
     } catch (submitError) {
       setError(
         submitError instanceof Error ? submitError.message : "Unable to login",

@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type VerifyResult = {
-  integrity?: string;
-  chain?: string;
-  signature?: string;
+  exists?: boolean;
+  hash_valid?: boolean;
+  timestamp_anchored?: boolean;
 };
 
 export default function VerifyPage() {
@@ -16,10 +17,12 @@ export default function VerifyPage() {
   const [payload, setPayload] = useState('{"event":"user.login","user_id":"123"}');
   const [result, setResult] = useState<VerifyResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setLoading(true);
 
     try {
       const parsedPayload = payload ? JSON.parse(payload) : null;
@@ -37,6 +40,8 @@ export default function VerifyPage() {
         submitError instanceof Error ? submitError.message : "Verification failed",
       );
       setResult(null);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -63,26 +68,37 @@ export default function VerifyPage() {
                 onChange={(event) => setPayload(event.target.value)}
               />
             </div>
-            <button className="btn btn-primary" type="submit">
-              Verify
+            <button className="btn btn-primary" type="submit" disabled={loading}>
+              {loading ? "Verifying..." : "Verify"}
             </button>
+            <div className="button-row">
+              <Link className="btn" href="/docs/verification">
+                API docs
+              </Link>
+              <Link className="btn" href="/docs/sdks">
+                SDK examples
+              </Link>
+              <Link className="btn" href="/docs/getting-started">
+                Quick start guide
+              </Link>
+            </div>
           </form>
-          {error && <p style={{ color: "var(--danger)" }}>{error}</p>}
+          {error && <p className="error-banner">{error}</p>}
         </section>
 
         {result && (
           <section className="grid grid-3" style={{ marginTop: 12 }}>
             <article className="card">
-              <strong>Integrity</strong>
-              <p>{result.integrity ?? "VALID"}</p>
+              <strong>Log exists</strong>
+              <p>{result.exists ? "Yes" : "No"}</p>
             </article>
             <article className="card">
-              <strong>Chain</strong>
-              <p>{result.chain ?? "VERIFIED"}</p>
+              <strong>Hash valid</strong>
+              <p>{result.hash_valid ? "Yes" : "No"}</p>
             </article>
             <article className="card">
-              <strong>Signature</strong>
-              <p>{result.signature ?? "MATCH"}</p>
+              <strong>Timestamp anchored</strong>
+              <p>{result.timestamp_anchored ? "Yes" : "No"}</p>
             </article>
           </section>
         )}

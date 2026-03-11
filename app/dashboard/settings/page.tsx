@@ -22,6 +22,7 @@ export default function SettingsPage() {
   const [form, setForm] = useState(fallback);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadSettings() {
@@ -38,6 +39,8 @@ export default function SettingsPage() {
         });
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load settings");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -83,8 +86,14 @@ export default function SettingsPage() {
   return (
     <>
       <DashboardTopBar title="Company / Project Settings" />
-      {error && <p className="muted">Live API unavailable: {error}</p>}
-      {notice && <p className="muted">{notice}</p>}
+      {loading && (
+        <div className="notice button-row" style={{ alignItems: "center", marginBottom: 12 }}>
+          <div className="spinner" />
+          <span>Loading project settings...</span>
+        </div>
+      )}
+      {error && <p className="error-banner">Live API unavailable: {error}</p>}
+      {notice && <p className="notice">{notice}</p>}
       <form className="card" onSubmit={saveSettings}>
         <div className="grid grid-2">
           <div>

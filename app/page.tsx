@@ -40,7 +40,7 @@ export default function HomePage() {
               trusting internal databases.
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
-              <Link className="btn btn-primary" href="/auth/signup">
+              <Link className="btn btn-primary" href="/signup">
                 Start Free
               </Link>
               <Link className="btn btn-link" href="/docs">
@@ -119,6 +119,24 @@ export default function HomePage() {
           <h2>System Architecture Visualization</h2>
           <div className="card" style={{ fontFamily: "JetBrains Mono, monospace" }}>
             Client -&gt; API -&gt; Hash Engine -&gt; Secure Storage
+          </div>
+        </section>
+
+        <section className="section">
+          <h2>Developer Documentation</h2>
+          <div className="grid grid-3">
+            <Link className="card" href="/docs/log-ingestion">
+              <strong>API docs</strong>
+              <p className="muted">Authentication, ingestion endpoints, and verification API.</p>
+            </Link>
+            <Link className="card" href="/docs/sdks">
+              <strong>SDK examples</strong>
+              <p className="muted">Node, Python, and Go examples for production integrations.</p>
+            </Link>
+            <Link className="card" href="/docs/getting-started">
+              <strong>Quick start guide</strong>
+              <p className="muted">Create keys, send logs, and verify anchored hashes fast.</p>
+            </Link>
           </div>
         </section>
       </main>

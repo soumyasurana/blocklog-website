@@ -7,13 +7,14 @@ const links = [
   { href: "/dashboard", label: "Overview" },
   { href: "/dashboard/logs", label: "Log Explorer" },
   { href: "/dashboard/ingestion-monitor", label: "Ingestion Monitor" },
-  { href: "/dashboard/verification-tools", label: "Verification Tools" },
+  { href: "/dashboard/verify", label: "Verification Tool" },
   { href: "/dashboard/audit-trail", label: "Audit Trail" },
   { href: "/dashboard/api-keys", label: "API Keys" },
   { href: "/dashboard/playground", label: "Developer Playground" },
   { href: "/dashboard/errors", label: "Error Monitoring" },
   { href: "/dashboard/notifications", label: "Notifications" },
   { href: "/dashboard/settings", label: "Settings" },
+  { href: "/docs", label: "Documentation" },
 ];
 
 export default function DashboardSidebar() {

@@ -70,7 +70,7 @@ export default function LogsPage() {
           <div>
             <label>Search</label>
             <input
-              placeholder="Search hash, user, event"
+              placeholder="Search timestamp, event, hash"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -108,35 +108,52 @@ export default function LogsPage() {
         </div>
       </form>
 
-      {error && <p className="muted">Live API unavailable: {error}</p>}
+      {loading && (
+        <div className="notice button-row" style={{ alignItems: "center", marginTop: 12 }}>
+          <div className="spinner" />
+          <span>Loading logs...</span>
+        </div>
+      )}
+
+      {error && <p className="error-banner">Live API unavailable: {error}</p>}
 
       <section className="table-shell">
-        <table>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Event type</th>
-              <th>Source</th>
-              <th>Hash</th>
-              <th>Status</th>
-              <th>Company ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs.map((log) => (
-              <tr key={log.id}>
-                <td>{log.timestamp}</td>
-                <td>
-                  <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
-                </td>
-                <td>{log.source}</td>
-                <td>{log.hash}</td>
-                <td>{log.status}</td>
-                <td>{log.company}</td>
+        {logs.length === 0 ? (
+          <div className="empty-state">No logs match the current filters.</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Event type</th>
+                <th>Source</th>
+                <th>Hash</th>
+                <th>Status</th>
+                <th>Company ID</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {logs.map((log) => (
+                <tr key={log.id}>
+                  <td>{log.timestamp}</td>
+                  <td>
+                    <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
+                  </td>
+                  <td>{log.source}</td>
+                  <td>{log.hash}</td>
+                  <td>{log.status}</td>
+                  <td>{log.company}</td>
+                  <td>
+                    <Link className="btn" href={`/dashboard/verify?hash=${encodeURIComponent(log.hash)}`}>
+                      Verify
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
     </>
   );
