@@ -4,84 +4,70 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
 import SimpleBars from "@/components/SimpleBars";
-import { defaultStats, recentLogs, type LogItem } from "@/components/data";
-import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
-
-type OverviewResponse = {
-  requests_total?: number;
-  ingestion_rate?: number;
-  logs_series?: number[];
-  api_series?: number[];
-};
+import { blocklogRequest } from "@/lib/blocklog";
 
 type UsageResponse = {
-  logs_ingested_today?: number;
-  total_logs?: number;
-  verification_requests?: number;
+  logs_ingested?: number;
+  gb_processed?: number;
 };
 
-type IntegrityResponse = {
-  verification_failures?: number;
-  integrity_status?: string;
+type IntegrityStatusResponse = {
+  status?: string;
+  logs_verified?: number;
+  anchors_created?: number;
 };
 
-const fallbackLogsSeries = [32, 48, 41, 56, 62, 74, 69, 82];
-const fallbackVerificationSeries = [12, 18, 16, 24, 29, 34, 31, 37];
+type IntegrityReportResponse = {
+  chain_continuity_status?: string;
+  recent_batches?: { batch_id: string; status: string; integrity_status: string | null }[];
+};
 
-function formatNum(value: number) {
-  return new Intl.NumberFormat("en-US").format(value);
-}
+type ExportProofResponse = {
+  logs: { log_id: string; created_at: string; payload_hash: string; chain_hash: string }[];
+};
 
 export default function DashboardHomePage() {
-  const [stats, setStats] = useState(defaultStats);
-  const [logs, setLogs] = useState<LogItem[]>(recentLogs);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [integrityStatus, setIntegrityStatus] = useState("Healthy");
-  const [ingestionRate, setIngestionRate] = useState(128);
-  const [logsSeries, setLogsSeries] = useState(fallbackLogsSeries);
-  const [verificationSeries, setVerificationSeries] = useState(
-    fallbackVerificationSeries,
-  );
+  const [stats, setStats] = useState({
+    logsIngested: 0,
+    verificationRequests: 0,
+    integrityStatus: "unknown",
+    ingestionRate: "0 GB",
+  });
+  const [logsSeries, setLogsSeries] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [verificationSeries, setVerificationSeries] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [recentLogs, setRecentLogs] = useState<
+    { log_id: string; created_at: string; chain_hash: string }[]
+  >([]);
 
   useEffect(() => {
     async function loadOverview() {
       setLoading(true);
       try {
-        const [metricsPayload, usagePayload, integrityPayload, logsPayload] = await Promise.all([
-          blocklogRequest<OverviewResponse | { data?: OverviewResponse }>("/metrics"),
-          blocklogRequest<UsageResponse | { data?: UsageResponse }>("/usage"),
-          blocklogRequest<IntegrityResponse | { data?: IntegrityResponse }>(
-            "/integrity/status",
+        const [usage, integrityStatus, integrityReport, proof] = await Promise.all([
+          blocklogRequest<UsageResponse>("/usage"),
+          blocklogRequest<IntegrityStatusResponse>("/integrity/status"),
+          blocklogRequest<IntegrityReportResponse>("/integrity/report"),
+          blocklogRequest<ExportProofResponse>(
+            `/logs/export-proof?from=${encodeURIComponent(
+              new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+            )}&to=${encodeURIComponent(new Date().toISOString())}`,
           ),
-          blocklogRequest<{ logs?: LogItem[] } | { data?: { logs?: LogItem[] } }>("/logs"),
         ]);
 
-        const metrics = normalizePayload<OverviewResponse>(metricsPayload, {}, "data");
-        const usage = normalizePayload<UsageResponse>(usagePayload, {}, "data");
-        const integrity = normalizePayload<IntegrityResponse>(integrityPayload, {}, "data");
-        const logsResponse = normalizePayload<{ logs?: LogItem[] }>(
-          logsPayload,
-          {},
-          "data",
-        );
-
+        const recent = proof.logs.slice(-8);
         setStats({
-          logsIngestedToday: usage.logs_ingested_today ?? defaultStats.logsIngestedToday,
-          totalLogs: usage.total_logs ?? defaultStats.totalLogs,
-          verificationFailures:
-            integrity.verification_failures ?? defaultStats.verificationFailures,
-          apiRequests: usage.verification_requests ?? defaultStats.apiRequests,
+          logsIngested: usage.logs_ingested ?? 0,
+          verificationRequests: integrityStatus.logs_verified ?? 0,
+          integrityStatus: integrityReport.chain_continuity_status ?? integrityStatus.status ?? "unknown",
+          ingestionRate: `${usage.gb_processed ?? 0} GB`,
         });
-        setIntegrityStatus(integrity.integrity_status ?? "Healthy");
-        setIngestionRate(metrics.ingestion_rate ?? 128);
-        setLogsSeries(
-          metrics.logs_series?.length ? metrics.logs_series : fallbackLogsSeries,
-        );
+        setLogsSeries(recent.map((_, index) => index + 1));
         setVerificationSeries(
-          metrics.api_series?.length ? metrics.api_series : fallbackVerificationSeries,
+          (integrityReport.recent_batches ?? []).slice(0, 8).map((_, index) => index + 1),
         );
-        setLogs(logsResponse.logs ?? []);
+        setRecentLogs(recent);
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load overview");
       } finally {
@@ -93,12 +79,10 @@ export default function DashboardHomePage() {
   }, []);
 
   const cards = [
-    ["Logs ingested today", formatNum(stats.logsIngestedToday)],
-    ["Total logs", formatNum(stats.totalLogs)],
-    ["Verification requests", formatNum(stats.apiRequests)],
-    ["Integrity status", integrityStatus],
-    ["Verification failures", formatNum(stats.verificationFailures)],
-    ["Ingestion rate", `${ingestionRate}/min`],
+    ["Logs ingested today", String(stats.logsIngested)],
+    ["Verification requests", String(stats.verificationRequests)],
+    ["System integrity status", stats.integrityStatus],
+    ["Ingestion volume", stats.ingestionRate],
   ];
 
   return (
@@ -130,7 +114,7 @@ export default function DashboardHomePage() {
           </div>
         </article>
         <article className="card">
-          <h2 style={{ marginTop: 0 }}>Verification requests</h2>
+          <h2 style={{ marginTop: 0 }}>Verification activity</h2>
           <div className="chart">
             <SimpleBars values={verificationSeries} color="var(--success)" />
           </div>
@@ -138,27 +122,25 @@ export default function DashboardHomePage() {
       </section>
 
       <section className="table-shell" style={{ marginTop: 16 }}>
-        {logs.length === 0 ? (
-          <div className="empty-state">No logs found for this account.</div>
+        {recentLogs.length === 0 ? (
+          <div className="empty-state">No recent logs available.</div>
         ) : (
           <table>
             <thead>
               <tr>
                 <th>Timestamp</th>
-                <th>Event</th>
-                <th>Source</th>
-                <th>Status</th>
+                <th>Log ID</th>
+                <th>Hash</th>
               </tr>
             </thead>
             <tbody>
-              {logs.map((log) => (
-                <tr key={log.id}>
-                  <td>{log.timestamp}</td>
+              {recentLogs.map((log) => (
+                <tr key={log.log_id}>
+                  <td>{new Date(log.created_at).toLocaleString()}</td>
                   <td>
-                    <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
+                    <Link href={`/dashboard/logs/${log.log_id}`}>{log.log_id}</Link>
                   </td>
-                  <td>{log.source}</td>
-                  <td>{log.status}</td>
+                  <td>{log.chain_hash}</td>
                 </tr>
               ))}
             </tbody>

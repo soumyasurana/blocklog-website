@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BASE_URL = process.env.BLOCKLOG_API_BASE_URL;
-const DEMO_MODE = !BASE_URL || process.env.BLOCKLOG_DEMO_MODE === "true";
+const BASE_URL =
+  process.env.BLOCKLOG_API_BASE_URL ?? "http://127.0.0.1:8000/api/v1";
+const DEMO_MODE = process.env.BLOCKLOG_DEMO_MODE === "true";
 
 type Context = {
   params: Promise<{ path: string[] }>;
@@ -100,7 +101,7 @@ function getDemoState(): DemoState {
       settings: {
         company_name: "Acme Financial",
         company_id: "cmp_84f02",
-        api_endpoint: "http://127.0.0.1:8000/api/v1",
+        api_endpoint: BASE_URL,
         region: "us-east-1",
       },
     };

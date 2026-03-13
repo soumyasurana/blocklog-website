@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { blocklogRequest, normalizePayload, writeSession } from "@/lib/blocklog";
+import {
+  blocklogRequest,
+  ensureUserApiKey,
+  normalizePayload,
+  writeSession,
+} from "@/lib/blocklog";
 
 type LoginResponse = {
-  token?: string;
-  api_key?: string;
+  access_token?: string;
   company_id?: string;
   expires_in?: number;
 };
@@ -33,10 +37,10 @@ export default function LoginPage() {
       const session = normalizePayload<LoginResponse>(payload, {}, "data");
 
       writeSession({
-        token: session.token,
-        apiKey: session.api_key,
+        token: session.access_token,
         companyId: session.company_id,
       }, session.expires_in ? session.expires_in * 1000 : undefined);
+      await ensureUserApiKey();
       const nextPath =
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")

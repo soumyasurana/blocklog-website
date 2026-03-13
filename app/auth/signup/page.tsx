@@ -3,18 +3,24 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { blocklogRequest, normalizePayload, writeSession } from "@/lib/blocklog";
+import {
+  blocklogRequest,
+  ensureUserApiKey,
+  normalizePayload,
+  writeSession,
+} from "@/lib/blocklog";
 
 type SignupResponse = {
-  token?: string;
-  api_key?: string;
+  access_token?: string;
   company_id?: string;
   expires_in?: number;
 };
 
 export default function SignupPage() {
   const router = useRouter();
-  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [companyId, setCompanyId] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -26,18 +32,37 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
+      if (companyName.trim()) {
+        try {
+          await blocklogRequest("/companies", "POST", {
+            company_id: companyId,
+            company_name: companyName,
+          });
+        } catch (companyError) {
+          if (
+            !(companyError instanceof Error) ||
+            !companyError.message.toLowerCase().includes("already exists")
+          ) {
+            throw companyError;
+          }
+        }
+      }
+
       const payload = await blocklogRequest<SignupResponse | { data?: SignupResponse }>(
         "/auth/signup",
         "POST",
-        { full_name: fullName, email, password },
+        { username, email, password, company_id: companyId },
       );
       const session = normalizePayload<SignupResponse>(payload, {}, "data");
 
-      writeSession({
-        token: session.token,
-        apiKey: session.api_key,
-        companyId: session.company_id,
-      }, session.expires_in ? session.expires_in * 1000 : undefined);
+      writeSession(
+        {
+          token: session.access_token,
+          companyId: session.company_id,
+        },
+        session.expires_in ? session.expires_in * 1000 : undefined,
+      );
+      await ensureUserApiKey();
       const nextPath =
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")
@@ -58,12 +83,29 @@ export default function SignupPage() {
         <h1 style={{ marginTop: 0 }}>Create your Blocklog account</h1>
         <form className="form" onSubmit={onSubmit}>
           <div>
-            <label>Full name</label>
+            <label>Username</label>
             <input
-              placeholder="Jane Doe"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
+              placeholder="pilot"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
               required
+            />
+          </div>
+          <div>
+            <label>Company ID</label>
+            <input
+              placeholder="pilot-co"
+              value={companyId}
+              onChange={(event) => setCompanyId(event.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Company name</label>
+            <input
+              placeholder="Pilot Company"
+              value={companyName}
+              onChange={(event) => setCompanyName(event.target.value)}
             />
           </div>
           <div>

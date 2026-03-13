@@ -1,14 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
-import { recentLogs, type LogItem } from "@/components/data";
-import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
+import { blocklogRequest } from "@/lib/blocklog";
 
-type LogsResponse = {
-  logs?: LogItem[];
+type ExportProofLog = {
+  log_id: string;
+  created_at: string;
+  payload_hash: string;
+  chain_hash: string;
 };
+
+type ExportProofResponse = {
+  logs: ExportProofLog[];
+};
+
+type LogDetails = {
+  log_id: string;
+  company_id: string;
+  event_type: string;
+  source: string;
+  payload: Record<string, unknown>;
+  chain_hash: string;
+  created_at: string;
+  is_deleted: boolean;
+};
+
+type ExplorerLog = {
+  id: string;
+  timestamp: string;
+  event: string;
+  source: string;
+  hash: string;
+  status: string;
+  company: string;
+};
+
+function getDateRange(range: string) {
+  const now = new Date();
+  const from = new Date(now);
+
+  if (range === "last_7_days") {
+    from.setDate(now.getDate() - 7);
+  } else if (range === "last_30_days") {
+    from.setDate(now.getDate() - 30);
+  } else {
+    from.setDate(now.getDate() - 1);
+  }
+
+  return { from: from.toISOString(), to: now.toISOString() };
+}
 
 export default function LogsPage() {
   const [dateRange, setDateRange] = useState("last_24_hours");
@@ -16,38 +58,94 @@ export default function LogsPage() {
   const [source, setSource] = useState("");
   const [status, setStatus] = useState("");
   const [query, setQuery] = useState("");
-  const [logs, setLogs] = useState<LogItem[]>(recentLogs);
+  const [logs, setLogs] = useState<ExplorerLog[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const initialRange = useMemo(() => getDateRange("last_24_hours"), []);
 
-  const fetchLogs = useCallback(async () => {
+  async function fetchLogs() {
     setLoading(true);
     setError(null);
 
-    const params = new URLSearchParams();
-    if (dateRange) params.set("date_range", dateRange);
-    if (eventType) params.set("event_type", eventType);
-    if (source) params.set("source", source);
-    if (status) params.set("status", status);
-    if (query) params.set("q", query);
-
     try {
-      const payload = await blocklogRequest<LogsResponse | { data?: LogsResponse }>(
-        `/logs?${params.toString()}`,
+      const { from, to } = getDateRange(dateRange);
+      const proof = await blocklogRequest<ExportProofResponse>(
+        `/logs/export-proof?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
       );
-      const parsed = normalizePayload<LogsResponse>(payload, {}, "data");
-      setLogs(parsed.logs ?? []);
+
+      const detailedLogs = await Promise.all(
+        proof.logs.slice(0, 50).map(async (log) => {
+          const details = await blocklogRequest<LogDetails>(`/logs/${log.log_id}`);
+          return {
+            id: details.log_id,
+            timestamp: details.created_at,
+            event: details.event_type,
+            source: details.source,
+            hash: details.chain_hash,
+            status: details.is_deleted ? "deleted" : "verified",
+            company: details.company_id,
+          } satisfies ExplorerLog;
+        }),
+      );
+
+      const filtered = detailedLogs.filter((log) => {
+        const q = query.toLowerCase();
+        return (
+          (!q ||
+            log.timestamp.toLowerCase().includes(q) ||
+            log.event.toLowerCase().includes(q) ||
+            log.hash.toLowerCase().includes(q)) &&
+          (!eventType || log.event.toLowerCase().includes(eventType.toLowerCase())) &&
+          (!source || log.source.toLowerCase().includes(source.toLowerCase())) &&
+          (!status || log.status.toLowerCase() === status.toLowerCase())
+        );
+      });
+
+      setLogs(filtered);
     } catch (fetchError) {
       setError(fetchError instanceof Error ? fetchError.message : "Failed to load logs");
-      setLogs(recentLogs);
+      setLogs([]);
     } finally {
       setLoading(false);
     }
-  }, [dateRange, eventType, source, status, query]);
+  }
 
   useEffect(() => {
-    fetchLogs();
-  }, [fetchLogs]);
+    async function loadInitialLogs() {
+      setLoading(true);
+      setError(null);
+      try {
+        const proof = await blocklogRequest<ExportProofResponse>(
+          `/logs/export-proof?from=${encodeURIComponent(
+            initialRange.from,
+          )}&to=${encodeURIComponent(initialRange.to)}`,
+        );
+
+        const detailedLogs = await Promise.all(
+          proof.logs.slice(0, 50).map(async (log) => {
+            const details = await blocklogRequest<LogDetails>(`/logs/${log.log_id}`);
+            return {
+              id: details.log_id,
+              timestamp: details.created_at,
+              event: details.event_type,
+              source: details.source,
+              hash: details.chain_hash,
+              status: details.is_deleted ? "deleted" : "verified",
+              company: details.company_id,
+            } satisfies ExplorerLog;
+          }),
+        );
+
+        setLogs(detailedLogs);
+      } catch (loadError) {
+        setError(loadError instanceof Error ? loadError.message : "Failed to load logs");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadInitialLogs();
+  }, [initialRange]);
 
   async function onFilter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -86,7 +184,7 @@ export default function LogsPage() {
           <div>
             <label>Source</label>
             <input
-              placeholder="web-app"
+              placeholder="api"
               value={source}
               onChange={(event) => setSource(event.target.value)}
             />
@@ -96,8 +194,7 @@ export default function LogsPage() {
             <select value={status} onChange={(event) => setStatus(event.target.value)}>
               <option value="">All statuses</option>
               <option value="verified">verified</option>
-              <option value="pending">pending</option>
-              <option value="failed">failed</option>
+              <option value="deleted">deleted</option>
             </select>
           </div>
         </div>
@@ -136,7 +233,7 @@ export default function LogsPage() {
             <tbody>
               {logs.map((log) => (
                 <tr key={log.id}>
-                  <td>{log.timestamp}</td>
+                  <td>{new Date(log.timestamp).toLocaleString()}</td>
                   <td>
                     <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
                   </td>
@@ -145,7 +242,7 @@ export default function LogsPage() {
                   <td>{log.status}</td>
                   <td>{log.company}</td>
                   <td>
-                    <Link className="btn" href={`/dashboard/verify?hash=${encodeURIComponent(log.hash)}`}>
+                    <Link className="btn" href={`/dashboard/verify?hash=${encodeURIComponent(log.id)}`}>
                       Verify
                     </Link>
                   </td>

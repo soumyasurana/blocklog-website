@@ -7,6 +7,14 @@ export type BlocklogSession = {
   expiresAt?: number;
 };
 
+type ApiKeyCreateResponse = {
+  key_id: string;
+  api_key: string;
+  name: string;
+  created_at: string;
+  rate_limit_per_minute: number;
+};
+
 const SESSION_KEY = "blocklog-session";
 const SESSION_COOKIE = "blocklog_session";
 const DEFAULT_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
@@ -83,6 +91,28 @@ export function requireValidSession() {
     throw new Error("Session expired. Please log in again.");
   }
   return session;
+}
+
+export async function ensureUserApiKey() {
+  const session = requireValidSession();
+  if (session.apiKey) {
+    return session.apiKey;
+  }
+
+  const created = await blocklogRequest<ApiKeyCreateResponse>(
+    "/auth/api_keys",
+    "POST",
+    {
+      name: "dashboard-default",
+      rate_limit_per_minute: 1000,
+    },
+    {
+      Authorization: `Bearer ${session.token}`,
+    },
+  );
+
+  writeSession({ ...session, apiKey: created.api_key });
+  return created.api_key;
 }
 
 export async function blocklogRequest<T>(

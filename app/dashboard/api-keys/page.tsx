@@ -2,39 +2,25 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
-import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
+import { blocklogRequest } from "@/lib/blocklog";
 
 type ApiKey = {
-  id: string;
-  key_name: string;
-  created_date: string;
-  last_used: string;
-  permissions: string[];
+  key_id: string;
+  name: string;
+  key_prefix: string;
+  created_at: string;
+  last_used_at: string | null;
+  revoked: boolean;
+  usage_count: number;
+  rate_limit_per_minute: number;
 };
 
-type ApiKeysPayload = { keys?: ApiKey[] };
-
-const fallbackKeys: ApiKey[] = [
-  {
-    id: "key_1",
-    key_name: "Production API",
-    created_date: "2026-01-10",
-    last_used: "2 minutes ago",
-    permissions: ["logs:write", "verify:read"],
-  },
-  {
-    id: "key_2",
-    key_name: "Staging API",
-    created_date: "2025-12-03",
-    last_used: "1 day ago",
-    permissions: ["logs:write"],
-  },
-];
+const fallbackKeys: ApiKey[] = [];
 
 export default function ApiKeysPage() {
   const [keys, setKeys] = useState<ApiKey[]>(fallbackKeys);
   const [keyName, setKeyName] = useState("");
-  const [permissions, setPermissions] = useState("logs:write");
+  const [rateLimit, setRateLimit] = useState("1000");
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -42,11 +28,8 @@ export default function ApiKeysPage() {
   async function loadKeys() {
     setLoading(true);
     try {
-      const payload = await blocklogRequest<ApiKeysPayload | { data?: ApiKeysPayload }>(
-        "/auth/api_keys",
-      );
-      const parsed = normalizePayload<ApiKeysPayload>(payload, {}, "data");
-      setKeys(parsed.keys ?? []);
+      const payload = await blocklogRequest<ApiKey[]>("/auth/api_keys");
+      setKeys(payload);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Failed to load keys");
     } finally {
@@ -55,24 +38,7 @@ export default function ApiKeysPage() {
   }
 
   useEffect(() => {
-    let active = true;
-
-    blocklogRequest<ApiKeysPayload | { data?: ApiKeysPayload }>("/auth/api_keys")
-      .then((payload) => {
-        if (!active) return;
-        const parsed = normalizePayload<ApiKeysPayload>(payload, {}, "data");
-        setKeys(parsed.keys ?? []);
-      })
-      .catch((loadError: unknown) => {
-        if (!active) return;
-        setError(
-          loadError instanceof Error ? loadError.message : "Failed to load keys",
-        );
-      });
-
-    return () => {
-      active = false;
-    };
+    loadKeys();
   }, []);
 
   async function createKey(event: FormEvent<HTMLFormElement>) {
@@ -80,12 +46,16 @@ export default function ApiKeysPage() {
     setError(null);
     setNotice(null);
     try {
-      await blocklogRequest("/auth/api_keys", "POST", {
-        key_name: keyName,
-        permissions: permissions.split(",").map((entry) => entry.trim()),
-      });
+      const created = await blocklogRequest<{ api_key: string; name: string }>(
+        "/auth/api_keys",
+        "POST",
+        {
+          name: keyName,
+          rate_limit_per_minute: Number(rateLimit),
+        },
+      );
       setKeyName("");
-      setNotice("API key created.");
+      setNotice(`API key created: ${created.api_key}`);
       await loadKeys();
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : "Failed to create key");
@@ -125,9 +95,11 @@ export default function ApiKeysPage() {
             required
           />
           <input
-            placeholder="permissions (comma separated)"
-            value={permissions}
-            onChange={(event) => setPermissions(event.target.value)}
+            placeholder="Rate limit per minute"
+            type="number"
+            min="1"
+            value={rateLimit}
+            onChange={(event) => setRateLimit(event.target.value)}
             required
           />
         </div>
@@ -143,26 +115,26 @@ export default function ApiKeysPage() {
           <table>
             <thead>
               <tr>
-                <th>Key name</th>
-                <th>Created date</th>
+                <th>Name</th>
+                <th>Prefix</th>
+                <th>Created</th>
                 <th>Last used</th>
-                <th>Permissions</th>
+                <th>Rate limit</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {keys.map((key) => (
-                <tr key={key.id}>
-                  <td>{key.key_name}</td>
-                  <td>{key.created_date}</td>
-                  <td>{key.last_used}</td>
-                  <td>{key.permissions.join(", ")}</td>
+                <tr key={key.key_id}>
+                  <td>{key.name}</td>
+                  <td>{key.key_prefix}</td>
+                  <td>{new Date(key.created_at).toLocaleString()}</td>
+                  <td>{key.last_used_at ? new Date(key.last_used_at).toLocaleString() : "Never"}</td>
+                  <td>{key.rate_limit_per_minute}/min</td>
                   <td>
-                    <div className="button-row">
-                      <button className="btn" onClick={() => revokeKey(key.id)} type="button">
-                        Revoke
-                      </button>
-                    </div>
+                    <button className="btn" onClick={() => revokeKey(key.key_id)} type="button">
+                      Revoke
+                    </button>
                   </td>
                 </tr>
               ))}
