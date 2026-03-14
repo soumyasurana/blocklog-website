@@ -37,7 +37,7 @@ export default function LoginPage() {
       const session = normalizePayload<LoginResponse>(payload, {}, "data");
 
       writeSession({
-        token: session.access_token,
+        accessToken: session.access_token,
         companyId: session.company_id,
       }, session.expires_in ? session.expires_in * 1000 : undefined);
       await ensureUserApiKey();

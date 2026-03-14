@@ -16,9 +16,10 @@ export default function DashboardTopBar({ title }: { title: string }) {
   return (
     <div className="dashboard-top">
       <div>
+        <p className="eyebrow" style={{ marginBottom: 8 }}>Control plane</p>
         <h1 style={{ margin: 0 }}>{title}</h1>
         <p className="muted" style={{ margin: "4px 0 0" }}>
-          Company: {companyId}
+          Trust domain: {companyId}
         </p>
       </div>
       <div style={{ display: "flex", gap: 8 }}>

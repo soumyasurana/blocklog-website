@@ -6,8 +6,13 @@ import SiteFooter from "@/components/SiteFooter";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type HealthPayload = { status?: string };
-type IntegrityPayload = { integrity_status?: string };
-type MetricsPayload = { requests_total?: number; ingestion_rate?: number };
+type IntegrityPayload = { status?: string; integrity_status?: string; logs_verified?: number };
+type UsagePayload = {
+  logs_ingested?: number;
+  logs_ingested_today?: number;
+  verification_requests?: number;
+  gb_processed?: number;
+};
 
 type Service = { service: string; status: string; uptime: string };
 
@@ -24,17 +29,17 @@ export default function StatusPage() {
   useEffect(() => {
     async function loadStatus() {
       try {
-        const [healthPayload, integrityPayload, metricsPayload] = await Promise.all([
+        const [healthPayload, integrityPayload, usagePayload] = await Promise.all([
           blocklogRequest<HealthPayload | { data?: HealthPayload }>("/health"),
           blocklogRequest<IntegrityPayload | { data?: IntegrityPayload }>(
             "/integrity/status",
           ),
-          blocklogRequest<MetricsPayload | { data?: MetricsPayload }>("/metrics"),
+          blocklogRequest<UsagePayload | { data?: UsagePayload }>("/usage"),
         ]);
 
         const health = normalizePayload<HealthPayload>(healthPayload, {}, "data");
         const integrity = normalizePayload<IntegrityPayload>(integrityPayload, {}, "data");
-        const metrics = normalizePayload<MetricsPayload>(metricsPayload, {}, "data");
+        const usage = normalizePayload<UsagePayload>(usagePayload, {}, "data");
 
         setServices([
           {
@@ -44,13 +49,13 @@ export default function StatusPage() {
           },
           {
             service: "Integrity status",
-            status: integrity.integrity_status ?? "Healthy",
+            status: integrity.integrity_status ?? integrity.status ?? "Healthy",
             uptime: "Continuous",
           },
           {
-            service: "Ingestion rate",
-            status: `${metrics.ingestion_rate ?? 0}/min`,
-            uptime: `${metrics.requests_total ?? 0} requests`,
+            service: "Ingestion volume",
+            status: `${usage.logs_ingested_today ?? usage.logs_ingested ?? 0} logs today`,
+            uptime: `${usage.verification_requests ?? integrity.logs_verified ?? 0} verification checks`,
           },
         ]);
       } catch (loadError) {
@@ -65,7 +70,16 @@ export default function StatusPage() {
     <>
       <SiteHeader />
       <main className="container section">
-        <h1 style={{ marginTop: 0 }}>Status</h1>
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Service health</p>
+            <h1 style={{ margin: 0, fontSize: "clamp(2.6rem, 5vw, 4.5rem)" }}>System status</h1>
+          </div>
+          <p className="section-lead">
+            Live signals from health, integrity, and usage endpoints. This page is tuned to the
+            actual API surface rather than a fake synthetic status model.
+          </p>
+        </div>
         {error && <p className="error-banner">Live API unavailable: {error}</p>}
         <div className="table-shell">
           <table>
@@ -80,7 +94,9 @@ export default function StatusPage() {
               {services.map((entry) => (
                 <tr key={entry.service}>
                   <td>{entry.service}</td>
-                  <td>{entry.status}</td>
+                  <td>
+                    <span className="status-pill status-valid">{entry.status}</span>
+                  </td>
                   <td>{entry.uptime}</td>
                 </tr>
               ))}

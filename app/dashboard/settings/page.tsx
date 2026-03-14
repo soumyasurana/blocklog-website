@@ -6,7 +6,7 @@ import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type MePayload = {
   email?: string;
-  full_name?: string;
+  username?: string;
   company_id?: string;
 };
 
@@ -26,7 +26,7 @@ const fallback = {
   company_id: "cmp_84f02",
   region: "us-east-1",
   email: "founder@blocklogsecurity.com",
-  full_name: "Blocklog Admin",
+  username: "blocklog-admin",
   retention_days: 365,
   policy_name: "standard-retention",
 };
@@ -60,7 +60,7 @@ export default function SettingsPage() {
           company_id: company.company_id ?? companyId,
           region: company.region ?? fallback.region,
           email: me.email ?? fallback.email,
-          full_name: me.full_name ?? fallback.full_name,
+          username: me.username ?? fallback.username,
           retention_days: policy.default_days ?? fallback.retention_days,
           policy_name: policy.policy_name ?? fallback.policy_name,
         });
@@ -104,7 +104,7 @@ export default function SettingsPage() {
           </div>
           <div>
             <label>Owner</label>
-            <input value={details.full_name} readOnly />
+            <input value={details.username} readOnly />
           </div>
           <div>
             <label>Owner email</label>

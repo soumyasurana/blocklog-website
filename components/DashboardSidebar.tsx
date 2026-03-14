@@ -23,8 +23,16 @@ export default function DashboardSidebar() {
   return (
     <aside className="sidebar">
       <Link className="brand" href="/dashboard">
-        Blocklog Console
+        <span className="brand-mark" />
+        <span>
+          Blocklog Console
+          <small className="brand-subtitle">Assurance Layer</small>
+        </span>
       </Link>
+      <div className="sidebar-chip">
+        <strong>Operational trust</strong>
+        <span>Cryptographic logging, verification, evidence export.</span>
+      </div>
       <nav>
         {links.map((item) => {
           const active =

@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const session = readSession();
-  const ready = Boolean(session.token);
+  const ready = Boolean(session.accessToken);
 
   useEffect(() => {
     if (!ready) {

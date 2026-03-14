@@ -4,6 +4,16 @@ export default function SiteFooter() {
   return (
     <footer className="footer">
       <div className="container">
+        <div className="footer-intro">
+          <div>
+            <p className="eyebrow">Blocklog Security</p>
+            <h2>Proof systems for every critical event.</h2>
+          </div>
+          <p className="muted" style={{ maxWidth: 520 }}>
+            Built for teams that need verifiable audit history across financial systems,
+            internal controls, AI actions, and regulated workloads.
+          </p>
+        </div>
         <div className="footer-links">
           <Link href="/docs">Docs</Link>
           <Link href="/docs/log-ingestion">API</Link>

@@ -1,7 +1,7 @@
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type BlocklogSession = {
-  token?: string;
+  accessToken?: string;
   companyId?: string;
   apiKey?: string;
   expiresAt?: number;
@@ -28,18 +28,16 @@ function syncSessionCookie(session?: BlocklogSession) {
     return;
   }
 
-  if (!session?.token || !session.expiresAt) {
+  if (!session?.accessToken || !session.expiresAt) {
     document.cookie = `${SESSION_COOKIE}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
     return;
   }
 
-  document.cookie = `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; path=/; expires=${new Date(
-    session.expiresAt,
-  ).toUTCString()}; SameSite=Lax`;
+  document.cookie = `${SESSION_COOKIE}=${encodeURIComponent(session.accessToken)}; path=/; expires=${new Date(session.expiresAt).toUTCString()}; SameSite=Lax`;
 }
 
 export function isSessionValid(session: BlocklogSession) {
-  return Boolean(session.token && session.expiresAt && session.expiresAt > Date.now());
+  return Boolean(session.accessToken && session.expiresAt && session.expiresAt > Date.now());
 }
 
 export function readSession(): BlocklogSession {
@@ -50,7 +48,13 @@ export function readSession(): BlocklogSession {
   try {
     const raw = window.localStorage.getItem(SESSION_KEY);
     if (!raw) return {};
-    const session = JSON.parse(raw) as BlocklogSession;
+    const parsed = JSON.parse(raw) as BlocklogSession & { token?: string };
+    const session: BlocklogSession = {
+      accessToken: parsed.accessToken ?? parsed.token,
+      companyId: parsed.companyId,
+      apiKey: parsed.apiKey,
+      expiresAt: parsed.expiresAt,
+    };
     if (!isSessionValid(session)) {
       clearSession();
       return {};
@@ -107,7 +111,7 @@ export async function ensureUserApiKey() {
       rate_limit_per_minute: 1000,
     },
     {
-      Authorization: `Bearer ${session.token}`,
+      Authorization: `Bearer ${session.accessToken}`,
     },
   );
 
@@ -127,8 +131,8 @@ export async function blocklogRequest<T>(
     ...overrides,
   };
 
-  if (session.token) {
-    headers.Authorization = `Bearer ${session.token}`;
+  if (session.accessToken) {
+    headers.Authorization = `Bearer ${session.accessToken}`;
   }
 
   if (session.companyId) {

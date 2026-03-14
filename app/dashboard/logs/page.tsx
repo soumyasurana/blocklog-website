@@ -155,7 +155,20 @@ export default function LogsPage() {
   return (
     <>
       <DashboardTopBar title="Log Explorer" />
-      <form className="card" style={{ display: "grid", gap: 12 }} onSubmit={onFilter}>
+      <section className="card glass-card" style={{ marginBottom: 16 }}>
+        <div className="section-header" style={{ marginBottom: 0 }}>
+          <div>
+            <p className="eyebrow">Search and inspect</p>
+            <h2 style={{ marginBottom: 8 }}>Explore sealed logs across time, source, and event type.</h2>
+            <p className="muted" style={{ margin: 0, maxWidth: 760 }}>
+              Since the backend exposes proof export and per-log retrieval rather than a direct list
+              endpoint, this explorer builds a verifiable index from exported proof windows and then
+              enriches each log with its canonical record.
+            </p>
+          </div>
+        </div>
+      </section>
+      <form className="card glass-card" style={{ display: "grid", gap: 12 }} onSubmit={onFilter}>
         <div className="grid grid-2">
           <div>
             <label>Date range</label>
@@ -206,7 +219,7 @@ export default function LogsPage() {
       </form>
 
       {loading && (
-        <div className="notice button-row" style={{ alignItems: "center", marginTop: 12 }}>
+        <div className="notice" style={{ marginTop: 12 }}>
           <div className="spinner" />
           <span>Loading logs...</span>
         </div>
@@ -239,7 +252,9 @@ export default function LogsPage() {
                   </td>
                   <td>{log.source}</td>
                   <td>{log.hash}</td>
-                  <td>{log.status}</td>
+                  <td>
+                    <span className={`status-pill status-${log.status}`}>{log.status}</span>
+                  </td>
                   <td>{log.company}</td>
                   <td>
                     <Link className="btn" href={`/dashboard/verify?hash=${encodeURIComponent(log.id)}`}>

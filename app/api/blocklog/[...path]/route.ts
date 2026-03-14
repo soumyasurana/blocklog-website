@@ -20,11 +20,15 @@ type DemoLog = {
 };
 
 type DemoApiKey = {
-  id: string;
-  key_name: string;
-  created_date: string;
-  last_used: string;
-  permissions: string[];
+  key_id: string;
+  name: string;
+  key_prefix: string;
+  created_at: string;
+  last_used_at: string | null;
+  revoked: boolean;
+  usage_count: number;
+  rate_limit_per_minute: number;
+  api_key?: string;
 };
 
 type DemoState = {
@@ -33,7 +37,7 @@ type DemoState = {
   user: {
     id: string;
     email: string;
-    full_name: string;
+    username: string;
     company_id: string;
   };
   settings: {
@@ -85,17 +89,21 @@ function getDemoState(): DemoState {
       ],
       apiKeys: [
         {
-          id: "key_1",
-          key_name: "Production API",
-          created_date: "2026-01-10",
-          last_used: "2 minutes ago",
-          permissions: ["logs:write", "verify:read"],
+          key_id: "key_1",
+          name: "Production API",
+          key_prefix: "blk_live",
+          created_at: "2026-01-10T10:00:00Z",
+          last_used_at: "2026-03-15T10:00:00Z",
+          revoked: false,
+          usage_count: 4129,
+          rate_limit_per_minute: 1000,
+          api_key: "blk_demo_key",
         },
       ],
       user: {
         id: "usr_demo_1",
         email: "founder@blocklogsecurity.com",
-        full_name: "Blocklog Admin",
+        username: "blocklog-admin",
         company_id: "cmp_84f02",
       },
       settings: {
@@ -133,8 +141,7 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     if (id === "login" || id === "signup") {
       return json({
         data: {
-          token: "demo-token",
-          api_key: "blk_demo_key",
+          access_token: "demo-token",
           company_id: state.settings.company_id,
           expires_in: 28800,
         },
@@ -153,27 +160,44 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
   }
 
   if (resource === "auth" && id === "api_keys" && method === "GET") {
-    return json({ data: { keys: state.apiKeys } });
+    return json(
+      state.apiKeys.map((entry) => ({
+        key_id: entry.key_id,
+        name: entry.name,
+        key_prefix: entry.key_prefix,
+        created_at: entry.created_at,
+        last_used_at: entry.last_used_at,
+        revoked: entry.revoked,
+        usage_count: entry.usage_count,
+        rate_limit_per_minute: entry.rate_limit_per_minute,
+      })),
+    );
   }
 
   if (resource === "auth" && id === "api_keys" && method === "POST") {
     const body = await parseBody(req);
     const created: DemoApiKey = {
-      id: `key_${Date.now()}`,
-      key_name: String(body.key_name ?? "New API Key"),
-      created_date: new Date().toISOString().slice(0, 10),
-      last_used: "never",
-      permissions: Array.isArray(body.permissions)
-        ? body.permissions.map((entry) => String(entry))
-        : ["logs:write"],
+      key_id: `key_${Date.now()}`,
+      name: String(body.name ?? "New API Key"),
+      key_prefix: "blk_live",
+      created_at: new Date().toISOString(),
+      last_used_at: null,
+      revoked: false,
+      usage_count: 0,
+      rate_limit_per_minute: Number(body.rate_limit_per_minute ?? 1000),
+      api_key: `blk_demo_${Date.now()}`,
     };
     state.apiKeys.unshift(created);
-    return json({ data: created }, 201);
+    return json(created, 201);
   }
 
   if (resource === "auth" && id === "api_keys" && action && method === "DELETE") {
-    state.apiKeys = state.apiKeys.filter((entry) => entry.id !== action);
-    return json({ data: { ok: true } });
+    state.apiKeys = state.apiKeys.map((entry) =>
+      entry.key_id === action
+        ? { ...entry, revoked: true, last_used_at: entry.last_used_at ?? new Date().toISOString() }
+        : entry,
+    );
+    return json({ status: "revoked", key_id: action });
   }
 
   if (resource === "health" && method === "GET") {
@@ -225,8 +249,23 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
         company_name: state.settings.company_name,
         company_id: state.settings.company_id,
         region: state.settings.region,
+        status: "ACTIVE",
+        created_at: "2026-01-10T09:30:00Z",
       },
     });
+  }
+
+  if (resource === "companies" && !id && method === "POST") {
+    const body = await parseBody(req);
+    state.settings.company_id = String(body.company_id ?? state.settings.company_id);
+    state.settings.company_name = String(body.company_name ?? state.settings.company_name);
+    state.user.company_id = state.settings.company_id;
+    return json({
+      company_id: state.settings.company_id,
+      company_name: state.settings.company_name,
+      status: "ACTIVE",
+      created_at: new Date().toISOString(),
+    }, 201);
   }
 
   if (resource === "policy" && id === "retention" && method === "GET") {
@@ -268,25 +307,21 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
-  if (resource === "logs" && !id && method === "GET") {
-    const q = req.nextUrl.searchParams.get("q")?.toLowerCase() ?? "";
-    const eventType = req.nextUrl.searchParams.get("event_type")?.toLowerCase() ?? "";
-    const source = req.nextUrl.searchParams.get("source")?.toLowerCase() ?? "";
-    const status = req.nextUrl.searchParams.get("status")?.toLowerCase() ?? "";
-
-    const filtered = state.logs.filter((log) => {
-      return (
-        (!q ||
-          log.timestamp.toLowerCase().includes(q) ||
-          log.event.toLowerCase().includes(q) ||
-          log.hash.toLowerCase().includes(q)) &&
-        (!eventType || log.event.toLowerCase().includes(eventType)) &&
-        (!source || log.source.toLowerCase().includes(source)) &&
-        (!status || log.status.toLowerCase() === status)
-      );
+  if (resource === "logs" && id === "export-proof" && method === "GET") {
+    return json({
+      logs: state.logs.map((log) => ({
+        log_id: log.id,
+        created_at: log.timestamp,
+        payload_hash: `${log.hash}_payload`,
+        chain_hash: log.hash,
+      })),
+      merkle_root: "demo-merkle-root",
+      verification_steps: [
+        "Filter logs in selected time range",
+        "Recompute hashes",
+        "Compare Merkle leaves and chain hashes",
+      ],
     });
-
-    return json({ data: { logs: filtered } });
   }
 
   if (resource === "logs" && !id && method === "POST") {
@@ -294,8 +329,8 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     const newLog: DemoLog = {
       id: `log_${Date.now()}`,
       timestamp: new Date().toISOString(),
-      event: String(body.event ?? "custom.event"),
-      source: "playground",
+      event: String(body.event_type ?? body.event ?? "custom.event"),
+      source: String(body.source ?? "playground"),
       hash: `0x${Date.now().toString(16)}`,
       status: "verified",
       company: state.settings.company_id,
@@ -311,26 +346,41 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
       return json({ detail: "Log not found" }, 404);
     }
     return json({
-      data: {
-        id: log.id,
-        event_data: { event: log.event, hash: log.hash },
-        metadata: log.metadata ?? {},
-        hash: log.hash,
-        signature: "sig_demo_123",
-        integrity_status: log.status === "failed" ? "INVALID" : "VALID",
-        chain_position: `Block #${6800 + state.logs.indexOf(log)}`,
-        verification_result:
-          log.status === "failed" ? "Signature mismatch" : "Signature MATCH, Chain VERIFIED",
-      },
+      log_id: log.id,
+      company_id: log.company,
+      event_type: log.event,
+      source: log.source,
+      payload: log.metadata ?? {},
+      payload_hash: `${log.hash}_payload`,
+      log_signature: "sig_demo_123",
+      public_key_id: "key_demo_public",
+      previous_hash: "0xprevdemo",
+      chain_hash: log.hash,
+      batch_id: "batch_demo_1",
+      created_at: log.timestamp,
+      is_deleted: log.status === "deleted",
     });
   }
 
   if (resource === "logs" && id && action === "verify" && (method === "POST" || method === "GET")) {
     const log = state.logs.find((entry) => entry.id === id);
     return json({
-      data: {
-        result: log?.status === "failed" ? "Integrity check failed." : "Integrity check passed.",
+      log_id: id,
+      hash: log?.hash ?? "0xunknown",
+      previous_hash: "0xprevdemo",
+      chain_valid: log?.status !== "failed",
+      signature_valid: log?.status !== "failed",
+      anchor_proof: {
+        batch_id: "batch_demo_1",
+        merkle_root: "demo-merkle-root",
+        anchor_tx: "0xanchor",
+        block_number: 19000001,
       },
+      time_attestation: {
+        anchored: true,
+        anchored_at: new Date().toISOString(),
+      },
+      verified_at: new Date().toISOString(),
     });
   }
 
