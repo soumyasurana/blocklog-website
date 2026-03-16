@@ -1,10 +1,10 @@
 import ApiCommandCenter from "@/components/ApiCommandCenter";
 import DashboardTopBar from "@/components/DashboardTopBar";
 
-export default function PlaygroundPage() {
+export default function ApiEndpointsPage() {
   return (
     <>
-      <DashboardTopBar title="Developer Playground" />
+      <DashboardTopBar title="API Command Center" />
       <ApiCommandCenter />
     </>
   );
