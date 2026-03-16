@@ -8,7 +8,6 @@ const groups = [
     title: "Command",
     links: [
       { href: "/dashboard", label: "Overview" },
-      { href: "/dashboard/api-endpoints", label: "API Command Center" },
       { href: "/dashboard/playground", label: "Developer Playground" },
     ],
   },
@@ -39,10 +38,8 @@ export default function DashboardSidebar() {
   return (
     <aside className="sidebar">
       <Link className="brand" href="/">
-        <span className="brand-mark" />
         <span>
           Blocklog Console
-          <small className="brand-subtitle">Assurance Layer</small>
         </span>
       </Link>
       <div className="sidebar-chip">
@@ -74,8 +71,6 @@ export default function DashboardSidebar() {
         ))}
       </nav>
       <div className="sidebar-footer">
-        <span className="status-pill status-valid">Landing linked</span>
-        <span className="muted">Brand mark now returns to the public site.</span>
       </div>
     </aside>
   );

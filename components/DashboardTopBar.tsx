@@ -24,7 +24,6 @@ export default function DashboardTopBar({ title }: { title: string }) {
       </div>
       <div className="dashboard-top-actions">
         <span className="status-pill status-valid">Console live</span>
-        <span className="status-pill">Unified workspace</span>
         <button className="btn" onClick={logout} type="button">
           Logout
         </button>

@@ -6,7 +6,7 @@ export default function SiteFooter() {
       <div className="container">
         <div className="footer-intro">
           <div>
-            <p className="eyebrow">Blocklog Security</p>
+            <p className="eyebrow">Blocklog</p>
             <h2>Proof systems for every critical event.</h2>
           </div>
           <p className="muted" style={{ maxWidth: 520 }}>
@@ -19,7 +19,7 @@ export default function SiteFooter() {
           <Link href="/docs/log-ingestion">API</Link>
           <Link href="/docs/sdks">SDK examples</Link>
           <Link href="/docs/getting-started">Quick start</Link>
-          <a href="https://github.com" target="_blank" rel="noreferrer">
+          <a href="https://github.com/Blockloghq" target="_blank" rel="noreferrer">
             GitHub
           </a>
           <a href="#">Privacy</a>

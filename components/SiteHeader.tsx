@@ -6,10 +6,8 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="container header-inner">
         <Link className="brand" href="/">
-          <span className="brand-mark" />
           <span>
             Blocklog
-            <span className="brand-subtitle">Audit Integrity Cloud</span>
           </span>
         </Link>
         <nav className="nav-links">

@@ -134,9 +134,6 @@ export default function DashboardHomePage() {
             so the product feels like a single control plane.
           </p>
           <div className="button-row">
-            <Link className="btn btn-primary" href="/dashboard/api-endpoints">
-              Open API Command Center
-            </Link>
             <Link className="btn" href="/dashboard/logs">
               Explore Logs
             </Link>
@@ -202,7 +199,7 @@ export default function DashboardHomePage() {
             <p className="eyebrow">Patched endpoints</p>
             <h2 style={{ marginBottom: 8 }}>API coverage visible from the overview.</h2>
           </div>
-          <Link className="btn" href="/dashboard/api-endpoints">
+          <Link className="btn" href="/dashboard/playground">
             View all endpoints
           </Link>
         </div>
