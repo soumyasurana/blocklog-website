@@ -22,12 +22,30 @@ const steps = [
 ];
 
 const features = [
-  "Immutable Logs",
-  "Cryptographic Integrity",
-  "Anchored Verification",
-  "Compliance Ready",
-  "API First",
-  "Human + AI Audit Trails",
+  {
+    title: "Immutable Logs",
+    detail: "Chain every write into a tamper-evident event history with preserved ordering.",
+  },
+  {
+    title: "Cryptographic Integrity",
+    detail: "Seal batches with signatures and proofs that survive outside your application boundary.",
+  },
+  {
+    title: "Anchored Verification",
+    detail: "Recompute inclusion, continuity, and timestamp checks whenever evidence is challenged.",
+  },
+  {
+    title: "Compliance Ready",
+    detail: "Package retention-friendly exports for audits, disputes, and regulated workflows.",
+  },
+  {
+    title: "API First",
+    detail: "Adopt the platform with lightweight ingestion endpoints and implementation-ready docs.",
+  },
+  {
+    title: "Human + AI Audit Trails",
+    detail: "Track operator actions, automated decisions, and HITL review steps in one chain of custody.",
+  },
 ];
 
 const useCases = [
@@ -39,6 +57,12 @@ const useCases = [
   "Third-party trust attestations",
 ];
 
+const trustSignals = [
+  { value: "Sub-second", label: "proof lookups for recent batches" },
+  { value: "24/7", label: "integrity posture for production systems" },
+  { value: "Portable", label: "evidence bundles for auditors and partners" },
+];
+
 export default function HomePage() {
   return (
     <>
@@ -46,6 +70,11 @@ export default function HomePage() {
       <main className="container">
         <section className="hero">
           <div className="hero-copy">
+            <div className="hero-copy-inner">
+              <div className="hero-badge">
+                <span className="hero-badge-dot" />
+                Trusted audit trails for security, finance, and AI operations
+              </div>
             <p className="eyebrow">Cryptographic audit infrastructure</p>
             <h1>Tamper-Proof Audit Logs for Modern Systems</h1>
             <p>
@@ -54,8 +83,8 @@ export default function HomePage() {
               is backed by cryptographic integrity instead of operational trust alone.
             </p>
             <div className="button-row" style={{ marginTop: 18 }}>
-              <Link className="btn btn-primary" href="/signup">
-                Start Free
+              <Link className="btn btn-primary" href="/login">
+                Log In
               </Link>
               <Link className="btn btn-link" href="/docs">
                 View Docs
@@ -78,8 +107,18 @@ export default function HomePage() {
                 <span className="muted">proof export for audits and disputes</span>
               </div>
             </div>
+            </div>
           </div>
           <div className="hero-panel">
+            <div className="hero-panel-glow" />
+            <div className="hero-status-strip">
+              {trustSignals.map((signal) => (
+                <div className="hero-status-card" key={signal.label}>
+                  <strong>{signal.value}</strong>
+                  <span>{signal.label}</span>
+                </div>
+              ))}
+            </div>
             <div className="code-pane">{`POST /api/v1/logs
 {
   "event_type": "payment.created",
@@ -136,14 +175,25 @@ export default function HomePage() {
           </div>
           <div className="grid grid-3">
             {features.map((feature) => (
-              <article className="card glass-card" key={feature}>
-                <h3 style={{ marginTop: 0 }}>{feature}</h3>
-                <p className="muted">
-                  Production-grade controls for ingestion, verification, export, and operational
-                  assurance.
-                </p>
+              <article className="card glass-card capability-card" key={feature.title}>
+                <div className="capability-icon" />
+                <h3 style={{ marginTop: 0 }}>{feature.title}</h3>
+                <p className="muted">{feature.detail}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="trust-band">
+            <div>
+              <p className="eyebrow">Operational clarity</p>
+              <h2>Designed to reassure both engineers and auditors.</h2>
+            </div>
+            <p className="section-lead" style={{ marginBottom: 0 }}>
+              The interface stays crisp, the evidence chain stays legible, and the trust story is
+              always ready for review when incidents or external questions arise.
+            </p>
           </div>
         </section>
 

@@ -57,40 +57,70 @@ export default function LoginPage() {
 
   return (
     <main className="auth-page">
-      <section className="card auth-card">
-        <h1 style={{ marginTop: 0 }}>Log in</h1>
-        <form className="form" onSubmit={onSubmit}>
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="you@company.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
-            />
+      <section className="card auth-shell">
+        <div className="auth-aside">
+          <p className="eyebrow">Welcome back</p>
+          <h1 style={{ marginTop: 0, marginBottom: 14 }}>Log in to your evidence console</h1>
+          <p className="muted auth-lead">
+            Review integrity checks, manage proofs, and monitor every critical event from one
+            operational surface.
+          </p>
+          <div className="auth-benefits">
+            <div className="auth-benefit">
+              <strong>Trace every action</strong>
+              <span>Audit-ready history for platform, finance, and AI workflows.</span>
+            </div>
+            <div className="auth-benefit">
+              <strong>Verify instantly</strong>
+              <span>Re-run chain and proof checks without leaving the dashboard.</span>
+            </div>
           </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-            />
+        </div>
+        <div className="auth-card">
+          <div className="auth-card-top">
+            <div>
+              <p className="eyebrow">Secure access</p>
+              <h2 style={{ marginTop: 8, marginBottom: 0 }}>Continue to Blocklog</h2>
+            </div>
+            <Link className="btn btn-primary" href="/signup">
+              Start Free
+            </Link>
           </div>
-          {error && <p style={{ color: "var(--danger)", margin: 0 }}>{error}</p>}
-          <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-        <p className="muted">
-          <Link href="/auth/forgot-password">Forgot password?</Link>
-        </p>
-        <p className="muted">
-          No account? <Link href="/auth/signup">Create one</Link>
-        </p>
+          <form className="form" onSubmit={onSubmit}>
+            <div>
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="you@company.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </div>
+            {error && <p style={{ color: "var(--danger)", margin: 0 }}>{error}</p>}
+            <button className="btn btn-primary auth-submit" type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </form>
+          <div className="auth-links">
+            <p className="muted">
+              <Link href="/auth/forgot-password">Forgot password?</Link>
+            </p>
+            <p className="muted">
+              No account? <Link href="/auth/signup">Create one</Link>
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   );

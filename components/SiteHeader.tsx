@@ -6,8 +6,10 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="container header-inner">
         <Link className="brand" href="/">
+          <span className="brand-mark" />
           <span>
             Blocklog
+            <span className="brand-subtitle">Audit Integrity Cloud</span>
           </span>
         </Link>
         <nav className="nav-links">
@@ -16,7 +18,6 @@ export default function SiteHeader() {
           <Link href="/docs">Docs</Link>
           <Link href="/status">Status</Link>
           <Link href="/login">Login</Link>
-          <Link className="header-cta" href="/signup">Start Free</Link>
           <Link className="header-cta subtle" href="/dashboard">Console</Link>
         </nav>
         <ThemeToggle />
