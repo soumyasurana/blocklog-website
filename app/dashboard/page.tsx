@@ -125,40 +125,6 @@ export default function DashboardHomePage() {
         </div>
       </section>
 
-      <section className="console-hero-grid" style={{ marginBottom: 16 }}>
-        <article className="card glass-card console-hero-card">
-          <p className="eyebrow">Unified command surface</p>
-          <h2 style={{ marginTop: 8, marginBottom: 10 }}>One console for assurance, diagnostics, and API execution.</h2>
-          <p className="muted" style={{ marginTop: 0 }}>
-            The console now keeps endpoint discovery, operations, and verification tightly connected
-            so the product feels like a single control plane.
-          </p>
-          <div className="button-row">
-            <Link className="btn" href="/dashboard/logs">
-              Explore Logs
-            </Link>
-          </div>
-        </article>
-        <article className="card glass-card console-hero-card">
-          <p className="eyebrow">Endpoint coverage</p>
-          <h2 style={{ marginTop: 8, marginBottom: 12 }}>{apiCatalog.length} mapped endpoints</h2>
-          <div className="console-signal-list">
-            <div className="console-signal-item">
-              <strong>{apiCategories.length}</strong>
-              <span>API categories available inside the console</span>
-            </div>
-            <div className="console-signal-item">
-              <strong>{endpointHighlights.filter((item) => item.pageHref).length}</strong>
-              <span>deep-linked operational surfaces from the registry</span>
-            </div>
-            <div className="console-signal-item">
-              <strong>Runner</strong>
-              <span>one-click preset execution for mapped endpoints</span>
-            </div>
-          </div>
-        </article>
-      </section>
-
       <section className="stats">
         {cards.map(([label, value]) => (
           <article className="card stat glass-card" key={label}>
@@ -193,27 +159,38 @@ export default function DashboardHomePage() {
         </article>
       </section>
 
-      <section className="card glass-card" style={{ marginTop: 16 }}>
-        <div className="section-header">
-          <div>
-            <p className="eyebrow">Patched endpoints</p>
-            <h2 style={{ marginBottom: 8 }}>API coverage visible from the overview.</h2>
+      <section className="console-hero-grid" style={{ marginBottom: 16 }}>
+        <article className="card glass-card console-hero-card">
+          <p className="eyebrow">Unified command surface</p>
+          <h2 style={{ marginTop: 8, marginBottom: 10 }}>One console for assurance, diagnostics, and API execution.</h2>
+          <p className="muted" style={{ marginTop: 0 }}>
+            The console now keeps endpoint discovery, operations, and verification tightly connected
+            so the product feels like a single control plane.
+          </p>
+          <div className="button-row">
+            <Link className="btn" href="/dashboard/logs">
+              Explore Logs
+            </Link>
           </div>
-          <Link className="btn" href="/dashboard/playground">
-            View all endpoints
-          </Link>
-        </div>
-        <div className="endpoint-inline-list">
-          {endpointHighlights.map((endpoint) => (
-            <div className="endpoint-inline-item" key={`${endpoint.method}-${endpoint.path}`}>
-              <span className={`endpoint-method endpoint-method-${endpoint.method.toLowerCase()}`}>
-                {endpoint.method}
-              </span>
-              <code>{endpoint.path}</code>
-              <span className="muted">{endpoint.label}</span>
+        </article>
+        <article className="card glass-card console-hero-card">
+          <p className="eyebrow">Endpoint coverage</p>
+          <h2 style={{ marginTop: 8, marginBottom: 12 }}>{apiCatalog.length} mapped endpoints</h2>
+          <div className="console-signal-list">
+            <div className="console-signal-item">
+              <strong>{apiCategories.length}</strong>
+              <span>API categories available inside the console</span>
             </div>
-          ))}
-        </div>
+            <div className="console-signal-item">
+              <strong>{endpointHighlights.filter((item) => item.pageHref).length}</strong>
+              <span>deep-linked operational surfaces from the registry</span>
+            </div>
+            <div className="console-signal-item">
+              <strong>Runner</strong>
+              <span>one-click preset execution for mapped endpoints</span>
+            </div>
+          </div>
+        </article>
       </section>
 
       <section className="table-shell" style={{ marginTop: 16 }}>
@@ -245,6 +222,29 @@ export default function DashboardHomePage() {
             </tbody>
           </table>
         )}
+      </section>
+      
+      <section className="card glass-card" style={{ marginTop: 16 }}>
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Patched endpoints</p>
+            <h2 style={{ marginBottom: 8 }}>API coverage visible from the overview.</h2>
+          </div>
+          <Link className="btn" href="/dashboard/playground">
+            View all endpoints
+          </Link>
+        </div>
+        <div className="endpoint-inline-list">
+          {endpointHighlights.map((endpoint) => (
+            <div className="endpoint-inline-item" key={`${endpoint.method}-${endpoint.path}`}>
+              <span className={`endpoint-method endpoint-method-${endpoint.method.toLowerCase()}`}>
+                {endpoint.method}
+              </span>
+              <code>{endpoint.path}</code>
+              <span className="muted">{endpoint.label}</span>
+            </div>
+          ))}
+        </div>
       </section>
     </>
   );
