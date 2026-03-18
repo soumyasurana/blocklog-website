@@ -161,13 +161,19 @@ export default function DashboardHomePage() {
 
       <section className="console-hero-grid" style={{ marginBottom: 16 }}>
         <article className="card glass-card console-hero-card">
-          <p className="eyebrow">Unified command surface</p>
-          <h2 style={{ marginTop: 8, marginBottom: 10 }}>One console for assurance, diagnostics, and API execution.</h2>
+          <p className="eyebrow">Next-gen command surface</p>
+          <h2 style={{ marginTop: 8, marginBottom: 10 }}>One dashboard for data plane, observability, control, and API execution.</h2>
           <p className="muted" style={{ marginTop: 0 }}>
-            The console now keeps endpoint discovery, operations, and verification tightly connected
-            so the product feels like a single control plane.
+            The console keeps endpoint discovery, trust operations, monitoring, and system control
+            tightly connected so the product reads like a single operating surface.
           </p>
           <div className="button-row">
+            <Link className="btn btn-primary" href="/dashboard/playground">
+              Open Playground
+            </Link>
+            <Link className="btn" href="/dashboard/system/pipeline">
+              Open Pipeline
+            </Link>
             <Link className="btn" href="/dashboard/logs">
               Explore Logs
             </Link>
@@ -191,6 +197,33 @@ export default function DashboardHomePage() {
             </div>
           </div>
         </article>
+      </section>
+
+      <section className="card glass-card" style={{ marginBottom: 16 }}>
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Console topology</p>
+            <h2 style={{ marginBottom: 8 }}>The new surface map is built into the product.</h2>
+          </div>
+        </div>
+        <div className="endpoint-inline-list">
+          <div className="endpoint-inline-item">
+            <strong>Data Plane</strong>
+            <span className="muted">`logs` / `verify` / `audit-trail`</span>
+          </div>
+          <div className="endpoint-inline-item">
+            <strong>Observability</strong>
+            <span className="muted">`monitoring/ingestion` / `monitoring/errors` / `monitoring/integrity`</span>
+          </div>
+          <div className="endpoint-inline-item">
+            <strong>Control Plane</strong>
+            <span className="muted">`system/pipeline` / `system/anchoring` / `settings` / `api-keys` / `notifications`</span>
+          </div>
+          <div className="endpoint-inline-item">
+            <strong>Developer Surface</strong>
+            <span className="muted">`playground` as the live API execution center</span>
+          </div>
+        </div>
       </section>
 
       <section className="table-shell" style={{ marginTop: 16 }}>

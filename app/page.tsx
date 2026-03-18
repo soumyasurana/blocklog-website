@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LandingHeroActions from "@/components/LandingHeroActions";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -82,17 +83,7 @@ export default function HomePage() {
               record. Every event is sealed, every proof is exportable, and every critical action
               is backed by cryptographic integrity instead of operational trust alone.
             </p>
-            <div className="button-row" style={{ marginTop: 18 }}>
-              <Link className="btn btn-primary" href="/login">
-                Log In
-              </Link>
-              <Link className="btn btn-link" href="/docs">
-                View Docs
-              </Link>
-              <Link className="btn" href="/dashboard">
-                Open Console
-              </Link>
-            </div>
+            <LandingHeroActions />
             <div className="hero-metrics">
               <div className="hero-metric">
                 <span className="metric-value">99.99%</span>

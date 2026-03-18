@@ -18,6 +18,7 @@ type ApiKeyCreateResponse = {
 const SESSION_KEY = "blocklog-session";
 const SESSION_COOKIE = "blocklog_session";
 const DEFAULT_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+const SESSION_EVENT = "blocklog:session-change";
 
 function hasWindow() {
   return typeof window !== "undefined";
@@ -34,6 +35,14 @@ function syncSessionCookie(session?: BlocklogSession) {
   }
 
   document.cookie = `${SESSION_COOKIE}=${encodeURIComponent(session.accessToken)}; path=/; expires=${new Date(session.expiresAt).toUTCString()}; SameSite=Lax`;
+}
+
+function emitSessionChange() {
+  if (!hasWindow()) {
+    return;
+  }
+
+  window.dispatchEvent(new Event(SESSION_EVENT));
 }
 
 export function isSessionValid(session: BlocklogSession) {
@@ -77,6 +86,7 @@ export function writeSession(
   const nextSession = { ...session, expiresAt };
   window.localStorage.setItem(SESSION_KEY, JSON.stringify(nextSession));
   syncSessionCookie(nextSession);
+  emitSessionChange();
 }
 
 export function clearSession() {
@@ -86,6 +96,27 @@ export function clearSession() {
 
   window.localStorage.removeItem(SESSION_KEY);
   syncSessionCookie();
+  emitSessionChange();
+}
+
+export function subscribeSession(listener: () => void) {
+  if (!hasWindow()) {
+    return () => {};
+  }
+
+  const handleStorage = (event: StorageEvent) => {
+    if (!event.key || event.key === SESSION_KEY) {
+      listener();
+    }
+  };
+
+  window.addEventListener(SESSION_EVENT, listener);
+  window.addEventListener("storage", handleStorage);
+
+  return () => {
+    window.removeEventListener(SESSION_EVENT, listener);
+    window.removeEventListener("storage", handleStorage);
+  };
 }
 
 export function requireValidSession() {

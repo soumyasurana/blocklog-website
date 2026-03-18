@@ -752,8 +752,25 @@ textarea {
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 45%),
     color-mix(in srgb, var(--bg-elevated) 92%, transparent);
   display: grid;
-  align-content: start;
   gap: 18px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.sidebar-top {
+  display: grid;
+  gap: 18px;
+}
+
+.sidebar-nav-shell {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.sidebar-overview-link {
+  display: grid;
 }
 
 .sidebar-chip {
@@ -769,6 +786,9 @@ textarea {
 .sidebar-nav-groups {
   display: grid;
   gap: 18px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .sidebar-group {
@@ -797,6 +817,11 @@ textarea {
 }
 
 .nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 12px 14px;
   border-radius: 16px;
   color: var(--muted);
@@ -807,7 +832,8 @@ textarea {
     background 180ms ease,
     border-color 180ms ease,
     color 180ms ease,
-    transform 180ms ease;
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .nav-item.active,
@@ -818,10 +844,19 @@ textarea {
   border-color: var(--border);
   color: var(--text);
   transform: translateX(2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.nav-item-pulse {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--primary-strong));
+  box-shadow: 0 0 0 6px rgba(123, 247, 212, 0.08);
 }
 
 .sidebar-footer {
-  margin-top: auto;
   display: grid;
   gap: 8px;
   padding: 16px;
@@ -1072,6 +1107,69 @@ tbody tr:hover {
   gap: 14px;
 }
 
+.api-command-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.8fr);
+  gap: 18px;
+}
+
+.api-catalog-panel,
+.api-runner-panel {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.api-category-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.api-runner-panel {
+  position: sticky;
+  top: 28px;
+  align-self: start;
+}
+
+.api-runner-card,
+.api-response-card {
+  height: fit-content;
+}
+
+.api-param-panel {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    color-mix(in srgb, var(--surface-strong) 58%, transparent);
+}
+
+.api-param-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.api-path-preview {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-strong) 62%, transparent);
+}
+
+.api-path-preview code {
+  font-family: var(--font-mono), monospace;
+  color: var(--primary-strong);
+  word-break: break-word;
+}
+
 .endpoint-card {
   display: grid;
   gap: 10px;
@@ -1290,6 +1388,7 @@ tbody tr:hover {
   .hero,
   .stack-grid,
   .console-hero-grid,
+  .api-command-shell,
   .trust-band,
   .auth-shell,
   .architecture-flow,
@@ -1339,6 +1438,10 @@ tbody tr:hover {
 
   .sidebar-footer {
     margin-top: 0;
+  }
+
+  .api-runner-panel {
+    position: static;
   }
 }
 

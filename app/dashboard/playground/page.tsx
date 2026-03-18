@@ -4,7 +4,7 @@ import DashboardTopBar from "@/components/DashboardTopBar";
 export default function PlaygroundPage() {
   return (
     <>
-      <DashboardTopBar title="Developer Playground" />
+      <DashboardTopBar title="Playground" />
       <ApiCommandCenter />
     </>
   );

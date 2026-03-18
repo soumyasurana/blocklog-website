@@ -89,7 +89,7 @@ export default function IngestionMonitorPage() {
 
   return (
     <>
-      <DashboardTopBar title="Log Ingestion Monitor" />
+      <DashboardTopBar title="Monitoring / Ingestion" />
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
       <section className="card glass-card">
         <p className="eyebrow">Recent intake</p>

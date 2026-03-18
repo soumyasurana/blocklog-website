@@ -59,7 +59,7 @@ export default function ErrorsPage() {
 
   return (
     <>
-      <DashboardTopBar title="Error Monitoring" />
+      <DashboardTopBar title="Monitoring / Errors" />
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
       <section className="card glass-card">
         <p className="eyebrow">Integrity diagnostics</p>

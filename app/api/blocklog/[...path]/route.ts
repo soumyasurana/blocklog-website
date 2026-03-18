@@ -324,6 +324,25 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
+  if (resource === "logs" && id === "batch" && method === "POST") {
+    const body = await parseBody(req);
+    const logs = Array.isArray(body.logs) ? body.logs : [];
+    logs.forEach((entry, index) => {
+      const record = entry as Record<string, unknown>;
+      state.logs.unshift({
+        id: `log_${Date.now()}_${index}`,
+        timestamp: new Date().toISOString(),
+        event: String(record.event_type ?? record.event ?? `batch.event.${index + 1}`),
+        source: String(record.source ?? "batch-playground"),
+        hash: `0x${(Date.now() + index).toString(16)}`,
+        status: "verified",
+        company: state.settings.company_id,
+        metadata: { created_via: "batch-demo" },
+      });
+    });
+    return json({ data: { accepted: logs.length, batch_id: `batch_${Date.now()}` } }, 201);
+  }
+
   if (resource === "logs" && !id && method === "POST") {
     const body = await parseBody(req);
     const newLog: DemoLog = {
@@ -338,6 +357,13 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     };
     state.logs.unshift(newLog);
     return json({ data: newLog }, 201);
+  }
+
+  if (resource === "logs" && id && action === "delete" && method === "POST") {
+    state.logs = state.logs.map((entry) =>
+      entry.id === id ? { ...entry, status: "deleted" } : entry,
+    );
+    return json({ data: { log_id: id, deleted: true } });
   }
 
   if (resource === "logs" && id && !action && method === "GET") {
@@ -406,6 +432,118 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
     });
   }
 
+  if (resource === "verify" && id === "batch" && action && method === "GET") {
+    return json({
+      data: {
+        batch_id: action,
+        integrity: "VALID",
+        anchored: true,
+        merkle_root: "demo-merkle-root",
+      },
+    });
+  }
+
+  if (resource === "batches" && id === "seal" && method === "POST") {
+    return json({
+      data: {
+        batch_id: `batch_${Date.now()}`,
+        status: "sealed",
+      },
+    }, 201);
+  }
+
+  if (resource === "batches" && !id && method === "GET") {
+    return json({
+      data: {
+        batches: [
+          { batch_id: "batch_demo_1", status: "sealed", log_count: state.logs.length },
+          { batch_id: "batch_demo_2", status: "anchored", log_count: 12 },
+        ],
+      },
+    });
+  }
+
+  if (resource === "batches" && id && !action && method === "GET") {
+    return json({
+      data: {
+        batch_id: id,
+        status: "sealed",
+        log_count: state.logs.length,
+        merkle_root: "demo-merkle-root",
+      },
+    });
+  }
+
+  if (resource === "batches" && id && action === "status" && method === "GET") {
+    return json({
+      data: {
+        batch_id: id,
+        status: "anchored",
+        stage: "complete",
+      },
+    });
+  }
+
+  if (resource === "batches" && id && action === "finalize" && method === "POST") {
+    return json({
+      data: {
+        batch_id: id,
+        status: "finalized",
+      },
+    });
+  }
+
+  if (resource === "batches" && id && action === "proof-bundle" && method === "GET") {
+    return json({
+      data: {
+        batch_id: id,
+        merkle_root: "demo-merkle-root",
+        proof_bundle_url: `/proofs/${id}.json`,
+      },
+    });
+  }
+
+  if (resource === "batches" && id && action === "anchor" && method === "POST") {
+    return json({
+      data: {
+        batch_id: id,
+        anchor_tx: "0xanchor",
+        status: "anchored",
+      },
+    });
+  }
+
+  if (resource === "anchors" && id && method === "GET") {
+    return json({
+      data: {
+        batch_id: id,
+        anchor_tx: "0xanchor",
+        block_number: 19000001,
+        merkle_root: "demo-merkle-root",
+      },
+    });
+  }
+
+  if (resource === "evidence" && id === "batch" && action && method === "GET") {
+    return json({
+      data: {
+        batch_id: action,
+        evidence_id: `evidence_${action}`,
+        status: "ready",
+      },
+    });
+  }
+
+  if (resource === "export" && id && method === "GET") {
+    return json({
+      data: {
+        batch_id: id,
+        export_id: `export_${id}`,
+        status: "queued",
+      },
+    });
+  }
+
   if (resource === "notifications" && method === "GET") {
     return json({
       data: {
@@ -414,6 +552,45 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
           { alert: "ingestion failure", time: "10 minutes ago" },
           { alert: "API misuse", time: "17 minutes ago" },
         ],
+      },
+    });
+  }
+
+  if (resource === "webhooks" && !id && method === "POST") {
+    const body = await parseBody(req);
+    return json({
+      data: {
+        webhook_id: `wh_${Date.now()}`,
+        url: String(body.url ?? "https://example.com/webhook"),
+        status: "registered",
+      },
+    }, 201);
+  }
+
+  if (resource === "ai" && id === "actions" && method === "POST") {
+    return json({
+      data: {
+        action_id: `act_${Date.now()}`,
+        stored: true,
+      },
+    }, 201);
+  }
+
+  if (resource === "request-override" && id && method === "GET") {
+    return json({
+      data: {
+        log_id: id,
+        challenge_id: `challenge_${id}`,
+        status: "pending_approval",
+      },
+    });
+  }
+
+  if (resource === "hitl" && id === "approve" && method === "POST") {
+    return json({
+      data: {
+        approved: true,
+        approved_at: new Date().toISOString(),
       },
     });
   }
