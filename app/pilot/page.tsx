@@ -1,220 +1,174 @@
+import Link from "next/link";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
+
 export const metadata = {
-  title: "Blocklog Pilot Program – Cryptographic Audit Readiness",
+  title: "Blocklog Pilot Program",
   description:
-    "Join the Blocklog pilot program to make your security logs cryptographically verifiable before your next audit.",
+    "Join the 20-day Blocklog pilot with founder-led onboarding, 2M events, and a clear path into Starter, Growth, or Enterprise.",
 };
 
-const ACCENT = "#1F3A5F";
+const pilotFacts = [
+  ["Duration", "20 days"],
+  ["Price", "$149 upfront"],
+  ["Refund", "Refundable if you convert"],
+  ["Limit", "2M log events"],
+  ["Support", "Founder-led onboarding"],
+  ["Extension", "One 10-day extension included"],
+  ["Payment", "Credited to first month if you convert"],
+];
+
+const pilotIncludes = [
+  "Cryptographic log sealing from day one",
+  "Founder-led onboarding and integration help",
+  "Proof verification workflow setup",
+  "Pilot-scoped evidence and audit review support",
+  "Single extension available if your team needs extra validation time",
+];
+
+const pilotFit = [
+  "Series A/B startups preparing for their first formal audit",
+  "Fintech and SaaS teams selling into compliance-heavy buyers",
+  "Teams that need to prove log integrity before SOC 2 Type II",
+];
+
+const postPilotSteps = [
+  "Continue into Starter at $299/month or $2,868/year",
+  "Keep your data and continuity intact",
+  "Apply the $149 pilot fee toward the first month if you convert",
+];
 
 export default function PilotPage() {
   return (
-    <main
-      style={{
-        maxWidth: 980,
-        margin: "0 auto",
-        padding: "80px 24px 120px",
-        lineHeight: 1.7,
-      }}
-    >
-      {/* HERO */}
-      <section style={{ marginBottom: 96 }}>
-        <h1
-          style={{
-            fontSize: 44,
-            letterSpacing: "-0.025em",
-            marginBottom: 24,
-            maxWidth: 820,
-          }}
-        >
-          Blocklog Pilot Program
-          <br />
-          <span style={{ color: ACCENT }}>Audit-ready. Court-verifiable.</span>
-        </h1>
+    <>
+      <SiteHeader />
+      <main className="container section">
+        <section className="section-header">
+          <div>
+            <p className="eyebrow">Pilot program</p>
+            <h1 style={{ fontSize: "clamp(2.7rem, 6vw, 5rem)", margin: 0 }}>
+              A 20-day pilot to prove Blocklog fits before you commit.
+            </h1>
+          </div>
+          <p className="section-lead">
+            Structured for early teams preparing for SOC 2, buyer security reviews, or first audit
+            evidence workflows. Small enough to de-risk fast, serious enough to show real value.
+          </p>
+        </section>
 
-        <p style={{ fontSize: 18, maxWidth: 760, color: "#333" }}>
-          A 40-day guided deployment to cryptographically harden your security logs
-          before SOC-2, ISO-27001, DPDP, or enterprise audits.
-        </p>
+        <section className="console-hero-grid" style={{ marginTop: 20 }}>
+          <article className="card glass-card console-hero-card">
+            <p className="eyebrow">Blocklog Pilot Program</p>
+            <h2 style={{ marginTop: 8, marginBottom: 10 }}>Founder-led, fixed-scope, and conversion-friendly.</h2>
+            <p className="muted" style={{ marginTop: 0 }}>
+              You get enough time and volume to validate ingestion, sealing, anchoring, and proof
+              verification without turning the pilot into an open-ended consulting engagement.
+            </p>
+            <div className="button-row">
+              <a
+                className="btn btn-primary"
+                href="https://calendly.com/founder-blocklogsecurity/audit-readiness-call-20-min"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Book Pilot Call
+              </a>
+              <Link className="btn" href="/pricing">
+                View Pricing
+              </Link>
+            </div>
+          </article>
 
-        <a
-          href="https://calendly.com/founder-blocklogsecurity/audit-readiness-call-20-min"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-block",
-            marginTop: 36,
-            padding: "14px 26px",
-            backgroundColor: ACCENT,
-            color: "#fff",
-            textDecoration: "none",
-            fontWeight: 600,
-            borderRadius: 6,
-          }}
-        >
-          Request pilot access
-        </a>
-      </section>
+          <article className="card glass-card console-hero-card">
+            <p className="eyebrow">Pilot terms</p>
+            <div className="grid" style={{ gap: 10 }}>
+              {pilotFacts.map(([label, value]) => (
+                <div className="orbital-card" key={label}>
+                  <strong>{label}</strong>
+                  <p className="muted" style={{ margin: "6px 0 0" }}>{value}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
 
-      <Divider />
+        <section className="section">
+          <div className="grid grid-2">
+            <article className="card glass-card">
+              <p className="eyebrow">What’s included</p>
+              <h2 style={{ marginTop: 8 }}>What you get during the pilot.</h2>
+              <div className="grid" style={{ gap: 10 }}>
+                {pilotIncludes.map((item) => (
+                  <div className="status-pill" key={item}>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
 
-      {/* WHO IT'S FOR */}
-      <Section title="Who This Is For">
-        <ul>
-          <li>FinTech / SaaS companies preparing for audits</li>
-          <li>Startups selling to regulated enterprises</li>
-          <li>Security teams tired of unverifiable logs</li>
-          <li>Founders who need defensible audit evidence</li>
-        </ul>
-      </Section>
+            <article className="card glass-card">
+              <p className="eyebrow">Best fit</p>
+              <h2 style={{ marginTop: 8 }}>Who the pilot is designed for.</h2>
+              <div className="grid" style={{ gap: 10 }}>
+                {pilotFit.map((item) => (
+                  <div className="orbital-card" key={item}>
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+            </article>
+          </div>
+        </section>
 
-      <Divider />
+        <section className="section">
+          <div className="trust-band">
+            <div>
+              <p className="eyebrow">After 20 days</p>
+              <h2>Clear next step, no pricing cliff.</h2>
+            </div>
+            <div className="grid" style={{ gap: 10 }}>
+              {postPilotSteps.map((item) => (
+                <div className="status-pill" key={item}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      {/* WHAT YOU GET */}
-      <Section title="What You Get During the Pilot">
-        <ul>
-          <li>Cryptographically signed & batched logs</li>
-          <li>Public blockchain timestamp anchoring</li>
-          <li>Independent verification portal</li>
-          <li>Policy & compliance engine</li>
-          <li>Integrity drift detection</li>
-          <li>Evidence export (PDF + JSON)</li>
-          <li>CLI verifier tool</li>
-          <li>Architecture review session</li>
-        </ul>
-      </Section>
-
-      <Divider />
-
-      {/* TIMELINE */}
-      <Section title="40-Day Pilot Timeline">
-        <ol>
-          <li><strong>Day 0–3:</strong> Architecture review + integration planning</li>
-          <li><strong>Day 4–7:</strong> SDK / API integration</li>
-          <li><strong>Week 2:</strong> First cryptographic batch anchored</li>
-          <li><strong>Week 3:</strong> Policy engine enabled</li>
-          <li><strong>Week 4:</strong> Evidence generation & verification demo</li>
-          <li><strong>Day 40:</strong> Final compliance report + production offer</li>
-        </ol>
-      </Section>
-
-      <Divider />
-
-      {/* INTEGRATION */}
-      <Section title="How Integration Works">
-        <ol>
-          <li>Add Blocklog API endpoint (or local proxy)</li>
-          <li>Forward structured logs (JSON)</li>
-          <li>Optional origin signing</li>
-          <li>Automatic batching + anchoring</li>
-          <li>Verifier available publicly</li>
-        </ol>
-
-        <p>
-          No replacement of your logging system. No data migration. No vendor lock-in.
-        </p>
-      </Section>
-
-      <Divider />
-
-      {/* EVIDENCE */}
-      <Section title="Evidence You Receive">
-        <ul>
-          <li>Merkle roots</li>
-          <li>Blockchain transactions</li>
-          <li>Proof-of-absence reports</li>
-          <li>Policy violation summaries</li>
-          <li>Cryptographic verification bundle</li>
-          <li>Chain-of-custody graph</li>
-        </ul>
-      </Section>
-
-      <Divider />
-
-      {/* REQUIREMENTS */}
-      <Section title="Pilot Requirements">
-        <ul>
-          <li>Structured logs (JSON)</li>
-          <li>5k+ logs/day preferred</li>
-          <li>Security contact available</li>
-          <li>Willing to provide feedback</li>
-        </ul>
-      </Section>
-
-      <Divider />
-
-      {/* CTA */}
-      <section style={{ marginTop: 100 }}>
-        <h2
-          style={{
-            fontSize: 32,
-            marginBottom: 18,
-            letterSpacing: "-0.015em",
-            color: ACCENT,
-          }}
-        >
-          Request Pilot Access
-        </h2>
-
-        <p style={{ maxWidth: 640 }}>
-          Limited to 10 companies per quarter to ensure deep technical support.
-        </p>
-
-        <a
-          href="https://calendly.com/founder-blocklogsecurity/audit-readiness-call-20-min"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-block",
-            marginTop: 24,
-            padding: "14px 26px",
-            backgroundColor: ACCENT,
-            color: "#fff",
-            textDecoration: "none",
-            fontWeight: 600,
-            borderRadius: 6,
-          }}
-        >
-          Book pilot call
-        </a>
-      </section>
-    </main>
-  );
-}
-
-/* ------------------ Helpers ------------------ */
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section style={{ marginBottom: 72 }}>
-      <h2
-        style={{
-          fontSize: 28,
-          marginBottom: 18,
-          letterSpacing: "-0.015em",
-          color: ACCENT,
-        }}
-      >
-        {title}
-      </h2>
-      <div style={{ maxWidth: 800, color: "#222" }}>{children}</div>
-    </section>
-  );
-}
-
-function Divider() {
-  return (
-    <div
-      style={{
-        height: 1,
-        backgroundColor: "#eee",
-        margin: "72px 0",
-      }}
-    />
+        <section className="section">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Post-pilot plans</p>
+              <h2>Where teams usually land after the pilot.</h2>
+            </div>
+            <Link className="btn btn-primary" href="/pricing">
+              Compare Plans
+            </Link>
+          </div>
+          <div className="grid grid-3">
+            <article className="card glass-card">
+              <p className="eyebrow">Starter</p>
+              <h3 style={{ marginTop: 8 }}>For first real compliance motion</h3>
+              <p className="muted">$299/month or $2,868/year</p>
+              <p className="muted">Best for Series A/B startups and first SOC 2 Type II audits.</p>
+            </article>
+            <article className="card glass-card">
+              <p className="eyebrow">Growth</p>
+              <h3 style={{ marginTop: 8 }}>For multi-team, multi-region growth</h3>
+              <p className="muted">$799/month or $7,670/year</p>
+              <p className="muted">Best for Series B/C companies with broader compliance scope.</p>
+            </article>
+            <article className="card glass-card">
+              <p className="eyebrow">Enterprise</p>
+              <h3 style={{ marginTop: 8 }}>For high-volume regulated environments</h3>
+              <p className="muted">Starts at $1,999/month</p>
+              <p className="muted">Best for enterprise procurement, custom terms, and multi-cloud scale.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

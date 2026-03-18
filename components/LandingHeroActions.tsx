@@ -14,8 +14,8 @@ export default function LandingHeroActions() {
   return (
     <div className="button-row" style={{ marginTop: 18 }}>
       {!loggedIn && (
-        <Link className="btn btn-primary" href="/login">
-          Log In
+        <Link className="btn btn-primary" href="/pilot">
+          Start 20-Day Pilot
         </Link>
       )}
       <Link className="btn btn-link" href="/docs">

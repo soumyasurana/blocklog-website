@@ -417,6 +417,9 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
         hash_valid: true,
         timestamp_anchored: true,
         integrity: "VALID",
+        verified_at: new Date().toISOString(),
+        anchor_tx: "0xanchor",
+        merkle_proof_valid: true,
       },
     });
   }

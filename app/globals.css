@@ -139,11 +139,12 @@ textarea {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  transition: transform 180ms ease;
+  transition: transform 180ms ease, filter 180ms ease;
 }
 
 .brand:hover {
   transform: translateY(-1px);
+  filter: brightness(1.04);
 }
 
 .brand-mark {
@@ -199,6 +200,8 @@ textarea {
 
 .theme-btn,
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -219,10 +222,27 @@ textarea {
     box-shadow 180ms ease;
 }
 
+.theme-btn::after,
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: -120% auto -120% -35%;
+  width: 34%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+  transform: skewX(-18deg);
+  opacity: 0;
+}
+
 .theme-btn:hover,
 .btn:hover {
   transform: translateY(-1px);
   border-color: var(--border-strong);
+}
+
+.theme-btn:hover::after,
+.btn:hover::after {
+  opacity: 1;
+  animation: sheenPass 850ms ease;
 }
 
 .btn-primary {
@@ -271,6 +291,11 @@ textarea {
   max-width: 62ch;
   font-size: 1.08rem;
   line-height: 1.7;
+}
+
+.hero-value-prop {
+  font-size: 1.18rem;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
 }
 
 .hero-copy,
@@ -398,6 +423,8 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  animation: revealUp 1100ms ease both;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .hero-status-card strong {
@@ -408,6 +435,13 @@ textarea {
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.5;
+}
+
+.hero-status-card:hover,
+.hero-metric:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
 }
 
 .hero-orbit {
@@ -755,6 +789,7 @@ textarea {
   gap: 18px;
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
+  animation: revealUp 700ms ease both;
 }
 
 .sidebar-top {
@@ -781,6 +816,7 @@ textarea {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
     color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  animation: revealUp 850ms ease both;
 }
 
 .sidebar-nav-groups {
@@ -791,9 +827,19 @@ textarea {
   padding-right: 4px;
 }
 
+.sidebar-nav-groups::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar-nav-groups::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
 .sidebar-group {
   display: grid;
   gap: 10px;
+  animation: revealUp 900ms ease both;
 }
 
 .sidebar-group-title {
@@ -854,6 +900,7 @@ textarea {
   border-radius: 999px;
   background: linear-gradient(135deg, var(--accent), var(--primary-strong));
   box-shadow: 0 0 0 6px rgba(123, 247, 212, 0.08);
+  animation: navPulse 2.4s ease-in-out infinite;
 }
 
 .sidebar-footer {
@@ -863,6 +910,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: color-mix(in srgb, var(--surface-strong) 62%, transparent);
+  animation: revealUp 1050ms ease both;
 }
 
 .dashboard-main {
@@ -888,6 +936,7 @@ textarea {
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
     color-mix(in srgb, var(--surface-strong) 52%, transparent);
   box-shadow: var(--shadow);
+  animation: revealUp 780ms ease both;
 }
 
 .dashboard-top h1 {
@@ -913,6 +962,7 @@ textarea {
 
 .stat {
   padding: 18px;
+  animation: revealUp 920ms ease both;
 }
 
 .stat h3 {
@@ -1079,11 +1129,21 @@ tbody tr:hover {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: color-mix(in srgb, var(--surface-strong) 60%, transparent);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .console-signal-item span {
   color: var(--muted);
   line-height: 1.5;
+}
+
+.console-signal-item:hover,
+.endpoint-inline-item:hover,
+.api-param-panel:hover,
+.api-path-preview:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.16);
 }
 
 .endpoint-inline-list {
@@ -1099,6 +1159,7 @@ tbody tr:hover {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: color-mix(in srgb, var(--surface-strong) 58%, transparent);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .endpoint-grid {
@@ -1125,12 +1186,14 @@ tbody tr:hover {
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 14px;
+  animation: revealUp 900ms ease both;
 }
 
 .api-runner-panel {
   position: sticky;
   top: 28px;
   align-self: start;
+  animation: revealUp 980ms ease both;
 }
 
 .api-runner-card,
@@ -1146,6 +1209,7 @@ tbody tr:hover {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
     color-mix(in srgb, var(--surface-strong) 58%, transparent);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .api-param-header {
@@ -1162,6 +1226,7 @@ tbody tr:hover {
   border-radius: 18px;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-strong) 62%, transparent);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .api-path-preview code {
@@ -1184,17 +1249,19 @@ tbody tr:hover {
     transform 200ms ease,
     border-color 200ms ease,
     box-shadow 200ms ease,
-    background 200ms ease;
+    background 200ms ease,
+    filter 200ms ease;
 }
 
 .endpoint-card:hover,
 .endpoint-card.selected {
-  transform: translateY(-4px);
+  transform: translateY(-5px) scale(1.01);
   border-color: var(--border-strong);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
   background:
     linear-gradient(135deg, rgba(93, 160, 255, 0.1), transparent 50%),
     color-mix(in srgb, var(--surface-strong) 62%, transparent);
+  filter: saturate(1.08);
 }
 
 .endpoint-card h3 {
@@ -1342,6 +1409,88 @@ tbody tr:hover {
   box-shadow: var(--shadow);
 }
 
+.verify-widget {
+  padding: 28px;
+}
+
+.verify-widget-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.verify-widget-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.verify-widget-results {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.verify-widget-card {
+  min-height: 120px;
+}
+
+.comparison-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.comparison-card {
+  padding: 22px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.comparison-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.comparison-card p {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.comparison-card-muted {
+  background: color-mix(in srgb, var(--surface-strong) 48%, transparent);
+}
+
+.comparison-card-strong {
+  background:
+    linear-gradient(135deg, rgba(93, 160, 255, 0.1), transparent 50%),
+    color-mix(in srgb, var(--surface-strong) 72%, transparent);
+}
+
+.comparison-label {
+  display: inline-flex;
+  margin-bottom: 12px;
+  color: var(--primary-strong);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1384,9 +1533,34 @@ tbody tr:hover {
   }
 }
 
+@keyframes sheenPass {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+
+  100% {
+    transform: translateX(420%) skewX(-18deg);
+  }
+}
+
+@keyframes navPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 6px rgba(123, 247, 212, 0.08);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(123, 247, 212, 0.04);
+    transform: scale(1.08);
+  }
+}
+
 @media (max-width: 1080px) {
   .hero,
   .stack-grid,
+  .comparison-row,
+  .verify-widget-results,
   .console-hero-grid,
   .api-command-shell,
   .trust-band,
@@ -1426,6 +1600,7 @@ tbody tr:hover {
   .header-inner,
   .dashboard-top,
   .footer-intro,
+  .verify-widget-header,
   .section-header,
   .auth-card-top {
     flex-direction: column;
@@ -1457,10 +1632,15 @@ tbody tr:hover {
   .hero-copy,
   .hero-panel,
   .card,
+  .verify-widget,
   .auth-card,
   .auth-aside,
   .doc-shell {
     padding: 18px;
+  }
+
+  .verify-widget-form {
+    grid-template-columns: 1fr;
   }
 
   th,

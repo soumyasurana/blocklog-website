@@ -2,66 +2,65 @@ import Link from "next/link";
 import LandingHeroActions from "@/components/LandingHeroActions";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import VerifyProofWidget from "@/components/VerifyProofWidget";
 
-const steps = [
+const howItWorks = [
   {
-    title: "Send logs via API",
-    detail: "Forward operational events, financial activity, AI actions, or compliance signals to a single ingestion plane.",
+    step: "1. Ingest logs",
+    detail: "Send application, financial, AI, and operator events through one audit API.",
   },
   {
-    title: "Seal every event",
-    detail: "Each record is hashed, chained, and signed to create tamper-evident lineage from the first write.",
+    step: "2. Seal and anchor",
+    detail: "Blocklog hash-chains records, generates proofs, and anchors batch integrity.",
   },
   {
-    title: "Store securely",
-    detail: "Batching, anchoring, and proof export make long-term retention auditable without trusting mutable infrastructure.",
-  },
-  {
-    title: "Verify anytime",
-    detail: "Re-run proof checks on demand to validate inclusion, chain continuity, and timestamp anchoring.",
+    step: "3. Verify anytime",
+    detail: "Auditors, customers, and internal teams can verify integrity independently.",
   },
 ];
 
-const features = [
+const beforeAfter = [
   {
-    title: "Immutable Logs",
-    detail: "Chain every write into a tamper-evident event history with preserved ordering.",
+    before: "Logs can be modified silently.",
+    after: "Logs are tamper-evident by design.",
   },
   {
-    title: "Cryptographic Integrity",
-    detail: "Seal batches with signatures and proofs that survive outside your application boundary.",
+    before: "Evidence is exported as screenshots and manual notes.",
+    after: "Proof bundles are generated with verifiable integrity data.",
   },
   {
-    title: "Anchored Verification",
-    detail: "Recompute inclusion, continuity, and timestamp checks whenever evidence is challenged.",
+    before: "Auditor trust depends on your word and process.",
+    after: "Auditors can verify the record independently.",
   },
-  {
-    title: "Compliance Ready",
-    detail: "Package retention-friendly exports for audits, disputes, and regulated workflows.",
-  },
-  {
-    title: "API First",
-    detail: "Adopt the platform with lightweight ingestion endpoints and implementation-ready docs.",
-  },
-  {
-    title: "Human + AI Audit Trails",
-    detail: "Track operator actions, automated decisions, and HITL review steps in one chain of custody.",
-  },
+];
+
+const securityGuarantees = [
+  "Append-only architecture",
+  "Cryptographic proofs",
+  "Public anchoring",
+  "No silent log mutation",
+];
+
+const auditorPoints = [
+  "Independent verification",
+  "Proof bundles for evidence requests",
+  "Public verification links",
+  "No need to trust Blocklog itself",
 ];
 
 const useCases = [
-  "Financial ledger evidence",
-  "Healthcare access history",
+  "SOC 2 evidence workflows",
+  "Fintech transaction trails",
   "Internal security telemetry",
-  "Policy and retention controls",
-  "AI provenance and HITL actions",
+  "AI provenance and HITL approvals",
+  "Retention and policy controls",
   "Third-party trust attestations",
 ];
 
 const trustSignals = [
-  { value: "Sub-second", label: "proof lookups for recent batches" },
-  { value: "24/7", label: "integrity posture for production systems" },
-  { value: "Portable", label: "evidence bundles for auditors and partners" },
+  { value: "Sub-second", label: "proof checks for recent records" },
+  { value: "Portable", label: "evidence bundles for auditors and customers" },
+  { value: "Independent", label: "verification without trusting the app" },
 ];
 
 export default function HomePage() {
@@ -74,32 +73,32 @@ export default function HomePage() {
             <div className="hero-copy-inner">
               <div className="hero-badge">
                 <span className="hero-badge-dot" />
-                Trusted audit trails for security, finance, and AI operations
+                Built for security teams, compliance leads, and auditors
               </div>
-            <p className="eyebrow">Cryptographic audit infrastructure</p>
-            <h1>Tamper-Proof Audit Logs for Modern Systems</h1>
-            <p>
-              Blocklog gives security, platform, and compliance teams a verifiable system of
-              record. Every event is sealed, every proof is exportable, and every critical action
-              is backed by cryptographic integrity instead of operational trust alone.
-            </p>
-            <LandingHeroActions />
-            <div className="hero-metrics">
-              <div className="hero-metric">
-                <span className="metric-value">99.99%</span>
-                <span className="muted">verification service uptime target</span>
+              <p className="eyebrow">Cryptographic audit infrastructure</p>
+              <h1>Audit logs you can verify, not just trust.</h1>
+              <p className="hero-value-prop">
+                Prove your audit logs have not been tampered with, cryptographically. Blocklog turns
+                every critical event into evidence an auditor can verify independently.
+              </p>
+              <LandingHeroActions />
+              <div className="hero-metrics">
+                <div className="hero-metric">
+                  <span className="metric-value">SOC 2 ready</span>
+                  <span className="muted">log integrity evidence without manual scramble</span>
+                </div>
+                <div className="hero-metric">
+                  <span className="metric-value">Proof-first</span>
+                  <span className="muted">evidence bundles generated from real chain state</span>
+                </div>
+                <div className="hero-metric">
+                  <span className="metric-value">Auditor-friendly</span>
+                  <span className="muted">verification without needing to trust Blocklog</span>
+                </div>
               </div>
-              <div className="hero-metric">
-                <span className="metric-value">Hash-chained</span>
-                <span className="muted">event lineage across every batch</span>
-              </div>
-              <div className="hero-metric">
-                <span className="metric-value">Evidence-ready</span>
-                <span className="muted">proof export for audits and disputes</span>
-              </div>
-            </div>
             </div>
           </div>
+
           <div className="hero-panel">
             <div className="hero-panel-glow" />
             <div className="hero-status-strip">
@@ -119,39 +118,43 @@ export default function HomePage() {
     "amount": 2000,
     "currency": "USD"
   }
-}`}</div>
+}
+
+POST /api/v1/batches/seal
+POST /api/v1/batches/{batch_id}/anchor
+GET  /api/v1/public/verify/{proof_id}`}</div>
             <div className="hero-orbit">
               <div className="orbital-card">
-                <p className="eyebrow">Integrity</p>
-                <strong>Hash chains + signatures</strong>
-                <p className="muted">Detect silent edits and prove ordering across records.</p>
+                <p className="eyebrow">Design partners</p>
+                <strong>Used by early fintech and SaaS teams preparing for SOC 2.</strong>
+                <p className="muted">Built by engineers for compliance-heavy workflows.</p>
               </div>
               <div className="orbital-card">
-                <p className="eyebrow">Verification</p>
-                <strong>Anchored proof checks</strong>
-                <p className="muted">Validate inclusion, timestamps, and chain state in seconds.</p>
+                <p className="eyebrow">Pilot structure</p>
+                <strong>Start a 20-day pilot</strong>
+                <p className="muted">Continue at $299/month. No data loss. Pilot cost credited forward.</p>
               </div>
             </div>
           </div>
         </section>
 
         <section className="section">
+          <VerifyProofWidget />
+        </section>
+
+        <section className="section">
           <div className="section-header">
             <div>
               <p className="eyebrow">How it works</p>
-              <h2>From event ingestion to defensible proof.</h2>
+              <h2>Three steps from event ingestion to defensible proof.</h2>
             </div>
-            <p className="section-lead">
-              Blocklog is designed to sit underneath production systems, not beside them. The API
-              surface stays simple while the trust machinery stays rigorous.
-            </p>
           </div>
-          <div className="grid grid-2">
-            {steps.map((step, index) => (
-              <article className="card glass-card feature-card" key={step.title}>
-                <p className="eyebrow">Step {index + 1}</p>
-                <h3>{step.title}</h3>
-                <p className="muted">{step.detail}</p>
+          <div className="grid grid-3">
+            {howItWorks.map((item) => (
+              <article className="card glass-card capability-card" key={item.step}>
+                <div className="capability-icon" />
+                <h3 style={{ marginTop: 0 }}>{item.step}</h3>
+                <p className="muted">{item.detail}</p>
               </article>
             ))}
           </div>
@@ -160,17 +163,105 @@ export default function HomePage() {
         <section className="section">
           <div className="section-header">
             <div>
-              <p className="eyebrow">Core capabilities</p>
-              <h2>Built for systems where trust has to be measurable.</h2>
+              <p className="eyebrow">Before vs after</p>
+              <h2>People buy contrast, not feature lists.</h2>
             </div>
           </div>
-          <div className="grid grid-3">
-            {features.map((feature) => (
-              <article className="card glass-card capability-card" key={feature.title}>
-                <div className="capability-icon" />
-                <h3 style={{ marginTop: 0 }}>{feature.title}</h3>
-                <p className="muted">{feature.detail}</p>
-              </article>
+          <div className="comparison-grid">
+            {beforeAfter.map((row) => (
+              <div className="comparison-row" key={row.before}>
+                <div className="comparison-card comparison-card-muted">
+                  <span className="comparison-label">Without Blocklog</span>
+                  <p>{row.before}</p>
+                </div>
+                <div className="comparison-card comparison-card-strong">
+                  <span className="comparison-label">With Blocklog</span>
+                  <p>{row.after}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="stack-grid">
+            <div className="card glass-card">
+              <p className="eyebrow">Built for auditors</p>
+              <h2>Built for auditors, not just engineers.</h2>
+              <p className="muted">
+                Independent verification, public proof links, and evidence bundles make audit review
+                faster because the reviewer does not need to trust your application or Blocklog.
+              </p>
+              <div className="grid grid-2" style={{ marginTop: 12 }}>
+                {auditorPoints.map((item) => (
+                  <div className="orbital-card" key={item}>
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="card glass-card">
+              <p className="eyebrow">SOC 2 use case</p>
+              <h2>How Blocklog helps you pass SOC 2 faster.</h2>
+              <div className="grid" style={{ gap: 10 }}>
+                <div className="status-pill">Supports log integrity requirements</div>
+                <div className="status-pill">Exports evidence when auditors ask</div>
+                <div className="status-pill">Reduces audit friction during review</div>
+              </div>
+              <div className="button-row" style={{ marginTop: 18 }}>
+                <Link className="btn btn-primary" href="/pilot">
+                  Start 20-Day Pilot
+                </Link>
+                <Link className="btn" href="/docs/getting-started">
+                  View integration path
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Security guarantees</p>
+              <h2>What security buyers scan for, right away.</h2>
+            </div>
+          </div>
+          <div className="grid grid-2">
+            <article className="card glass-card">
+              <div className="grid" style={{ gap: 10 }}>
+                {securityGuarantees.map((item) => (
+                  <div className="status-pill" key={item}>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
+            <article className="card glass-card">
+              <p className="eyebrow">Developer hook</p>
+              <h2 style={{ marginTop: 8 }}>A short API flow your team can picture using.</h2>
+              <div className="code-pane">{`POST /logs
+POST /batches/seal
+POST /batches/{batch_id}/anchor
+GET /public/verify/{proof_id}
+
+# evidence anyone can verify`}</div>
+            </article>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Who it fits</p>
+              <h2>Designed for real trust-heavy workflows.</h2>
+            </div>
+          </div>
+          <div className="grid" style={{ gap: 10 }}>
+            {useCases.map((item) => (
+              <div className="status-pill" key={item}>
+                {item}
+              </div>
             ))}
           </div>
         </section>
@@ -178,83 +269,13 @@ export default function HomePage() {
         <section className="section">
           <div className="trust-band">
             <div>
-              <p className="eyebrow">Operational clarity</p>
-              <h2>Designed to reassure both engineers and auditors.</h2>
+              <p className="eyebrow">Pilot clarity</p>
+              <h2>What happens after 20 days?</h2>
             </div>
             <p className="section-lead" style={{ marginBottom: 0 }}>
-              The interface stays crisp, the evidence chain stays legible, and the trust story is
-              always ready for review when incidents or external questions arise.
+              Continue at <strong>$299/month</strong>, keep your data, and apply the pilot toward
+              the first paid term. The point of the pilot is to reduce risk, not create a cliff.
             </p>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="stack-grid">
-            <div className="card glass-card">
-              <p className="eyebrow">Security model</p>
-              <h2>Hash chains, digital signatures, and verifiable retention.</h2>
-              <p className="muted">
-                Every log is sealed into a chain, every proof is portable, and every verification
-                decision can be reproduced outside the primary application. That gives teams a real
-                assurance story for audits, incidents, and external review.
-              </p>
-              <div className="grid grid-3" style={{ marginTop: 12 }}>
-                <div className="orbital-card">
-                  <strong>Hash chains</strong>
-                  <p className="muted">Preserve sequence integrity and reveal unauthorized mutation.</p>
-                </div>
-                <div className="orbital-card">
-                  <strong>Digital signatures</strong>
-                  <p className="muted">Bind ingestion events to trusted signing identities.</p>
-                </div>
-                <div className="orbital-card">
-                  <strong>Integrity verification</strong>
-                  <p className="muted">Re-run proofs on demand across logs, batches, and exports.</p>
-                </div>
-              </div>
-            </div>
-            <div className="card glass-card">
-              <p className="eyebrow">Use cases</p>
-              <h2>Where teams use Blocklog.</h2>
-              <div className="grid" style={{ gap: 10 }}>
-                {useCases.map((item) => (
-                  <div className="status-pill" key={item}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-header">
-            <div>
-              <p className="eyebrow">Architecture</p>
-              <h2>Trust infrastructure that stays legible.</h2>
-            </div>
-          </div>
-          <div className="architecture-flow">
-            <article className="architecture-node">
-              <p className="eyebrow">1</p>
-              <h3>Client Systems</h3>
-              <p className="muted">Applications, ledgers, security controls, and AI agents emit events.</p>
-            </article>
-            <article className="architecture-node">
-              <p className="eyebrow">2</p>
-              <h3>Blocklog API</h3>
-              <p className="muted">Authenticated ingestion captures logs, batches, webhooks, and provenance data.</p>
-            </article>
-            <article className="architecture-node">
-              <p className="eyebrow">3</p>
-              <h3>Hash Engine</h3>
-              <p className="muted">Chain construction, signatures, sealing, and proof generation happen here.</p>
-            </article>
-            <article className="architecture-node">
-              <p className="eyebrow">4</p>
-              <h3>Secure Storage</h3>
-              <p className="muted">Proof bundles, export artifacts, and retention-aware storage complete the chain.</p>
-            </article>
           </div>
         </section>
 
@@ -274,9 +295,9 @@ export default function HomePage() {
               <h3>SDK examples</h3>
               <p className="muted">Implementation patterns for production event pipelines and backend services.</p>
             </Link>
-            <Link className="card glass-card" href="/docs/getting-started">
-              <h3>Quick start guide</h3>
-              <p className="muted">Create keys, register a company, ingest logs, and verify proof artifacts.</p>
+            <Link className="card glass-card" href="/pilot">
+              <h3>Start 20-day pilot</h3>
+              <p className="muted">Run a scoped pilot for SOC 2 prep, trust evidence, and buyer validation.</p>
             </Link>
           </div>
         </section>
