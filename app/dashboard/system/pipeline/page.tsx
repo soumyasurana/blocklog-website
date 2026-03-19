@@ -7,13 +7,14 @@ import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 type MetricsPayload = {
   requests_total?: number;
   ingestion_rate?: number;
+  logs_series?: number[];
+  api_series?: number[];
 };
 
-type StreamPayload = {
-  lines?: string[];
-  verified_pct?: number;
-  pending_pct?: number;
-  failed_pct?: number;
+type UsagePayload = {
+  logs_ingested_today?: number;
+  logs_ingested?: number;
+  verification_requests?: number;
 };
 
 export default function PipelinePage() {
@@ -22,11 +23,11 @@ export default function PipelinePage() {
   const [summary, setSummary] = useState({
     requests: 0,
     ingestionRate: 0,
-    verifiedPct: 0,
-    pendingPct: 0,
-    failedPct: 0,
+    logsToday: 0,
+    verificationRequests: 0,
   });
-  const [lines, setLines] = useState<string[]>([]);
+  const [logsSeries, setLogsSeries] = useState<number[]>([]);
+  const [apiSeries, setApiSeries] = useState<number[]>([]);
 
   useEffect(() => {
     async function loadPipeline() {
@@ -34,22 +35,22 @@ export default function PipelinePage() {
       setError(null);
 
       try {
-        const [metricsPayload, streamPayload] = await Promise.all([
+        const [metricsPayload, usagePayload] = await Promise.all([
           blocklogRequest<MetricsPayload | { data?: MetricsPayload }>("/metrics"),
-          blocklogRequest<StreamPayload | { data?: StreamPayload }>("/logs/stream"),
+          blocklogRequest<UsagePayload | { data?: UsagePayload }>("/usage"),
         ]);
 
         const metrics = normalizePayload<MetricsPayload>(metricsPayload, {}, "data");
-        const stream = normalizePayload<StreamPayload>(streamPayload, {}, "data");
+        const usage = normalizePayload<UsagePayload>(usagePayload, {}, "data");
 
         setSummary({
           requests: metrics.requests_total ?? 0,
           ingestionRate: metrics.ingestion_rate ?? 0,
-          verifiedPct: stream.verified_pct ?? 0,
-          pendingPct: stream.pending_pct ?? 0,
-          failedPct: stream.failed_pct ?? 0,
+          logsToday: usage.logs_ingested_today ?? usage.logs_ingested ?? 0,
+          verificationRequests: usage.verification_requests ?? 0,
         });
-        setLines(stream.lines ?? []);
+        setLogsSeries(metrics.logs_series ?? []);
+        setApiSeries(metrics.api_series ?? []);
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load pipeline view");
       } finally {
@@ -81,25 +82,30 @@ export default function PipelinePage() {
           <h3>{summary.ingestionRate}</h3>
         </article>
         <article className="card stat glass-card">
-          <p className="eyebrow" style={{ marginBottom: 10 }}>Verified</p>
-          <h3>{summary.verifiedPct}%</h3>
+          <p className="eyebrow" style={{ marginBottom: 10 }}>Logs today</p>
+          <h3>{summary.logsToday}</h3>
         </article>
         <article className="card stat glass-card">
-          <p className="eyebrow" style={{ marginBottom: 10 }}>Pending / Failed</p>
-          <h3>{summary.pendingPct}% / {summary.failedPct}%</h3>
+          <p className="eyebrow" style={{ marginBottom: 10 }}>Verification requests</p>
+          <h3>{summary.verificationRequests}</h3>
         </article>
       </section>
 
-      <section className="card glass-card" style={{ marginTop: 16 }}>
-        <p className="eyebrow">Batching and queue flow</p>
-        <h2 style={{ marginTop: 8 }}>Pipeline visibility for intake, buffering, and throughput.</h2>
-        <div className="stream">
-          {lines.length === 0 ? (
-            <div className="empty-state">No pipeline activity returned by the backend.</div>
-          ) : (
-            lines.map((line) => <p key={line}>{line}</p>)
-          )}
-        </div>
+      <section className="grid grid-2" style={{ marginTop: 16 }}>
+        <article className="card glass-card">
+          <p className="eyebrow">Telemetry</p>
+          <h2 style={{ marginTop: 8 }}>Ingestion series</h2>
+          <div className="code-pane">
+            {logsSeries.length > 0 ? JSON.stringify(logsSeries, null, 2) : "No telemetry returned yet."}
+          </div>
+        </article>
+        <article className="card glass-card">
+          <p className="eyebrow">API traffic</p>
+          <h2 style={{ marginTop: 8 }}>Request series</h2>
+          <div className="code-pane">
+            {apiSeries.length > 0 ? JSON.stringify(apiSeries, null, 2) : "No API traffic returned yet."}
+          </div>
+        </article>
       </section>
     </>
   );

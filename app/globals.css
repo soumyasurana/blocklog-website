@@ -512,6 +512,45 @@ h4 {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   position: relative;
   z-index: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-pane {
+  border-radius: 22px;
+  border: 1px solid rgba(140, 176, 232, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    linear-gradient(180deg, rgba(7, 16, 29, 0.96), rgba(5, 11, 20, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 24px 60px rgba(2, 8, 18, 0.28);
+  overflow: hidden;
+}
+
+.terminal-pane-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(140, 176, 232, 0.12);
+  background:
+    linear-gradient(90deg, rgba(93, 160, 255, 0.1), transparent 48%),
+    rgba(255, 255, 255, 0.02);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.terminal-output {
+  margin: 0;
+  padding: 18px 20px 20px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: #dce9ff;
+  white-space: pre-wrap;
+  word-break: break-word;
+  tab-size: 2;
 }
 
 .code-pane::before {
@@ -1428,6 +1467,39 @@ tbody tr:hover {
   align-items: end;
 }
 
+.verify-console-banner {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(93, 160, 255, 0.1), transparent 55%),
+    color-mix(in srgb, var(--surface-strong) 68%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.verify-console-banner code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.92rem;
+  color: var(--primary-strong);
+}
+
+.verify-console-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-strong) 60%, transparent);
+  color: var(--primary-strong);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .verify-widget-results {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1437,6 +1509,265 @@ tbody tr:hover {
 
 .verify-widget-card {
   min-height: 120px;
+}
+
+.verification-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.85fr) minmax(320px, 0.95fr);
+  gap: 16px;
+}
+
+.verification-console {
+  display: grid;
+  gap: 18px;
+}
+
+.verification-stage {
+  display: grid;
+  gap: 18px;
+}
+
+.verification-entry-card {
+  display: grid;
+  gap: 18px;
+}
+
+.verification-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.verification-scoreboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 12px;
+  min-width: min(100%, 320px);
+}
+
+.verification-score {
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(93, 160, 255, 0.12), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 66%, transparent);
+}
+
+.verification-score strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.05rem;
+}
+
+.verification-score-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.verification-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verification-mode-card {
+  text-align: left;
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    color-mix(in srgb, var(--surface-strong) 52%, transparent);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.verification-mode-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: 0 18px 40px rgba(2, 8, 18, 0.16);
+}
+
+.verification-mode-card.active {
+  border-color: rgba(123, 247, 212, 0.3);
+  background:
+    linear-gradient(135deg, rgba(123, 247, 212, 0.14), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 64%, transparent);
+  box-shadow: 0 20px 48px rgba(123, 247, 212, 0.12);
+}
+
+.verification-mode-card span {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.verification-mode-card code {
+  color: var(--primary-strong);
+}
+
+.input-caption {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.verification-result-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.verification-hero-card {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.9fr);
+  gap: 18px;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at top right, rgba(123, 247, 212, 0.14), transparent 32%),
+    linear-gradient(135deg, rgba(93, 160, 255, 0.12), transparent 48%),
+    color-mix(in srgb, var(--surface-strong) 72%, transparent);
+}
+
+.verification-hero-card h3 {
+  margin: 8px 0 10px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.verification-hero-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.verification-signal-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.verification-signal {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(149, 181, 230, 0.12);
+  background: rgba(7, 16, 29, 0.28);
+}
+
+.verification-signal span {
+  display: block;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.verification-signal strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.verification-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    color-mix(in srgb, var(--surface-strong) 58%, transparent);
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.verification-tab {
+  flex: 1 1 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  min-height: 46px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.verification-tab:hover {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.verification-tab.active {
+  color: #06111f;
+  background: linear-gradient(135deg, var(--accent), #b2ffeb);
+  box-shadow: 0 14px 36px rgba(123, 247, 212, 0.2);
+}
+
+.verification-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
+  gap: 16px;
+}
+
+.verification-check-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verification-metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.verification-metadata-tall .orbital-card {
+  min-height: 138px;
+}
+
+.auditor-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.95fr);
+  gap: 16px;
+}
+
+.auditor-panel {
+  min-height: 100%;
+}
+
+.auditor-security-banner {
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 191, 71, 0.24);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 191, 71, 0.12), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 66%, transparent);
 }
 
 .comparison-grid {
@@ -1559,6 +1890,14 @@ tbody tr:hover {
 @media (max-width: 1080px) {
   .hero,
   .stack-grid,
+  .verification-shell,
+  .verification-stage,
+  .verification-main-grid,
+  .verification-metadata-grid,
+  .verification-check-grid,
+  .auditor-shell,
+  .verification-mode-grid,
+  .verification-hero-card,
   .comparison-row,
   .verify-widget-results,
   .console-hero-grid,
@@ -1577,6 +1916,21 @@ tbody tr:hover {
   .hero-status-strip,
   .hero-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .verification-intro,
+  .verification-result-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .verification-tabs {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .verification-tab {
+    flex: 1 1 0;
   }
 
   .auth-card {

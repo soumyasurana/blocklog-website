@@ -36,7 +36,7 @@ export default function VerifyProofWidget() {
 
     try {
       if (!proofId.trim()) {
-        throw new Error("Enter a proof ID to verify.");
+        throw new Error("Enter the proof ID returned after anchoring.");
       }
 
       const response = await blocklogRequest<VerifyWidgetResult | { data?: VerifyWidgetResult }>(
@@ -58,17 +58,24 @@ export default function VerifyProofWidget() {
           <p className="eyebrow">Verify a real proof</p>
           <h2 style={{ marginTop: 8, marginBottom: 10 }}>See Blocklog prove integrity in real time.</h2>
           <p className="muted" style={{ margin: 0 }}>
-            Enter a proof ID and verify the audit trail instantly. No screenshots. No hand-waving.
+            Paste the proof ID returned after anchoring to verify the record instantly. No
+            screenshots. No trust leap.
           </p>
         </div>
         <div className="status-pill status-valid">Live verification</div>
       </div>
 
+      <div className="verify-console-banner">
+        <span className="verify-console-label">Expected input</span>
+        <code>proof_demo_1</code>
+        <span className="muted">Use the real `proof_id` returned by your backend after sealing and anchoring.</span>
+      </div>
+
       <form className="verify-widget-form" onSubmit={onSubmit}>
         <div>
-          <label>Proof ID</label>
+          <label>Paste your proof ID returned after anchoring</label>
           <input
-            placeholder="proof_..."
+            placeholder="proof_demo_1"
             value={proofId}
             onChange={(event) => setProofId(event.target.value)}
           />
@@ -83,20 +90,20 @@ export default function VerifyProofWidget() {
       {result && (
         <div className="verify-widget-results">
           <article className="orbital-card verify-widget-card">
-            <strong>{result.integrity === "VALID" ? "Verified" : "Needs review"}</strong>
+            <strong>{result.integrity === "VALID" ? "Verified" : result.integrity === "NOT_FOUND" ? "Proof not found" : "Needs review"}</strong>
             <p className="muted" style={{ marginBottom: 0 }}>
-              {result.exists ? "Proof found and checked." : "Proof not found."}
+              {result.exists ? "Proof found and checked." : "No proof matched that identifier."}
             </p>
           </article>
           <article className="orbital-card verify-widget-card">
             <strong>Timestamp</strong>
             <p className="muted" style={{ marginBottom: 0 }}>
-              {result.verified_at ? new Date(result.verified_at).toLocaleString() : "Anchored"}
+              {result.verified_at ? new Date(result.verified_at).toLocaleString() : "Unavailable"}
             </p>
           </article>
           <article className="orbital-card verify-widget-card">
             <strong>Anchor (tx hash)</strong>
-            <p className="muted" style={{ marginBottom: 0 }}>{result.anchor_tx ?? "0xanchor"}</p>
+            <p className="muted" style={{ marginBottom: 0 }}>{result.anchor_tx ?? "Unavailable"}</p>
           </article>
           <article className="orbital-card verify-widget-card">
             <strong>Merkle proof valid</strong>

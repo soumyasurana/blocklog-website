@@ -438,10 +438,16 @@ async function handleDemo(req: NextRequest, path: string[], method: string) {
   if (resource === "verify" && id === "batch" && action && method === "GET") {
     return json({
       data: {
+        exists: true,
         batch_id: action,
+        hash_valid: true,
         integrity: "VALID",
         anchored: true,
+        timestamp_anchored: true,
         merkle_root: "demo-merkle-root",
+        merkle_proof_valid: true,
+        anchor_tx: "0xanchor",
+        verified_at: new Date().toISOString(),
       },
     });
   }
@@ -647,6 +653,32 @@ async function forward(req: NextRequest, context: Context, method: string) {
   try {
     const response = await fetch(target, init);
     const bodyText = await response.text();
+
+    const isPublicVerifyLookup =
+      method === "GET" &&
+      ((path[0] === "public" && path[1] === "verify" && Boolean(path[2])) ||
+        (path[0] === "verify" && (path[1] === "log" || path[1] === "batch") && Boolean(path[2])));
+
+    if (response.status === 404 && isPublicVerifyLookup) {
+      return NextResponse.json(
+        {
+          data: {
+            exists: false,
+            hash_valid: false,
+            timestamp_anchored: false,
+            integrity: "NOT_FOUND",
+            verified_at: new Date().toISOString(),
+            merkle_proof_valid: false,
+          },
+        },
+        {
+          status: 200,
+          headers: {
+            "x-blocklog-mode": "live",
+          },
+        },
+      );
+    }
 
     return new NextResponse(bodyText, {
       status: response.status,
