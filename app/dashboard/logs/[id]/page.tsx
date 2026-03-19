@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest } from "@/lib/blocklog";
 
@@ -34,8 +34,9 @@ type VerificationResult = {
 export default function LogDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const [details, setDetails] = useState<LogDetails | null>(null);
   const [verification, setVerification] = useState<VerificationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +45,7 @@ export default function LogDetailsPage({
   useEffect(() => {
     async function loadDetails() {
       try {
-        const payload = await blocklogRequest<LogDetails>(`/logs/${params.id}`);
+        const payload = await blocklogRequest<LogDetails>(`/logs/${id}`);
         setDetails(payload);
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load log");
@@ -52,12 +53,12 @@ export default function LogDetailsPage({
     }
 
     loadDetails();
-  }, [params.id]);
+  }, [id]);
 
   async function verifyIntegrity() {
     setVerifying(true);
     try {
-      const payload = await blocklogRequest<VerificationResult>(`/logs/${params.id}/verify`);
+      const payload = await blocklogRequest<VerificationResult>(`/logs/${id}/verify`);
       setVerification(payload);
     } catch (verifyError) {
       setError(verifyError instanceof Error ? verifyError.message : "Verification failed");
@@ -78,7 +79,7 @@ export default function LogDetailsPage({
 
   return (
     <>
-      <DashboardTopBar title={`Log Details: ${params.id}`} />
+      <DashboardTopBar title={`Log Details: ${id}`} />
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
       <section className="card glass-card" style={{ marginBottom: 16 }}>
         <p className="eyebrow">Canonical record</p>
@@ -111,7 +112,7 @@ export default function LogDetailsPage({
       <section className="grid grid-3" style={{ marginTop: 12 }}>
         <article className="card glass-card">
           <strong>Log ID</strong>
-          <p className="muted">{details?.log_id ?? params.id}</p>
+          <p className="muted">{details?.log_id ?? id}</p>
         </article>
         <article className="card glass-card">
           <strong>Chain hash</strong>

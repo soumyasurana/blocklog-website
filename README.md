@@ -19,18 +19,18 @@ This repository is the frontend layer only. It depends on the Blocklog backend A
   - verification tool
   - API key management
   - settings
-- API proxy:
-  - frontend never calls the backend directly from the browser
-  - all requests are routed through `app/api/blocklog/[...path]/route.ts`
+- Direct backend integration:
+  - browser requests go straight to the backend API
+  - `lib/blocklog.ts` injects auth headers and retries failed requests
 
 ## Documentation Map
 
-- [LOCAL_DEVELOPMENT.md](/Users/soumyasurana/Desktop/Website/blocklog-website/LOCAL_DEVELOPMENT.md)
-- [ENVIRONMENT.md](/Users/soumyasurana/Desktop/Website/blocklog-website/ENVIRONMENT.md)
-- [ARCHITECTURE.md](/Users/soumyasurana/Desktop/Website/blocklog-website/ARCHITECTURE.md)
-- [API_INTEGRATION.md](/Users/soumyasurana/Desktop/Website/blocklog-website/API_INTEGRATION.md)
-- [DEPLOYMENT.md](/Users/soumyasurana/Desktop/Website/blocklog-website/DEPLOYMENT.md)
-- [TROUBLESHOOTING.md](/Users/soumyasurana/Desktop/Website/blocklog-website/TROUBLESHOOTING.md)
+- [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)
+- [ENVIRONMENT.md](ENVIRONMENT.md)
+- [ARCHITECTURE.md](ARCHITECTURE.md)
+- [API_INTEGRATION.md](API_INTEGRATION.md)
+- [DEPLOYMENT.md](DEPLOYMENT.md)
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 
 ## Tech Stack
 
@@ -61,20 +61,23 @@ By default, the frontend expects the backend at:
 http://127.0.0.1:8000/api/v1
 ```
 
-If `BLOCKLOG_DEMO_MODE=true`, the proxy serves local demo responses instead of forwarding to the backend.
+Preferred frontend env var:
+
+```bash
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
+```
 
 ## Key Behavior
 
 - User auth uses bearer tokens.
 - Most product data routes require an API key.
 - After login/signup, the frontend attempts to create a default API key automatically so the dashboard can function.
-- Browser requests go to `/api/blocklog/*`; the server route proxies to the backend.
+- Browser requests go directly to the configured backend base URL.
 
 ## Repository Structure
 
 ```text
 app/
-  api/blocklog/[...path]/route.ts   # backend proxy / demo mode
   auth/                             # auth pages
   dashboard/                        # product UI
   docs/                             # docs pages in app
@@ -91,4 +94,4 @@ This frontend is integrated against the current backend contract you provided. A
 - The log explorer therefore builds its list from `GET /logs/export-proof` and then resolves per-log details with `GET /logs/{log_id}`.
 - API key listing does not return plaintext API keys, so the frontend creates a fresh default key after auth when needed.
 
-These are documented in more detail in [API_INTEGRATION.md](/Users/soumyasurana/Desktop/Website/blocklog-website/API_INTEGRATION.md).
+These are documented in more detail in [API_INTEGRATION.md](API_INTEGRATION.md).

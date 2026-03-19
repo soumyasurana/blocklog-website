@@ -48,6 +48,25 @@ export const apiCatalog: ApiEndpointDefinition[] = [
   },
   {
     category: "Authentication",
+    label: "Forgot Password",
+    method: "POST",
+    path: "/auth/forgot-password",
+    description: "Generate a password reset token for an existing user.",
+    pageHref: "/auth/forgot-password",
+    samplePayload: '{\n  "email": "you@company.com"\n}',
+  },
+  {
+    category: "Authentication",
+    label: "Reset Password",
+    method: "POST",
+    path: "/auth/reset-password",
+    description: "Validate a reset token and update the user password.",
+    pageHref: "/auth/reset-password",
+    samplePayload:
+      '{\n  "token": "paste-reset-token",\n  "password": "new-super-secure-password"\n}',
+  },
+  {
+    category: "Authentication",
     label: "Current User",
     method: "GET",
     path: "/auth/me",
@@ -86,6 +105,15 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     method: "POST",
     path: "/companies",
     description: "Provision a company or project namespace for new workloads.",
+    samplePayload:
+      '{\n  "company_id": "cmp_84f02",\n  "company_name": "Acme Financial"\n}',
+  },
+  {
+    category: "Companies",
+    label: "Legacy Register Company",
+    method: "POST",
+    path: "/register_company",
+    description: "Legacy company registration route retained for compatibility.",
     samplePayload:
       '{\n  "company_id": "cmp_84f02",\n  "company_name": "Acme Financial"\n}',
   },

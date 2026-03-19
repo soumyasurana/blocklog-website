@@ -199,7 +199,7 @@ export default function ApiCommandCenter() {
               <div className="api-param-panel">
                 <div className="api-param-header">
                   <strong>Path and query parameters</strong>
-                  <span className="muted">These values replace `{placeholder}` tokens automatically.</span>
+                  <span className="muted">These values replace <code>{"{placeholder}"}</code> tokens automatically.</span>
                 </div>
                 <div className="grid grid-2">
                   {templateKeys.map((key) => (

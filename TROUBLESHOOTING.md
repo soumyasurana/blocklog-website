@@ -5,14 +5,14 @@
 Check:
 
 ```bash
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL
 BLOCKLOG_API_BASE_URL
-BLOCKLOG_DEMO_MODE
 ```
 
 Expected local value:
 
 ```bash
-BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
 ```
 
 Restart dev server after changing env vars.
@@ -78,9 +78,8 @@ Webpack mode is the stable path in this repo.
 Check:
 
 - backend is publicly reachable from Vercel
-- backend allows requests from the deployment environment
-- `BLOCKLOG_API_BASE_URL` is set in Vercel
-- `BLOCKLOG_DEMO_MODE` is not `true`
+- backend allows requests from the deployed frontend origin
+- `NEXT_PUBLIC_BLOCKLOG_API_BASE_URL` is set in Vercel
 
 ## Useful Manual Checks
 

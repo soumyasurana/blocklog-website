@@ -5,10 +5,10 @@ import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type MetricsPayload = {
-  requests_total?: number;
-  ingestion_rate?: number;
-  logs_series?: number[];
-  api_series?: number[];
+  requests_total: number;
+  logs_ingested_total: number;
+  verification_requests_total: number;
+  raw: string;
 };
 
 type UsagePayload = {
@@ -36,21 +36,21 @@ export default function PipelinePage() {
 
       try {
         const [metricsPayload, usagePayload] = await Promise.all([
-          blocklogRequest<MetricsPayload | { data?: MetricsPayload }>("/metrics"),
+          blocklogRequest<string>("/metrics"),
           blocklogRequest<UsagePayload | { data?: UsagePayload }>("/usage"),
         ]);
 
-        const metrics = normalizePayload<MetricsPayload>(metricsPayload, {}, "data");
+        const metrics = parsePrometheusMetrics(metricsPayload);
         const usage = normalizePayload<UsagePayload>(usagePayload, {}, "data");
 
         setSummary({
-          requests: metrics.requests_total ?? 0,
-          ingestionRate: metrics.ingestion_rate ?? 0,
+          requests: metrics.requests_total,
+          ingestionRate: metrics.logs_ingested_total,
           logsToday: usage.logs_ingested_today ?? usage.logs_ingested ?? 0,
-          verificationRequests: usage.verification_requests ?? 0,
+          verificationRequests: usage.verification_requests ?? metrics.verification_requests_total,
         });
-        setLogsSeries(metrics.logs_series ?? []);
-        setApiSeries(metrics.api_series ?? []);
+        setLogsSeries(extractMetricSeries(metrics.raw, "blocklog_logs_ingested_total"));
+        setApiSeries(extractMetricSeries(metrics.raw, "blocklog_http_request_latency_seconds_count"));
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load pipeline view");
       } finally {
@@ -109,4 +109,28 @@ export default function PipelinePage() {
       </section>
     </>
   );
+}
+
+function parsePrometheusMetrics(payload: string): MetricsPayload {
+  return {
+    requests_total: sumMetric(payload, "blocklog_http_request_latency_seconds_count"),
+    logs_ingested_total: sumMetric(payload, "blocklog_logs_ingested_total"),
+    verification_requests_total: sumMetric(payload, "blocklog_verify_requests_total"),
+    raw: payload,
+  };
+}
+
+function sumMetric(payload: string, metricName: string) {
+  return payload
+    .split("\n")
+    .filter((line) => line.startsWith(metricName))
+    .reduce((total, line) => total + Number(line.trim().split(/\s+/).pop() ?? 0), 0);
+}
+
+function extractMetricSeries(payload: string, metricName: string) {
+  return payload
+    .split("\n")
+    .filter((line) => line.startsWith(metricName))
+    .map((line) => Number(line.trim().split(/\s+/).pop() ?? 0))
+    .filter((value) => Number.isFinite(value));
 }

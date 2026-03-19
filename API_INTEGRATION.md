@@ -16,6 +16,8 @@ The frontend is wired to these backend route families:
 
 - `POST /auth/signup`
 - `POST /auth/login`
+- `POST /auth/forgot-password`
+- `POST /auth/reset-password`
 - `GET /auth/me`
 - `POST /auth/api_keys`
 - `GET /auth/api_keys`
@@ -24,6 +26,7 @@ The frontend is wired to these backend route families:
 ### Company and policy
 
 - `POST /companies`
+- `POST /register_company`
 - `GET /companies/{company_id}`
 - `GET /policy/retention`
 

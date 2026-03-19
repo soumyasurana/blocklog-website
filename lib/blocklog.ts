@@ -19,6 +19,10 @@ const SESSION_KEY = "blocklog-session";
 const SESSION_COOKIE = "blocklog_session";
 const DEFAULT_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 const SESSION_EVENT = "blocklog:session-change";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_BLOCKLOG_API_BASE_URL ??
+  process.env.BLOCKLOG_API_BASE_URL ??
+  "http://127.0.0.1:8000/api/v1";
 
 function hasWindow() {
   return typeof window !== "undefined";
@@ -156,7 +160,16 @@ export async function blocklogRequest<T>(
   body?: unknown,
   overrides: Record<string, string> = {},
 ): Promise<T> {
-  const session = readSession();
+  let session = readSession();
+  if (needsApiKey(path) && session.accessToken && !session.apiKey) {
+    try {
+      await ensureUserApiKey();
+      session = readSession();
+    } catch {
+      session = readSession();
+    }
+  }
+
   const headers: HeadersInit = {
     "Content-Type": "application/json",
     ...overrides,
@@ -181,7 +194,7 @@ export async function blocklogRequest<T>(
 
   while (attempt < maxAttempts) {
     try {
-      response = await fetch(`/api/blocklog${path}`, {
+      response = await fetch(buildApiUrl(path), {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,
@@ -206,12 +219,15 @@ export async function blocklogRequest<T>(
   }
 
   let data: unknown = null;
-  if (text) {
+  const contentType = response.headers.get("content-type") ?? "";
+  if (text && contentType.includes("json")) {
     try {
       data = JSON.parse(text) as unknown;
     } catch {
       data = { message: text };
     }
+  } else if (text) {
+    data = text;
   }
 
   if (!response.ok) {
@@ -219,6 +235,7 @@ export async function blocklogRequest<T>(
       clearSession();
     }
     const detail =
+      (typeof data === "string" ? data : undefined) ||
       (data as { detail?: string; message?: string })?.detail ||
       (data as { detail?: string; message?: string })?.message ||
       `Request failed (${response.status})`;
@@ -226,6 +243,25 @@ export async function blocklogRequest<T>(
   }
 
   return data as T;
+}
+
+function buildApiUrl(path: string) {
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  const normalizedBase = API_BASE_URL.replace(/\/$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+}
+
+function needsApiKey(path: string) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return !(
+    normalizedPath.startsWith("/auth/") ||
+    normalizedPath === "/health" ||
+    normalizedPath.startsWith("/public/")
+  );
 }
 
 export function normalizePayload<T>(

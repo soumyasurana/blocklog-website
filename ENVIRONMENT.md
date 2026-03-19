@@ -2,9 +2,9 @@
 
 ## Supported Environment Variables
 
-### `BLOCKLOG_API_BASE_URL`
+### `NEXT_PUBLIC_BLOCKLOG_API_BASE_URL`
 
-Backend base URL used by the frontend proxy route.
+Backend base URL used by the browser-side request client.
 
 Default:
 
@@ -15,53 +15,41 @@ http://127.0.0.1:8000/api/v1
 Examples:
 
 ```bash
-BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
-BLOCKLOG_API_BASE_URL=https://api.blocklogsecurity.com/api/v1
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=https://api.blocklogsecurity.com/api/v1
 ```
 
-### `BLOCKLOG_DEMO_MODE`
+### `BLOCKLOG_API_BASE_URL`
 
-When set to `true`, the frontend does not forward requests to the backend and instead serves demo responses from the proxy route.
+Optional compatibility fallback for server-side contexts. Prefer `NEXT_PUBLIC_BLOCKLOG_API_BASE_URL`.
 
 Example:
 
 ```bash
-BLOCKLOG_DEMO_MODE=true
+BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
 ```
-
-Use this only for UI demos or offline exploration.
 
 ## Recommended `.env.local`
 
-### Local backend
-
 ```bash
-BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
-BLOCKLOG_DEMO_MODE=false
-```
-
-### Demo-only frontend
-
-```bash
-BLOCKLOG_DEMO_MODE=true
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1
 ```
 
 ## Vercel Environment Variables
 
 Set these in Vercel project settings:
 
+- `NEXT_PUBLIC_BLOCKLOG_API_BASE_URL`
 - `BLOCKLOG_API_BASE_URL`
-- `BLOCKLOG_DEMO_MODE`
 
 Production recommendation:
 
 ```bash
-BLOCKLOG_API_BASE_URL=https://your-backend-domain/api/v1
-BLOCKLOG_DEMO_MODE=false
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=https://your-backend-domain/api/v1
 ```
 
 ## Notes
 
-- Browser code never calls the backend directly.
-- The proxy route reads env vars server-side.
+- Browser code calls the backend directly.
+- The backend must allow the frontend origin in `CORS_ORIGINS`.
 - After env changes, restart local dev or redeploy in Vercel.

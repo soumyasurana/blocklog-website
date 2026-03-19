@@ -2,7 +2,7 @@
 
 ## High-Level Design
 
-The frontend is a Next.js App Router application with three layers:
+The frontend is a Next.js App Router application with two main layers:
 
 1. Presentation layer
    - pages in `app/`
@@ -12,21 +12,15 @@ The frontend is a Next.js App Router application with three layers:
    - session handling
    - request retries
    - auth header injection
-3. Server proxy layer
-   - `app/api/blocklog/[...path]/route.ts`
-   - forwards frontend requests to backend
-   - supports demo mode
 
 ## Request Flow
 
 ```text
 Browser
-  -> /api/blocklog/*
-  -> Next.js route handler
   -> Blocklog backend /api/v1/*
 ```
 
-This avoids browser-side CORS complexity and keeps backend base URLs out of client code.
+This requires the backend to allow the frontend origin via CORS and to be reachable from the browser.
 
 ## Auth Model
 
@@ -81,7 +75,7 @@ The backend only returns plaintext API key material at creation time. Listed API
 
 ## Operational Risk Areas
 
-- env misconfiguration causing proxy to target the wrong backend
-- demo mode accidentally enabled in production
+- env misconfiguration causing the browser to target the wrong backend
+- backend CORS or host configuration blocking browser requests
 - backend reachable but auth payload shape out of sync
 - bearer-token success but missing API key for dashboard routes

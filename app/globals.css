@@ -1,4 +1,6 @@
 :root {
+  --font-sans: "Avenir Next", Avenir, "Segoe UI", "Trebuchet MS", sans-serif;
+  --font-mono: "SFMono-Regular", "IBM Plex Mono", Menlo, Monaco, Consolas, monospace;
   --bg: #07111f;
   --bg-elevated: #0c1729;
   --surface: rgba(11, 23, 41, 0.78);

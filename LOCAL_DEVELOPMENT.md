@@ -19,6 +19,12 @@ npm install
 ## Start Frontend
 
 ```bash
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=http://127.0.0.1:8000/api/v1 npm run dev
+```
+
+Or set it in `.env.local` and run:
+
+```bash
 npm run dev
 ```
 
@@ -82,12 +88,6 @@ Run lint before committing:
 npm run lint
 ```
 
-## Demo Mode
+## Direct API Access
 
-If you need the UI without a backend:
-
-```bash
-BLOCKLOG_DEMO_MODE=true
-```
-
-When demo mode is enabled, `app/api/blocklog/[...path]/route.ts` returns local mock data instead of proxying requests.
+The frontend now calls the backend directly from the browser, so make sure the backend `CORS_ORIGINS` setting includes your frontend origin, usually `http://localhost:3000`.

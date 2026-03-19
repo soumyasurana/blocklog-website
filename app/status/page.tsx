@@ -6,13 +6,6 @@ import SiteFooter from "@/components/SiteFooter";
 import { blocklogRequest, normalizePayload } from "@/lib/blocklog";
 
 type HealthPayload = { status?: string };
-type IntegrityPayload = { status?: string; integrity_status?: string; logs_verified?: number };
-type UsagePayload = {
-  logs_ingested?: number;
-  logs_ingested_today?: number;
-  verification_requests?: number;
-  gb_processed?: number;
-};
 
 type Service = { service: string; status: string; uptime: string };
 
@@ -29,17 +22,9 @@ export default function StatusPage() {
   useEffect(() => {
     async function loadStatus() {
       try {
-        const [healthPayload, integrityPayload, usagePayload] = await Promise.all([
-          blocklogRequest<HealthPayload | { data?: HealthPayload }>("/health"),
-          blocklogRequest<IntegrityPayload | { data?: IntegrityPayload }>(
-            "/integrity/status",
-          ),
-          blocklogRequest<UsagePayload | { data?: UsagePayload }>("/usage"),
-        ]);
+        const healthPayload = await blocklogRequest<HealthPayload | { data?: HealthPayload }>("/health");
 
         const health = normalizePayload<HealthPayload>(healthPayload, {}, "data");
-        const integrity = normalizePayload<IntegrityPayload>(integrityPayload, {}, "data");
-        const usage = normalizePayload<UsagePayload>(usagePayload, {}, "data");
 
         setServices([
           {
@@ -48,14 +33,14 @@ export default function StatusPage() {
             uptime: "Available",
           },
           {
-            service: "Integrity status",
-            status: integrity.integrity_status ?? integrity.status ?? "Healthy",
-            uptime: "Continuous",
+            service: "Integrity verification",
+            status: "Protected",
+            uptime: "Available after authenticated dashboard login",
           },
           {
-            service: "Ingestion volume",
-            status: `${usage.logs_ingested_today ?? usage.logs_ingested ?? 0} logs today`,
-            uptime: `${usage.verification_requests ?? integrity.logs_verified ?? 0} verification checks`,
+            service: "Usage analytics",
+            status: "Protected",
+            uptime: "Visible inside the signed-in dashboard",
           },
         ]);
       } catch (loadError) {

@@ -7,8 +7,7 @@ This frontend is designed to deploy cleanly to Vercel.
 ## Production Requirements
 
 - reachable Blocklog backend
-- correct `BLOCKLOG_API_BASE_URL`
-- `BLOCKLOG_DEMO_MODE=false`
+- correct `NEXT_PUBLIC_BLOCKLOG_API_BASE_URL`
 - Node-compatible Next.js runtime
 
 ## Vercel Setup
@@ -18,8 +17,7 @@ This frontend is designed to deploy cleanly to Vercel.
 3. Add environment variables:
 
 ```bash
-BLOCKLOG_API_BASE_URL=https://your-backend-domain/api/v1
-BLOCKLOG_DEMO_MODE=false
+NEXT_PUBLIC_BLOCKLOG_API_BASE_URL=https://your-backend-domain/api/v1
 ```
 
 4. Use default build command:
@@ -37,7 +35,7 @@ npm run build
 - API key creation works with production auth token
 - dashboard can load usage/integrity data
 - public verify route works
-- demo mode is disabled
+- backend CORS allows the deployed frontend origin
 
 ## Local Production Build
 
@@ -48,9 +46,9 @@ npm run start
 
 ## Vercel Notes
 
-- browser traffic never talks to backend directly
-- Vercel executes the Next.js proxy route server-side
-- backend must be reachable from the Vercel deployment environment
+- browser traffic talks to the backend directly
+- backend must be reachable from the user browser
+- backend must allow the deployed frontend origin via CORS
 
 ## Recommended Production Validation
 
@@ -68,5 +66,5 @@ If production breaks after deploy:
 
 - inspect Vercel runtime logs
 - confirm backend base URL is correct
-- confirm backend is reachable from Vercel
-- confirm no stale demo-mode env var is enabled
+- confirm backend is reachable from the browser
+- confirm backend CORS is configured for the frontend origin
