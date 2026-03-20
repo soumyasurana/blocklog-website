@@ -420,24 +420,72 @@ textarea {
 }
 
 .hero-status-card {
+  position: relative;
   display: grid;
-  gap: 4px;
-  padding: 14px 16px;
+  gap: 8px;
+  min-height: 116px;
+  padding: 18px 18px 16px;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%),
+    linear-gradient(135deg, var(--primary-soft), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 78%, transparent);
   animation: revealUp 1100ms ease both;
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  overflow: hidden;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.hero-status-card::before {
+  content: "";
+  width: 42px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--primary-strong));
+  box-shadow: 0 6px 20px rgba(123, 247, 212, 0.2);
+}
+
+.hero-status-card::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: -22px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123, 247, 212, 0.12), transparent 68%);
+  pointer-events: none;
 }
 
 .hero-status-card strong {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 .hero-status-card span {
   color: var(--muted);
   font-size: 0.88rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 18ch;
+}
+
+.hero-status-card:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%),
+    linear-gradient(135deg, rgba(123, 247, 212, 0.12), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 78%, transparent);
+}
+
+.hero-status-card:nth-child(3) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%),
+    linear-gradient(135deg, rgba(149, 181, 230, 0.14), transparent 62%),
+    color-mix(in srgb, var(--surface-strong) 78%, transparent);
 }
 
 .hero-status-card:hover,
@@ -445,6 +493,13 @@ textarea {
   transform: translateY(-4px);
   border-color: var(--border-strong);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.hero-status-card:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%),
+    linear-gradient(135deg, var(--primary-soft-strong), transparent 58%),
+    color-mix(in srgb, var(--surface-strong) 84%, transparent);
 }
 
 .hero-orbit {
@@ -1649,7 +1704,7 @@ tbody tr:hover {
 
 .verify-widget-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) auto;
   gap: 12px;
   align-items: end;
 }
@@ -2101,7 +2156,8 @@ tbody tr:hover {
   }
 
   .hero-status-strip,
-  .hero-metrics {
+  .hero-metrics,
+  .hero-orbit {
     grid-template-columns: 1fr;
   }
 

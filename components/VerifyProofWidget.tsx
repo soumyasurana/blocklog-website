@@ -13,6 +13,8 @@ type VerifyWidgetResult = {
   merkle_proof_valid?: boolean;
 };
 
+type VerifyLookupType = "proof_id" | "log_id" | "batch_id";
+
 const defaultResult: VerifyWidgetResult = {
   exists: true,
   hash_valid: true,
@@ -24,10 +26,32 @@ const defaultResult: VerifyWidgetResult = {
 };
 
 export default function VerifyProofWidget() {
-  const [proofId, setProofId] = useState("proof_demo_1");
+  const [lookupType, setLookupType] = useState<VerifyLookupType>("proof_id");
+  const [lookupValue, setLookupValue] = useState("proof_demo_1");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<VerifyWidgetResult | null>(defaultResult);
+
+  const exampleValue =
+    lookupType === "proof_id"
+      ? "proof_demo_1"
+      : lookupType === "log_id"
+        ? "log_10021"
+        : "batch_demo_1";
+
+  const fieldLabel =
+    lookupType === "proof_id"
+      ? "Paste your proof ID returned after anchoring"
+      : lookupType === "log_id"
+        ? "Paste your log ID from the audit trail"
+        : "Paste your batch ID from the sealing pipeline";
+
+  function getLookupPath() {
+    const value = encodeURIComponent(lookupValue.trim());
+    if (lookupType === "log_id") return `/verify/log/${value}`;
+    if (lookupType === "batch_id") return `/verify/batch/${value}`;
+    return `/public/verify/${value}`;
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,13 +59,30 @@ export default function VerifyProofWidget() {
     setError(null);
 
     try {
-      if (!proofId.trim()) {
-        throw new Error("Enter the proof ID returned after anchoring.");
+      if (!lookupValue.trim()) {
+        throw new Error(
+          lookupType === "proof_id"
+            ? "Enter the proof ID returned after anchoring."
+            : lookupType === "log_id"
+              ? "Enter a real log ID from the audit trail."
+              : "Enter a real batch ID from the batch pipeline.",
+        );
       }
 
-      const response = await blocklogRequest<VerifyWidgetResult | { data?: VerifyWidgetResult }>(
-        `/public/verify/${encodeURIComponent(proofId.trim())}`,
-      );
+      let response: VerifyWidgetResult | { data?: VerifyWidgetResult };
+
+      if (lookupType === "log_id") {
+        try {
+          response = await blocklogRequest<VerifyWidgetResult | { data?: VerifyWidgetResult }>(getLookupPath());
+        } catch {
+          response = await blocklogRequest<VerifyWidgetResult | { data?: VerifyWidgetResult }>(
+            `/logs/${encodeURIComponent(lookupValue.trim())}/verify`,
+          );
+        }
+      } else {
+        response = await blocklogRequest<VerifyWidgetResult | { data?: VerifyWidgetResult }>(getLookupPath());
+      }
+
       setResult(normalizePayload<VerifyWidgetResult>(response, defaultResult, "data"));
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Verification failed");
@@ -58,8 +99,8 @@ export default function VerifyProofWidget() {
           <p className="eyebrow">Verify a real proof</p>
           <h2 style={{ marginTop: 8, marginBottom: 10 }}>See Blocklog prove integrity in real time.</h2>
           <p className="muted" style={{ margin: 0 }}>
-            Paste the proof ID returned after anchoring to verify the record instantly. No
-            screenshots. No trust leap.
+            Verify by proof ID, log ID, or batch ID to check integrity without screenshots or
+            trust leaps.
           </p>
         </div>
         <div className="status-pill status-valid">Live verification</div>
@@ -67,17 +108,31 @@ export default function VerifyProofWidget() {
 
       <div className="verify-console-banner">
         <span className="verify-console-label">Expected input</span>
-        <code>proof_demo_1</code>
-        <span className="muted">Use the real `proof_id` returned by your backend after sealing and anchoring.</span>
+        <code>{exampleValue}</code>
+        <span className="muted">
+          {lookupType === "proof_id"
+            ? "Use the real `proof_id` returned by your backend after sealing and anchoring."
+            : lookupType === "log_id"
+              ? "Use a real `log_id` from your audit trail."
+              : "Use a real `batch_id` from the sealing and anchoring workflow."}
+        </span>
       </div>
 
       <form className="verify-widget-form" onSubmit={onSubmit}>
         <div>
-          <label>Paste your proof ID returned after anchoring</label>
+          <label>Lookup type</label>
+          <select value={lookupType} onChange={(event) => setLookupType(event.target.value as VerifyLookupType)}>
+            <option value="proof_id">Proof ID</option>
+            <option value="log_id">Log ID</option>
+            <option value="batch_id">Batch ID</option>
+          </select>
+        </div>
+        <div>
+          <label>{fieldLabel}</label>
           <input
-            placeholder="proof_demo_1"
-            value={proofId}
-            onChange={(event) => setProofId(event.target.value)}
+            placeholder={exampleValue}
+            value={lookupValue}
+            onChange={(event) => setLookupValue(event.target.value)}
           />
         </div>
         <button className="btn btn-primary" disabled={loading} type="submit">

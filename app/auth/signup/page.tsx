@@ -32,26 +32,16 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      if (companyName.trim()) {
-        try {
-          await blocklogRequest("/companies", "POST", {
-            company_id: companyId,
-            company_name: companyName,
-          });
-        } catch (companyError) {
-          if (
-            !(companyError instanceof Error) ||
-            !companyError.message.toLowerCase().includes("already exists")
-          ) {
-            throw companyError;
-          }
-        }
-      }
-
       const payload = await blocklogRequest<SignupResponse | { data?: SignupResponse }>(
         "/auth/signup",
         "POST",
-        { username, email, password, company_id: companyId },
+        {
+          username,
+          email,
+          password,
+          company_id: companyId,
+          company_name: companyName || undefined,
+        },
       );
       const session = normalizePayload<SignupResponse>(payload, {}, "data");
 

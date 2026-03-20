@@ -24,6 +24,7 @@ export default function SiteHeader() {
         </Link>
         <nav className="nav-links">
           <Link href="/">Platform</Link>
+          <Link href="/pilot">Pilot</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/docs">Docs</Link>
           <Link href="/status">Status</Link>

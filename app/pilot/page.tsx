@@ -38,6 +38,12 @@ const postPilotSteps = [
   "Apply the $149 pilot fee toward the first month if you convert",
 ];
 
+const pilotHighlights = [
+  ["Scope", "Validate ingestion, sealing, anchoring, and verification end to end."],
+  ["Hands-on", "Founder-led onboarding keeps setup tight and decisions fast."],
+  ["Conversion path", "Move into production without redoing the implementation work."],
+];
+
 export default function PilotPage() {
   return (
     <>
@@ -64,15 +70,33 @@ export default function PilotPage() {
               You get enough time and volume to validate ingestion, sealing, anchoring, and proof
               verification without turning the pilot into an open-ended consulting engagement.
             </p>
-            <div className="button-row">
+            <div className="button-row" style={{ marginTop: 18, marginBottom: 18 }}>
               <a
                 className="btn btn-primary"
                 href="https://calendly.com/founder-blocklogsecurity/audit-readiness-call-20-min"
                 target="_blank"
                 rel="noreferrer"
+                style={{
+                  minHeight: 58,
+                  padding: "16px 28px",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  flex: "1 1 100%",
+                  justifyContent: "center",
+                }}
               >
                 Book Pilot Call
               </a>
+            </div>
+            <div className="grid" style={{ gap: 10 }}>
+              {pilotHighlights.map(([label, detail]) => (
+                <div className="orbital-card" key={label}>
+                  <strong>{label}</strong>
+                  <p className="muted" style={{ margin: "6px 0 0" }}>{detail}</p>
+                </div>
+              ))}
+            </div>
+            <div className="button-row" style={{ marginTop: 16 }}>
               <Link className="btn" href="/pricing">
                 View Pricing
               </Link>

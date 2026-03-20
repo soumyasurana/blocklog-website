@@ -49,7 +49,8 @@ The frontend is wired to these backend route families:
   "username": "pilot",
   "email": "pilot@example.com",
   "password": "ChangeMe123!",
-  "company_id": "pilot-co"
+  "company_id": "pilot-co",
+  "company_name": "Pilot Company"
 }
 ```
 
@@ -108,7 +109,15 @@ Used for:
 
 ### Auth bootstrap
 
-After login/signup:
+After signup:
+
+1. if the company does not exist yet and `company_name` is included, the backend creates it during signup
+2. store bearer token
+3. store company ID
+4. create a default API key if no plaintext key is already stored
+5. use that key for dashboard APIs
+
+After login:
 
 1. store bearer token
 2. store company ID

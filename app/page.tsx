@@ -95,6 +95,18 @@ export default function HomePage() {
                   <span className="metric-value">Auditor-friendly</span>
                   <span className="muted">verification without needing to trust Blocklog</span>
                 </div>
+                <div className="hero-metric">
+                  <span className="metric-value">Public anchoring</span>
+                  <span className="muted">batch integrity recorded with independently checkable timestamps</span>
+                </div>
+                <div className="hero-metric">
+                  <span className="metric-value">Portable evidence</span>
+                  <span className="muted">export bundles your auditor can review outside the product</span>
+                </div>
+                <div className="hero-metric">
+                  <span className="metric-value">Fast verification</span>
+                  <span className="muted">proof checks that turn audit questions into quick answers</span>
+                </div>
               </div>
             </div>
           </div>
