@@ -2,12 +2,59 @@ import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
-const plans = [
+type PlanGroup = {
+  title: string;
+  points: string[];
+};
+
+type Plan = {
+  name: string;
+  price: string;
+  annual: string;
+  subtitle: string;
+  points: string[];
+  fit: string[];
+  highlight?: boolean;
+  comingSoon?: boolean;
+  groups?: PlanGroup[];
+};
+
+const plans: Plan[] = [
   {
     name: "Starter Plan",
     price: "$299/month",
     annual: "$2,868/year (20% off)",
-    subtitle: "Production-ready for early teams with real audit pressure.",
+    highlight: true,
+    subtitle:
+      'Your auditor asks: "Prove your logs weren\'t tampered with." Blocklog gives you cryptographic proof they can verify independently.',
+    groups: [
+      {
+        title: "Capacity & Limits",
+        points: [
+          "5M log events/month",
+          "$12 per additional 1M events",
+          "Dashboard access (5 users)",
+        ],
+      },
+      {
+        title: "Core Features",
+        points: [
+          "Unlimited batches",
+          "Blockchain anchoring (Polygon)",
+          "Verification reports (PDF export)",
+          "Auditor portal (read-only access)",
+          "Single company account",
+          "Standard API access",
+        ],
+      },
+      {
+        title: "Support & Retention",
+        points: [
+          "Email support (24-hour response)",
+          "90-day proof retention",
+        ],
+      },
+    ],
     points: [
       "5M log events/month",
       "$12 per additional 1M events",
@@ -22,6 +69,8 @@ const plans = [
       "Dashboard access (5 users)",
     ],
     fit: [
+      "Series A/B startups",
+      "First SOC 2 Type II audit",
       "10-50 employees",
       "AWS/GCP single region",
       "~10-20 microservices",
@@ -32,6 +81,36 @@ const plans = [
     price: "$799/month",
     annual: "$7,670/year (20% off)",
     subtitle: "Everything in Starter, plus scale, retention, support, and team expansion.",
+    groups: [
+      {
+        title: "Capacity & Limits",
+        points: [
+          "25M log events/month",
+          "$10 per additional 1M events",
+          "Multi-team access (unlimited users)",
+        ],
+      },
+      {
+        title: "Core Features",
+        points: [
+          "Multi-region support",
+          "Custom retention policies",
+          "Advanced analytics dashboard",
+          "Webhook integrations",
+          "SSO/SAML authentication",
+        ],
+      },
+      {
+        title: "Support & Success",
+        points: [
+          "Priority support (4-hour response)",
+          "Slack channel access",
+          "Dedicated onboarding (CSM-led)",
+          "Monthly review calls",
+          "365-day proof retention",
+        ],
+      },
+    ],
     points: [
       "25M log events/month",
       "$10 per additional 1M events",
@@ -49,11 +128,11 @@ const plans = [
     ],
     fit: [
       "Series B/C companies",
+      "Scaling compliance programs",
       "50-200 employees",
       "SOC 2 + ISO 27001",
       "~30-50 microservices",
     ],
-    highlight: true,
     comingSoon: true,
   },
   {
@@ -61,6 +140,39 @@ const plans = [
     price: "Custom pricing",
     annual: "Starts at $1,999/month, annual contracts only",
     subtitle: "Everything in Growth, plus enterprise procurement, residency, support, and legal readiness.",
+    groups: [
+      {
+        title: "Capacity & Limits",
+        points: [
+          "100M+ log events/month",
+          "Custom overage rates",
+          "Multi-year pricing lock",
+          "Invoice payment (NET 30/60)",
+        ],
+      },
+      {
+        title: "Core Features",
+        points: [
+          "99.9% SLA guarantee",
+          "Custom integrations (API extensions)",
+          "Custom data residency",
+          "HIPAA compliance package",
+          "SOC 2 Type II report access",
+          "Custom legal terms (BAA, DPA, etc.)",
+        ],
+      },
+      {
+        title: "Support & Partnership",
+        points: [
+          "Dedicated Customer Success Manager",
+          "Priority feature requests",
+          "Quarterly business reviews",
+          "Premium support (1-hour response)",
+          "24/7 on-call support optional add-on",
+          "Dedicated Slack channel with engineering",
+        ],
+      },
+    ],
     points: [
       "100M+ log events/month",
       "Custom overage rates",
@@ -81,6 +193,7 @@ const plans = [
     ],
     fit: [
       "Series C+ or public companies",
+      "Highly regulated environments",
       "200+ employees",
       "Healthcare, finance, and regulated sectors",
       "100+ microservices",
@@ -101,8 +214,8 @@ export default function PricingPage() {
   return (
     <>
       <SiteHeader />
-      <main className="container section">
-        <div className="section-header">
+      <main className="container section pricing-page">
+        <div className="section-header pricing-header">
           <div>
             <p className="eyebrow">Pricing</p>
             <h1 style={{ fontSize: "clamp(2.6rem, 5vw, 4.5rem)", margin: 0 }}>
@@ -115,55 +228,76 @@ export default function PricingPage() {
           </p>
         </div>
 
-        <section className="trust-band" style={{ marginTop: 24 }}>
+        <section className="trust-band pricing-trust-band" style={{ marginTop: 24 }}>
           <div>
             <p className="eyebrow">Pilot bridge</p>
             <h2>How the pilot rolls into production.</h2>
           </div>
-          <div className="grid" style={{ gap: 10 }}>
-            {pilotBridge.map((item) => (
-              <div className="status-pill" key={item}>
+          <div className="grid pricing-pilot-grid" style={{ gap: 10 }}>
+            {pilotBridge.map((item, index) => (
+              <div className="status-pill pricing-pilot-pill" key={item} style={{ animationDelay: `${index * 90}ms` }}>
                 {item}
               </div>
             ))}
           </div>
         </section>
 
-        <div className="grid grid-3" style={{ marginTop: 24 }}>
-          {plans.map((plan) => (
-            <article className="card glass-card capability-card" key={plan.name}>
+        <div className="grid grid-3 pricing-plan-grid" style={{ marginTop: 24 }}>
+          {plans.map((plan, planIndex) => (
+            <article
+              className={`card glass-card capability-card pricing-plan-card${plan.highlight ? " pricing-plan-card--highlight" : ""}`}
+              key={plan.name}
+              style={{ animationDelay: `${planIndex * 120}ms` }}
+            >
               <p className="eyebrow">
                 {plan.comingSoon ? "Coming soon" : plan.highlight ? "Recommended" : "Plan"}
               </p>
-              <h2 style={{ margin: "8px 0 6px" }}>{plan.name}</h2>
-              <p style={{ fontSize: "2.2rem", margin: "0 0 6px", fontWeight: 700 }}>{plan.price}</p>
+              <h2 className="pricing-plan-title" style={{ margin: "8px 0 6px" }}>{plan.name}</h2>
+              <p className="pricing-plan-price" style={{ fontSize: "2.2rem", margin: "0 0 6px", fontWeight: 700 }}>{plan.price}</p>
               <p className="muted" style={{ marginTop: 0 }}>{plan.annual}</p>
-              <p className="muted">{plan.subtitle}</p>
+              <p className="muted pricing-plan-subtitle">{plan.subtitle}</p>
 
-              <div className="grid" style={{ gap: 10, marginTop: 18 }}>
-                {plan.points.map((point) => (
-                  <div className="status-pill" key={point}>
-                    {point}
-                  </div>
-                ))}
-              </div>
+              {plan.groups ? (
+                <div className="grid" style={{ gap: 14, marginTop: 18 }}>
+                  {plan.groups.map((group, groupIndex) => (
+                    <div className="pricing-group" key={group.title} style={{ animationDelay: `${groupIndex * 120}ms` }}>
+                      <p className="eyebrow" style={{ marginBottom: 8 }}>{group.title}</p>
+                      <div className="grid pricing-group-list" style={{ gap: 10 }}>
+                        {group.points.map((point) => (
+                          <div className="status-pill pricing-feature-pill" key={point}>
+                            {point}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid" style={{ gap: 10, marginTop: 18 }}>
+                  {plan.points.map((point) => (
+                    <div className="status-pill pricing-feature-pill" key={point}>
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              )}
 
-              <div className="grid" style={{ gap: 10, marginTop: 18 }}>
+              <div className="grid pricing-fit-section" style={{ gap: 8, marginTop: 18 }}>
                 <p className="eyebrow" style={{ marginBottom: 0 }}>Best for</p>
                 {plan.fit.map((item) => (
-                  <div className="orbital-card" key={item}>
-                    <strong>{item}</strong>
+                  <div className="status-pill pricing-fit-pill" key={item}>
+                    {item}
                   </div>
                 ))}
               </div>
 
-              <div className="button-row" style={{ marginTop: 18 }}>
+              <div className="button-row pricing-actions" style={{ marginTop: 18 }}>
                 {!plan.comingSoon ? (
-                  <Link className="btn btn-primary" href="/pilot">
+                  <Link className="btn btn-primary pricing-primary-cta" href="/pilot">
                     Start 20-Day Pilot
                   </Link>
                 ) : (
-                  <button className="btn btn-primary" disabled type="button">
+                  <button className="btn btn-primary pricing-primary-cta" disabled type="button">
                     Coming Soon
                   </button>
                 )}
