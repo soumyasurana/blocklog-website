@@ -24,6 +24,7 @@ export default function ApiKeysPage() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [revokingId, setRevokingId] = useState<string | null>(null);
 
   async function loadKeys() {
     setLoading(true);
@@ -45,6 +46,7 @@ export default function ApiKeysPage() {
     event.preventDefault();
     setError(null);
     setNotice(null);
+
     try {
       const created = await blocklogRequest<{ api_key: string; name: string }>(
         "/auth/api_keys",
@@ -54,6 +56,7 @@ export default function ApiKeysPage() {
           rate_limit_per_minute: Number(rateLimit),
         },
       );
+
       setKeyName("");
       setNotice(`API key created: ${created.api_key}`);
       await loadKeys();
@@ -65,28 +68,37 @@ export default function ApiKeysPage() {
   async function revokeKey(id: string) {
     setError(null);
     setNotice(null);
+    setRevokingId(id);
+
     try {
       await blocklogRequest(`/auth/api_keys/${id}`, "DELETE");
       setNotice("API key revoked.");
       await loadKeys();
     } catch (revokeError) {
       setError(revokeError instanceof Error ? revokeError.message : "Failed to revoke key");
+    } finally {
+      setRevokingId(null);
     }
   }
 
   return (
     <>
       <DashboardTopBar title="API Keys" />
+
       {loading && (
         <div className="notice button-row" style={{ alignItems: "center", marginBottom: 12 }}>
           <div className="spinner" />
           <span>Loading API keys...</span>
         </div>
       )}
+
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
       {notice && <p className="notice">{notice}</p>}
+
+      {/* Create Key */}
       <form className="card" onSubmit={createKey}>
         <h2 style={{ marginTop: 0 }}>Create new key</h2>
+
         <div className="grid grid-2">
           <input
             placeholder="Key name"
@@ -103,11 +115,13 @@ export default function ApiKeysPage() {
             required
           />
         </div>
+
         <button className="btn btn-primary" style={{ marginTop: 12 }}>
           Create key
         </button>
       </form>
 
+      {/* Keys Table */}
       <section className="table-shell">
         {keys.length === 0 ? (
           <div className="empty-state">No API keys created yet.</div>
@@ -117,24 +131,57 @@ export default function ApiKeysPage() {
               <tr>
                 <th>Name</th>
                 <th>Prefix</th>
+                <th>Status</th>
                 <th>Created</th>
                 <th>Last used</th>
                 <th>Rate limit</th>
                 <th></th>
               </tr>
             </thead>
+
             <tbody>
               {keys.map((key) => (
                 <tr key={key.key_id}>
                   <td>{key.name}</td>
                   <td>{key.key_prefix}</td>
-                  <td>{new Date(key.created_at).toLocaleString()}</td>
-                  <td>{key.last_used_at ? new Date(key.last_used_at).toLocaleString() : "Never"}</td>
-                  <td>{key.rate_limit_per_minute}/min</td>
+
+                  {/* ✅ Status */}
                   <td>
-                    <button className="btn" onClick={() => revokeKey(key.key_id)} type="button">
-                      Revoke
-                    </button>
+                    {key.revoked ? (
+                      <span style={{ color: "var(--danger)", fontWeight: 500 }}>
+                        Revoked
+                      </span>
+                    ) : (
+                      <span style={{ color: "var(--success)", fontWeight: 500 }}>
+                        Active
+                      </span>
+                    )}
+                  </td>
+
+                  <td>{new Date(key.created_at).toLocaleString()}</td>
+
+                  <td>
+                    {key.last_used_at
+                      ? new Date(key.last_used_at).toLocaleString()
+                      : "Never"}
+                  </td>
+
+                  <td>{key.rate_limit_per_minute}/min</td>
+
+                  {/* ✅ Action */}
+                  <td>
+                    {key.revoked ? (
+                      <span className="muted">—</span>
+                    ) : (
+                      <button
+                        className="btn"
+                        disabled={revokingId === key.key_id}
+                        onClick={() => revokeKey(key.key_id)}
+                        type="button"
+                      >
+                        {revokingId === key.key_id ? "Revoking..." : "Revoke"}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

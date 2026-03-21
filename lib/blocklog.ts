@@ -3,16 +3,7 @@ export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type BlocklogSession = {
   accessToken?: string;
   companyId?: string;
-  apiKey?: string;
   expiresAt?: number;
-};
-
-type ApiKeyCreateResponse = {
-  key_id: string;
-  api_key: string;
-  name: string;
-  created_at: string;
-  rate_limit_per_minute: number;
 };
 
 const SESSION_KEY = "blocklog-session";
@@ -65,7 +56,6 @@ export function readSession(): BlocklogSession {
     const session: BlocklogSession = {
       accessToken: parsed.accessToken ?? parsed.token,
       companyId: parsed.companyId,
-      apiKey: parsed.apiKey,
       expiresAt: parsed.expiresAt,
     };
     if (!isSessionValid(session)) {
@@ -132,43 +122,13 @@ export function requireValidSession() {
   return session;
 }
 
-export async function ensureUserApiKey() {
-  const session = requireValidSession();
-  if (session.apiKey) {
-    return session.apiKey;
-  }
-
-  const created = await blocklogRequest<ApiKeyCreateResponse>(
-    "/auth/api_keys",
-    "POST",
-    {
-      name: "dashboard-default",
-      rate_limit_per_minute: 1000,
-    },
-    {
-      Authorization: `Bearer ${session.accessToken}`,
-    },
-  );
-
-  writeSession({ ...session, apiKey: created.api_key });
-  return created.api_key;
-}
-
 export async function blocklogRequest<T>(
   path: string,
   method: HttpMethod = "GET",
   body?: unknown,
   overrides: Record<string, string> = {},
 ): Promise<T> {
-  let session = readSession();
-  if (needsApiKey(path) && session.accessToken && !session.apiKey) {
-    try {
-      await ensureUserApiKey();
-      session = readSession();
-    } catch {
-      session = readSession();
-    }
-  }
+  const session = readSession();
 
   const headers: HeadersInit = {
     "Content-Type": "application/json",
@@ -181,10 +141,6 @@ export async function blocklogRequest<T>(
 
   if (session.companyId) {
     headers["X-Company-ID"] = session.companyId;
-  }
-
-  if (session.apiKey) {
-    headers["X-API-Key"] = session.apiKey;
   }
 
   const maxAttempts = method === "GET" ? 3 : 2;
@@ -253,15 +209,6 @@ function buildApiUrl(path: string) {
   const normalizedBase = API_BASE_URL.replace(/\/$/, "");
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${normalizedBase}${normalizedPath}`;
-}
-
-function needsApiKey(path: string) {
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return !(
-    normalizedPath.startsWith("/auth/") ||
-    normalizedPath === "/health" ||
-    normalizedPath.startsWith("/public/")
-  );
 }
 
 export function normalizePayload<T>(

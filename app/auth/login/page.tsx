@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import {
   blocklogRequest,
-  ensureUserApiKey,
   normalizePayload,
   writeSession,
 } from "@/lib/blocklog";
@@ -40,7 +39,6 @@ export default function LoginPage() {
         accessToken: session.access_token,
         companyId: session.company_id,
       }, session.expires_in ? session.expires_in * 1000 : undefined);
-      await ensureUserApiKey();
       const nextPath =
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")
