@@ -20,7 +20,7 @@ const defaultResult: VerifyWidgetResult = {
   hash_valid: true,
   timestamp_anchored: true,
   integrity: "VALID",
-  verified_at: new Date().toISOString(),
+  verified_at: undefined,
   anchor_tx: "0xanchor",
   merkle_proof_valid: true,
 };
@@ -153,7 +153,7 @@ export default function VerifyProofWidget() {
           <article className="orbital-card verify-widget-card">
             <strong>Timestamp</strong>
             <p className="muted" style={{ marginBottom: 0 }}>
-              {result.verified_at ? new Date(result.verified_at).toLocaleString() : "Unavailable"}
+              {result.verified_at ? new Date(result.verified_at).toISOString() : "Unavailable"}
             </p>
           </article>
           <article className="orbital-card verify-widget-card">

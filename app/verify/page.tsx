@@ -187,7 +187,7 @@ export default function VerifyPage() {
             </article>
             <article className="card">
               <strong>Verified at</strong>
-              <p>{result.verified_at ? new Date(result.verified_at).toLocaleString() : "Pending"}</p>
+              <p>{result.verified_at ? new Date(result.verified_at).toISOString() : "Pending"}</p>
             </article>
             <article className="card">
               <strong>Integrity verdict</strong>

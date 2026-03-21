@@ -55,7 +55,7 @@ export default function AuditTrailPage() {
                   {node.log} → {node.hash}
                 </strong>
                 <p className="muted" style={{ marginBottom: 0 }}>
-                  Chain position {index + 1} · {new Date(node.createdAt).toLocaleString()}
+                  Chain position {index + 1} · {new Date(node.createdAt).toISOString()}
                 </p>
               </div>
             ))}

@@ -131,7 +131,7 @@ export default function LogDetailsPage({
         <article className="card glass-card">
           <strong>Created at</strong>
           <p className="muted">
-            {details?.created_at ? new Date(details.created_at).toLocaleString() : "unknown"}
+            {details?.created_at ? new Date(details.created_at).toISOString() : "unknown"}
           </p>
         </article>
         <article className="card glass-card">
@@ -170,7 +170,7 @@ export default function LogDetailsPage({
             <strong>Verified at</strong>
             <p className="muted">
               {verification.verified_at
-                ? new Date(verification.verified_at).toLocaleString()
+                ? new Date(verification.verified_at).toISOString()
                 : "unknown"}
             </p>
           </article>

@@ -576,7 +576,7 @@ export default function AdminPortalPage() {
                           <td>{entry.action ?? "unknown"}</td>
                           <td>{entry.actor ?? "unknown"}</td>
                           <td>{entry.company_id ?? "n/a"}</td>
-                          <td>{entry.created_at ? new Date(entry.created_at).toLocaleString() : "Unknown"}</td>
+                          <td>{entry.created_at ? new Date(entry.created_at).toISOString() : "Unknown"}</td>
                         </tr>
                       ))}
                     </tbody>

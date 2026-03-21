@@ -478,7 +478,7 @@ export default function VerificationToolsPage() {
                 <div className="verification-metadata-grid verification-metadata-tall" style={{ marginTop: 18 }}>
                   <article className="orbital-card">
                     <strong>Verified at</strong>
-                    <p>{result.verified_at ? new Date(result.verified_at).toLocaleString() : "Pending"}</p>
+                    <p>{result.verified_at ? new Date(result.verified_at).toISOString() : "Pending"}</p>
                   </article>
                   <article className="orbital-card">
                     <strong>Anchor transaction</strong>

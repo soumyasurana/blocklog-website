@@ -158,11 +158,11 @@ export default function ApiKeysPage() {
                     )}
                   </td>
 
-                  <td>{new Date(key.created_at).toLocaleString()}</td>
+                  <td>{new Date(key.created_at).toISOString()}</td>
 
                   <td>
                     {key.last_used_at
-                      ? new Date(key.last_used_at).toLocaleString()
+                      ? new Date(key.last_used_at).toISOString()
                       : "Never"}
                   </td>
 

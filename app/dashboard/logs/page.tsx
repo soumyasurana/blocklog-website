@@ -246,7 +246,7 @@ export default function LogsPage() {
             <tbody>
               {logs.map((log) => (
                 <tr key={log.id}>
-                  <td>{new Date(log.timestamp).toLocaleString()}</td>
+                  <td>{new Date(log.timestamp).toISOString()}</td>
                   <td>
                     <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
                   </td>

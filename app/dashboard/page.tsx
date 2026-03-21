@@ -242,7 +242,7 @@ export default function DashboardHomePage() {
             <tbody>
               {recentLogs.map((log) => (
                 <tr key={log.log_id}>
-                  <td>{new Date(log.created_at).toLocaleString()}</td>
+                  <td>{new Date(log.created_at).toISOString()}</td>
                   <td>{log.log_id}</td>
                   <td>{log.chain_hash}</td>
                   <td>
