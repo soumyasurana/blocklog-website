@@ -125,10 +125,6 @@ export default function DashboardSidebar() {
         </nav>
       </div>
 
-      <div className="sidebar-footer">
-        <span className="status-pill status-valid">Public site linked</span>
-        <span className="muted">Click the Blocklog mark to return to the landing page.</span>
-      </div>
     </aside>
   );
 }
