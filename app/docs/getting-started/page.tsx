@@ -26,9 +26,11 @@ export default function GettingStartedPage() {
   "username": "founder",
   "email": "founder@company.com",
   "password": "ChangeMe123!",
-  "company_id": "acme-financial",
-  "company_name": "Acme Financial"
+  "company_id": "acme-financial"
 }`}</pre>
+            <p className="muted" style={{ marginBottom: 0 }}>
+              The company must already exist in the database before signup.
+            </p>
           </article>
 
           <article className="card glass-card">

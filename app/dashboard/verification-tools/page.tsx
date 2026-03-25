@@ -37,6 +37,36 @@ type LogDetails = {
   created_at: string;
 };
 
+type BatchDetails = {
+  batch_id?: string;
+  company_id?: string;
+  status?: string;
+  start_time?: string;
+  end_time?: string;
+  log_count?: number;
+  merkle_root?: string;
+  batch_hash?: string;
+  prev_batch_hash?: string | null;
+  global_root?: string | null;
+  anchored_at?: string | null;
+  anchor_tx?: string | null;
+};
+
+type BatchProofBundle = {
+  batch_id?: string;
+  merkle_root?: string;
+  anchor_tx?: string | null;
+  logs?: Array<{ log_id: string; hash: string; merkle_proof: string[] }>;
+  time_attestation?: Record<string, unknown>;
+};
+
+type AnchorProof = {
+  batch_id?: string;
+  merkle_root?: string;
+  batch_hash?: string;
+  anchor?: Record<string, unknown>;
+};
+
 const defaultResult: VerifyResult = {
   exists: true,
   hash_valid: true,
@@ -234,6 +264,30 @@ export default function VerificationToolsPage() {
         logs.map((entry) => blocklogRequest<LogDetails>(`/logs/${entry.log_id}`)),
       );
 
+      const batchIds = Array.from(
+        new Set(
+          details
+            .map((detail) => detail.batch_id)
+            .filter((batchId): batchId is string => Boolean(batchId)),
+        ),
+      );
+
+      const batches = await Promise.all(
+        batchIds.map(async (batchId) => {
+          const [batch, proofBundle, anchor] = await Promise.all([
+            blocklogRequest<BatchDetails>(`/batches/${batchId}`),
+            blocklogRequest<BatchProofBundle>(`/batches/${batchId}/proof-bundle`),
+            blocklogRequest<AnchorProof>(`/anchors/${batchId}`).catch(() => null),
+          ]);
+          return {
+            batch_id: batchId,
+            details: batch,
+            proof_bundle: proofBundle,
+            anchor_proof: anchor,
+          };
+        }),
+      );
+
       const bundle = details.map((detail) => ({
         log_id: detail.log_id,
         company_id: detail.company_id,
@@ -247,15 +301,31 @@ export default function VerificationToolsPage() {
         ...(includePayloads ? { payload: detail.payload } : {}),
       }));
 
+      const fullExport = {
+        generated_at: new Date().toISOString(),
+        from: fromIso,
+        to: toIso,
+        include_payloads: includePayloads,
+        summary: {
+          log_count: bundle.length,
+          batch_count: batches.length,
+          anchored_batch_count: batches.filter((batch) => Boolean(batch.anchor_proof)).length,
+        },
+        logs: bundle,
+        batches,
+      };
+
       downloadJson(
-        includePayloads ? "blocklog-audit-bundle-with-payloads.json" : "blocklog-audit-bundle-without-payloads.json",
-        bundle,
+        includePayloads
+          ? "blocklog-auditor-export-with-payloads.json"
+          : "blocklog-auditor-export-without-payloads.json",
+        fullExport,
       );
       downloadText("blocklog-verify-script.mjs", verifyScript);
       setNotice(
         includePayloads
-          ? "Downloaded auditor bundle with payloads and verification script."
-          : "Downloaded auditor bundle without payloads and verification script.",
+          ? "Downloaded auditor export with logs, batches, blockchain proofs, and payloads."
+          : "Downloaded auditor export with logs, batches, blockchain proofs, without payloads.",
       );
       setReauthPassword("");
     } catch (downloadError) {

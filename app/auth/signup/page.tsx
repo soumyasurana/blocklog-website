@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   blocklogRequest,
   normalizePayload,
@@ -15,15 +15,58 @@ type SignupResponse = {
   expires_in?: number;
 };
 
+type CompanyLookupResponse = {
+  exists?: boolean;
+  company_id?: string;
+  company_name?: string;
+  status?: string;
+};
+
 export default function SignupPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [companyId, setCompanyId] = useState("");
-  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [companyCheckLoading, setCompanyCheckLoading] = useState(false);
+  const [companyState, setCompanyState] = useState<{
+    exists: boolean;
+    checkedId: string;
+    companyName?: string;
+    status?: string;
+  }>({ exists: false, checkedId: "" });
+
+  useEffect(() => {
+    const normalized = companyId.trim().toLowerCase();
+    if (!normalized) {
+      setCompanyState({ exists: false, checkedId: "" });
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setCompanyCheckLoading(true);
+      try {
+        const payload = await blocklogRequest<CompanyLookupResponse | { data?: CompanyLookupResponse }>(
+          `/auth/companies/${encodeURIComponent(normalized)}/exists`,
+        );
+        const result = normalizePayload<CompanyLookupResponse>(payload, {}, "data");
+        setCompanyState({
+          exists: Boolean(result.exists),
+          checkedId: result.company_id ?? normalized,
+          companyName: result.company_name,
+          status: result.status,
+        });
+      } catch {
+        setCompanyState({ exists: false, checkedId: normalized });
+      } finally {
+        setCompanyCheckLoading(false);
+      }
+    }, 280);
+
+    return () => clearTimeout(timer);
+  }, [companyId]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,6 +74,14 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
+      const normalizedCompanyId = companyId.trim().toLowerCase();
+      if (!normalizedCompanyId) {
+        throw new Error("Enter a valid company ID.");
+      }
+      if (!companyState.exists || companyState.checkedId !== normalizedCompanyId) {
+        throw new Error("Company not found. Ask your admin to create the company first.");
+      }
+
       const payload = await blocklogRequest<SignupResponse | { data?: SignupResponse }>(
         "/auth/signup",
         "POST",
@@ -38,8 +89,7 @@ export default function SignupPage() {
           username,
           email,
           password,
-          company_id: companyId,
-          company_name: companyName || undefined,
+          company_id: normalizedCompanyId,
         },
       );
       const session = normalizePayload<SignupResponse>(payload, {}, "data");
@@ -69,6 +119,9 @@ export default function SignupPage() {
     <main className="auth-page">
       <section className="card auth-card">
         <h1 style={{ marginTop: 0 }}>Create your Blocklog account</h1>
+        <p className="muted" style={{ marginTop: 0 }}>
+          Sign up with an existing company ID. Company provisioning is handled by your admin.
+        </p>
         <form className="form" onSubmit={onSubmit}>
           <div>
             <label>Username</label>
@@ -87,14 +140,15 @@ export default function SignupPage() {
               onChange={(event) => setCompanyId(event.target.value)}
               required
             />
-          </div>
-          <div>
-            <label>Company name</label>
-            <input
-              placeholder="Pilot Company"
-              value={companyName}
-              onChange={(event) => setCompanyName(event.target.value)}
-            />
+            {companyId.trim() && (
+              <p className="muted" style={{ margin: "8px 0 0" }}>
+                {companyCheckLoading
+                  ? "Checking company..."
+                  : companyState.exists
+                    ? `Company found: ${companyState.companyName ?? companyState.checkedId} (${companyState.status ?? "ACTIVE"})`
+                    : "Company not found. Use a valid company ID."}
+              </p>
+            )}
           </div>
           <div>
             <label>Work email</label>
@@ -117,7 +171,11 @@ export default function SignupPage() {
             />
           </div>
           {error && <p style={{ color: "var(--danger)", margin: 0 }}>{error}</p>}
-          <button className="btn btn-primary" type="submit" disabled={loading}>
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={loading || companyCheckLoading || !companyState.exists}
+          >
             {loading ? "Creating..." : "Start Free"}
           </button>
         </form>
