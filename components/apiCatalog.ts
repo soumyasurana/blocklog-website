@@ -232,7 +232,7 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     description: "Ingest a single event into the sealed audit trail.",
     pageHref: "/dashboard/logs",
     samplePayload:
-      '{\n  "event_type": "payment.created",\n  "source": "payments-api",\n  "payload": {\n    "user_id": "123",\n    "amount": 2000,\n    "currency": "USD"\n  }\n}',
+      '{\n  "event_type": "payment.created",\n  "source": "payments-api",\n  "idempotency_key": "evt_payment_123_created",\n  "data": {\n    "user_id": "123",\n    "amount": 2000,\n    "currency": "USD"\n  }\n}',
   },
   {
     category: "Logs",
@@ -242,7 +242,15 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     description: "Ingest a batch of logs into the audit pipeline.",
     pageHref: "/dashboard/system/pipeline",
     samplePayload:
-      '{\n  "logs": [\n    {\n      "event_type": "payment.created",\n      "source": "payments-api",\n      "payload": {\n        "user_id": "123",\n        "amount": 2000,\n        "currency": "USD"\n      }\n    },\n    {\n      "event_type": "payment.updated",\n      "source": "payments-api",\n      "payload": {\n        "user_id": "123",\n        "status": "captured"\n      }\n    }\n  ]\n}',
+      '{\n  "logs": [\n    {\n      "event_type": "payment.created",\n      "source": "payments-api",\n      "idempotency_key": "evt_payment_123_created",\n      "data": {\n        "user_id": "123",\n        "amount": 2000,\n        "currency": "USD"\n      }\n    },\n    {\n      "event_type": "payment.updated",\n      "source": "payments-api",\n      "idempotency_key": "evt_payment_123_updated",\n      "data": {\n        "user_id": "123",\n        "status": "captured"\n      }\n    }\n  ]\n}',
+  },
+  {
+    category: "Logs",
+    label: "Recent Ingestion Debug",
+    method: "GET",
+    path: "/logs/debug/recent",
+    description: "Return the tenant-scoped golden debug stream with raw requests, processed logs, and ingestion errors.",
+    pageHref: "/dashboard/monitoring/ingestion",
   },
   {
     category: "Logs",

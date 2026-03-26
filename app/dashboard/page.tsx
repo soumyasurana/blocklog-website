@@ -10,6 +10,7 @@ import { blocklogRequest } from "@/lib/blocklog";
 type UsageResponse = {
   logs_ingested?: number;
   logs_ingested_today?: number;
+  api_calls?: number;
   verification_requests?: number;
   gb_processed?: number;
 };
@@ -67,7 +68,7 @@ export default function DashboardHomePage() {
         setStats({
           logsIngested: usage.logs_ingested_today ?? usage.logs_ingested ?? 0,
           verificationRequests:
-            usage.verification_requests ?? integrityStatus.logs_verified ?? 0,
+            usage.api_calls ?? usage.verification_requests ?? integrityStatus.logs_verified ?? 0,
           integrityStatus:
             integrityReport.chain_continuity_status ??
             integrityStatus.integrity_status ??
@@ -93,7 +94,7 @@ export default function DashboardHomePage() {
 
   const cards = [
     ["Logs ingested today", String(stats.logsIngested)],
-    ["Verification requests", String(stats.verificationRequests)],
+    ["API calls", String(stats.verificationRequests)],
     ["Integrity status", stats.integrityStatus],
     ["Anchors created", String(stats.anchors)],
   ];

@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest } from "@/lib/blocklog";
 
-type ExportProofResponse = {
-  logs?: { log_id: string; created_at: string; chain_hash: string }[];
-};
-
-type LogDetails = {
-  log_id?: string;
-  event_type?: string;
-};
-
-type VerifyResult = {
-  chain_valid?: boolean;
-  signature_valid?: boolean | null;
+type DebugEvent = {
+  event?: "raw_request" | "processed_log" | "error";
+  recorded_at?: string;
+  payload?: {
+    event_type?: string;
+    source?: string;
+    log_id?: string;
+    idempotency_key?: string | null;
+    reason?: string;
+    message?: string;
+  };
 };
 
 type StreamLine = {
@@ -36,38 +35,37 @@ export default function IngestionMonitorPage() {
   useEffect(() => {
     async function loadStream() {
       try {
-        const from = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
-        const to = new Date().toISOString();
-        const proof = await blocklogRequest<ExportProofResponse>(
-          `/logs/export-proof?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
+        const debug = await blocklogRequest<{ events?: DebugEvent[] }>(
+          "/logs/debug/recent?limit=12",
         );
-
-        const recent = (proof.logs ?? []).slice(0, 6);
+        const recent = (debug.events ?? []).slice(0, 12);
         if (recent.length === 0) {
           setLines([]);
           return;
         }
 
-        const stream = await Promise.all(
-          recent.map(async (log) => {
-            const [details, verification] = await Promise.all([
-              blocklogRequest<LogDetails>(`/logs/${log.log_id}`),
-              blocklogRequest<VerifyResult>(`/logs/${log.log_id}/verify`),
-            ]);
+        const stream = recent.map((event) => {
+          const status =
+            event.event === "processed_log"
+              ? "verified"
+              : event.event === "error"
+                ? "failed"
+                : "pending";
+          const label =
+            event.payload?.event_type ??
+            event.payload?.reason ??
+            event.payload?.log_id ??
+            "ingestion.event";
+          const source = event.payload?.source ? ` via ${event.payload.source}` : "";
+          const suffix = event.payload?.idempotency_key
+            ? ` [${event.payload.idempotency_key}]`
+            : "";
 
-            const status =
-              verification.chain_valid && verification.signature_valid !== false
-                ? "verified"
-                : verification.chain_valid === false
-                  ? "failed"
-                  : "pending";
-
-            return {
-              line: `[${new Date(log.created_at).toLocaleTimeString()}] ${details.event_type ?? log.log_id}`,
-              status,
-            } satisfies StreamLine;
-          }),
-        );
+          return {
+            line: `[${new Date(event.recorded_at ?? Date.now()).toLocaleTimeString()}] ${label}${source}${suffix}`,
+            status,
+          } satisfies StreamLine;
+        });
 
         setLines(stream);
       } catch (loadError) {
@@ -92,8 +90,8 @@ export default function IngestionMonitorPage() {
       <DashboardTopBar title="Monitoring / Ingestion" />
       {error && <p className="error-banner">Live API unavailable: {error}</p>}
       <section className="card glass-card">
-        <p className="eyebrow">Recent intake</p>
-        <h2 style={{ marginTop: 8 }}>Incoming log stream derived from export proofs and per-log verification.</h2>
+        <p className="eyebrow">Golden debug layer</p>
+        <h2 style={{ marginTop: 8 }}>Raw requests, processed logs, and ingestion errors in one tenant-scoped stream.</h2>
         <div className="stream">
           {lines.length === 0 ? (
             <div className="empty-state">No recent logs found for the selected window.</div>
