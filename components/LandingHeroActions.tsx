@@ -12,18 +12,21 @@ export default function LandingHeroActions() {
   const loggedIn = useSyncExternalStore(subscribeSession, getSnapshot, () => false);
 
   return (
-    <div className="button-row" style={{ marginTop: 18 }}>
-      {!loggedIn && (
-        <Link className="btn btn-primary" href="/pilot">
-          Start 20-Day Pilot
+    <div className="landing-hero-actions">
+      <div className="button-row" style={{ marginTop: 18 }}>
+        <Link className="btn btn-primary" href={loggedIn ? "/dashboard" : "/pilot"}>
+          {loggedIn ? "Open Console" : "Start 20-Day Pilot"}
         </Link>
-      )}
-      <Link className="btn btn-link" href="/docs">
-        View Docs
-      </Link>
-      <Link className={`btn${loggedIn ? " btn-primary" : ""}`} href="/dashboard">
-        Open Console
-      </Link>
+        <Link className="btn btn-link" href="#proof-flow">
+          See 3-Step Proof Flow
+        </Link>
+        {!loggedIn && (
+          <Link className="btn" href="/docs">
+            View Docs
+          </Link>
+        )}
+      </div>
+      {!loggedIn && <p className="landing-hero-action-note">No credit card required.</p>}
     </div>
   );
 }
