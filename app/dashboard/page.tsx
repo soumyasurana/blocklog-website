@@ -53,7 +53,7 @@ export default function DashboardHomePage() {
       setError(null);
 
       try {
-        const [usage, integrityStatus, integrityReport, proof] = await Promise.all([
+        const [usageResult, integrityStatusResult, integrityReportResult, proofResult] = await Promise.allSettled([
           blocklogRequest<UsageResponse>("/usage"),
           blocklogRequest<IntegrityStatusResponse>("/integrity/status"),
           blocklogRequest<IntegrityReportResponse>("/integrity/report"),
@@ -64,24 +64,49 @@ export default function DashboardHomePage() {
           ),
         ]);
 
-        const recent = proof.logs.slice(-8);
+        const usage = usageResult.status === "fulfilled" ? usageResult.value : null;
+        const integrityStatus =
+          integrityStatusResult.status === "fulfilled" ? integrityStatusResult.value : null;
+        const integrityReport =
+          integrityReportResult.status === "fulfilled" ? integrityReportResult.value : null;
+        const proof = proofResult.status === "fulfilled" ? proofResult.value : null;
+
+        const recent = (proof?.logs ?? []).slice(-8);
         setStats({
-          logsIngested: usage.logs_ingested_today ?? usage.logs_ingested ?? 0,
+          logsIngested: usage?.logs_ingested_today ?? usage?.logs_ingested ?? 0,
           verificationRequests:
-            usage.api_calls ?? usage.verification_requests ?? integrityStatus.logs_verified ?? 0,
+            usage?.api_calls ??
+            usage?.verification_requests ??
+            integrityStatus?.logs_verified ??
+            0,
           integrityStatus:
-            integrityReport.chain_continuity_status ??
-            integrityStatus.integrity_status ??
-            integrityStatus.status ??
+            integrityReport?.chain_continuity_status ??
+            integrityStatus?.integrity_status ??
+            integrityStatus?.status ??
             "unknown",
-          ingestionRate: `${usage.gb_processed ?? 0} GB processed`,
-          anchors: integrityStatus.anchors_created ?? 0,
+          ingestionRate: `${usage?.gb_processed ?? 0} GB processed`,
+          anchors: integrityStatus?.anchors_created ?? 0,
         });
         setLogsSeries(recent.map((_, index) => (index + 1) * 12));
         setVerificationSeries(
-          (integrityReport.recent_batches ?? []).slice(0, 8).map((_, index) => (index + 1) * 8),
+          (integrityReport?.recent_batches ?? []).slice(0, 8).map((_, index) => (index + 1) * 8),
         );
         setRecentLogs(recent.reverse());
+
+        const failedSources = [
+          usageResult.status === "rejected" ? "usage" : null,
+          integrityStatusResult.status === "rejected" ? "integrity status" : null,
+          integrityReportResult.status === "rejected" ? "integrity report" : null,
+          proofResult.status === "rejected" ? "proof export" : null,
+        ].filter(Boolean);
+
+        if (failedSources.length === 4) {
+          throw new Error("Failed to load overview");
+        }
+
+        if (failedSources.length > 0) {
+          setError(`Some trust metrics are unavailable: ${failedSources.join(", ")}`);
+        }
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load overview");
       } finally {

@@ -47,6 +47,13 @@ type CompanySummary = {
   batch_count?: number;
 };
 
+type CompanyRecord = {
+  company_id?: string;
+  company_name?: string;
+  status?: string;
+  created_at?: string;
+};
+
 type CompanyControlsResponse = {
   company_id?: string;
   company_name?: string;
@@ -95,16 +102,24 @@ export default function AdminPortalPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [killing, setKilling] = useState(false);
+  const [creatingCompany, setCreatingCompany] = useState(false);
   const [keyLoading, setKeyLoading] = useState(false);
+  const [companyRecordLoading, setCompanyRecordLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [access, setAccess] = useState<"checking" | "granted" | "denied">("checking");
   const [operator, setOperator] = useState({ email: "founder@blocklogsecurity.com", username: "founder" });
   const [overview, setOverview] = useState<AdminOverviewPayload>(fallbackOverview);
   const [companies, setCompanies] = useState<CompanySummary[]>([]);
+  const [companyRegistry, setCompanyRegistry] = useState<CompanyRecord[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
+  const [companyRecord, setCompanyRecord] = useState<CompanyRecord | null>(null);
   const [apiKeys, setApiKeys] = useState<CompanyApiKey[]>([]);
   const [killReason, setKillReason] = useState("");
+  const [newCompany, setNewCompany] = useState({
+    company_name: "",
+    company_id: "",
+  });
   const [controls, setControls] = useState({
     company_name: "",
     status: "ACTIVE",
@@ -137,13 +152,15 @@ export default function AdminPortalPage() {
           return;
         }
 
-        const [overviewPayload, companiesPayload] = await Promise.all([
+        const [overviewPayload, companiesPayload, registryPayload] = await Promise.all([
           blocklogRequest<AdminOverviewPayload | { data?: AdminOverviewPayload }>("/admin/overview"),
           blocklogRequest<CompanySummary[] | { data?: CompanySummary[] }>("/admin/companies"),
+          blocklogRequest<CompanyRecord[] | { data?: CompanyRecord[] }>("/companies"),
         ]);
 
         const nextOverview = normalizePayload<AdminOverviewPayload>(overviewPayload, fallbackOverview, "data");
         const companyList = normalizePayload<CompanySummary[]>(companiesPayload, [], "data");
+        const registry = normalizePayload<CompanyRecord[]>(registryPayload, [], "data");
 
         setOperator({
           email: me.email ?? "founder@blocklogsecurity.com",
@@ -151,6 +168,7 @@ export default function AdminPortalPage() {
         });
         setOverview(nextOverview);
         setCompanies(companyList);
+        setCompanyRegistry(registry);
         if (companyList.length > 0) {
           setSelectedCompanyId((current) => current || companyList[0].company_id || "");
         }
@@ -204,6 +222,29 @@ export default function AdminPortalPage() {
     loadKeys();
   }, [selectedCompanyId, access]);
 
+  useEffect(() => {
+    async function loadCompanyRecord() {
+      if (!selectedCompanyId || access !== "granted") {
+        setCompanyRecord(null);
+        return;
+      }
+
+      setCompanyRecordLoading(true);
+      try {
+        const payload = await blocklogRequest<CompanyRecord | { data?: CompanyRecord }>(
+          `/companies/${encodeURIComponent(selectedCompanyId)}`,
+        );
+        setCompanyRecord(normalizePayload<CompanyRecord>(payload, {}, "data"));
+      } catch (loadError) {
+        setError(loadError instanceof Error ? loadError.message : "Failed to load company record");
+      } finally {
+        setCompanyRecordLoading(false);
+      }
+    }
+
+    loadCompanyRecord();
+  }, [selectedCompanyId, access]);
+
   if (!loading && access === "denied") {
     notFound();
   }
@@ -217,9 +258,46 @@ export default function AdminPortalPage() {
     }
   }
 
+  async function refreshCompanyRegistry(preserveSelected = true) {
+    const payload = await blocklogRequest<CompanyRecord[] | { data?: CompanyRecord[] }>("/companies");
+    const registry = normalizePayload<CompanyRecord[]>(payload, [], "data");
+    setCompanyRegistry(registry);
+    if (!preserveSelected && registry.length > 0) {
+      setSelectedCompanyId(registry[0].company_id ?? "");
+    }
+  }
+
   async function refreshOverview() {
     const payload = await blocklogRequest<AdminOverviewPayload | { data?: AdminOverviewPayload }>("/admin/overview");
     setOverview(normalizePayload<AdminOverviewPayload>(payload, fallbackOverview, "data"));
+  }
+
+  async function onCreateCompany(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setCreatingCompany(true);
+    setError(null);
+    setNotice(null);
+
+    try {
+      const payload = await blocklogRequest<CompanyRecord>(
+        "/companies",
+        "POST",
+        {
+          company_name: newCompany.company_name,
+          company_id: newCompany.company_id.trim() || undefined,
+        },
+      );
+
+      await Promise.all([refreshCompanies(false), refreshCompanyRegistry(false), refreshOverview()]);
+      setSelectedCompanyId(payload.company_id ?? "");
+      setNewCompany({ company_name: "", company_id: "" });
+      setNotice(`Company created: ${payload.company_name ?? payload.company_id}`);
+    } catch (createError) {
+      setError(createError instanceof Error ? createError.message : "Failed to create company");
+    } finally {
+      setCreatingCompany(false);
+    }
   }
 
   async function onSaveControls(event: FormEvent<HTMLFormElement>) {
@@ -382,6 +460,81 @@ export default function AdminPortalPage() {
               <article className="card glass-card">
                 <div className="section-header" style={{ marginBottom: 16 }}>
                   <div>
+                    <p className="eyebrow">Company registry endpoints</p>
+                    <h2 style={{ marginBottom: 8 }}>List, create, and inspect companies from the admin portal.</h2>
+                  </div>
+                </div>
+
+                <form className="form" onSubmit={onCreateCompany}>
+                  <div className="grid grid-2">
+                    <div>
+                      <label>New company name</label>
+                      <input
+                        value={newCompany.company_name}
+                        onChange={(event) =>
+                          setNewCompany((current) => ({ ...current, company_name: event.target.value }))
+                        }
+                        placeholder="Acme Financial"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label>Optional company ID</label>
+                      <input
+                        value={newCompany.company_id}
+                        onChange={(event) =>
+                          setNewCompany((current) => ({ ...current, company_id: event.target.value }))
+                        }
+                        placeholder="Leave blank to auto-generate"
+                      />
+                    </div>
+                  </div>
+                  <div className="button-row">
+                    <button className="btn btn-primary" type="submit" disabled={creatingCompany}>
+                      {creatingCompany ? "Creating..." : "Create Company"}
+                    </button>
+                    <button className="btn" type="button" onClick={() => void refreshCompanyRegistry()}>
+                      Refresh Company List
+                    </button>
+                  </div>
+                </form>
+
+                <div className="section-header" style={{ marginTop: 20, marginBottom: 12 }}>
+                  <div>
+                    <p className="eyebrow">Registry from `/companies`</p>
+                    <h2 style={{ marginBottom: 8 }}>{companyRegistry.length} companies visible to this admin session.</h2>
+                  </div>
+                </div>
+
+                {companyRegistry.length === 0 ? (
+                  <div className="empty-state">No companies returned from the company registry endpoint.</div>
+                ) : (
+                  <div className="table-shell">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Company ID</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {companyRegistry.map((company) => (
+                          <tr key={company.company_id}>
+                            <td>{company.company_name ?? "Unnamed company"}</td>
+                            <td>{company.company_id ?? "n/a"}</td>
+                            <td>{company.status ?? "unknown"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </article>
+
+              <article className="card glass-card">
+                <div className="section-header" style={{ marginBottom: 16 }}>
+                  <div>
                     <p className="eyebrow">Tenant controls</p>
                     <h2 style={{ marginBottom: 8 }}>Select a company and change live admin controls.</h2>
                   </div>
@@ -402,6 +555,30 @@ export default function AdminPortalPage() {
                       </select>
                     </div>
                     <div className="grid grid-2">
+                      <div>
+                        <label>Selected company record</label>
+                        <input
+                          readOnly
+                          value={
+                            companyRecordLoading
+                              ? "Loading company endpoint..."
+                              : companyRecord
+                                ? `${companyRecord.company_name ?? "Unknown"} (${companyRecord.status ?? "unknown"})`
+                                : "No company selected"
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label>Record created at</label>
+                        <input
+                          readOnly
+                          value={
+                            companyRecord?.created_at
+                              ? new Date(companyRecord.created_at).toISOString()
+                              : "No company record loaded"
+                          }
+                        />
+                      </div>
                       <div>
                         <label>Company name</label>
                         <input
