@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "next": "16.1.1",
+    "posthog-js": "^1.364.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "vercel": "^50.32.5"
