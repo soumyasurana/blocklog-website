@@ -56,6 +56,12 @@ export default function ApiKeysPage() {
           rate_limit_per_minute: Number(rateLimit),
         },
       );
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag("event", "api_key_created", {
+        key_name: keyName,
+        rate_limit: Number(rateLimit),
+        });
+      }
 
       setKeyName("");
       setNotice(`API key created: ${created.api_key}`);

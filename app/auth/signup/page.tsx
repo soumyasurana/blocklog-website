@@ -101,6 +101,12 @@ export default function SignupPage() {
         },
         session.expires_in ? session.expires_in * 1000 : undefined,
       );
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag("event", "signup", {
+        method: "email",
+        company_id: normalizedCompanyId,
+        });
+      }
       const nextPath =
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")
