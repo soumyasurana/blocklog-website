@@ -185,6 +185,12 @@ const founderLinks = [
   { href: "mailto:founder@blocklogsecurity.com", label: "founder@blocklogsecurity.com" },
 ];
 
+const pressurePoints = [
+  "The average incident takes 7 hours to diagnose from logs.",
+  "Most logs can be edited without detection.",
+  "Regulators are starting to ask how you know your logs are real.",
+];
+
 export default function HomePage() {
   return (
     <>
@@ -204,8 +210,9 @@ export default function HomePage() {
                 <span>Blocklog makes them proof.</span>
               </h1>
               <p className="hero-value-prop">
-                A cryptographic event layer for systems that can&apos;t afford to be trusted blindly
-                - starting with the audit workflows that still run on screenshots and CSV exports.
+                Every system that touches money, compliance, or autonomous decisions will need to
+                prove its own integrity. That moment is arriving faster than the tooling is.
+                Blocklog is the layer being built for it.
               </p>
               <div className="landing-hero-quotes">
                 {heroQuotes.map((item) => (
@@ -300,6 +307,72 @@ $ ./verify.sh proof_bundle.zip
 
         <section className="landing-proof-strip" aria-label="Blocklog proof signals">
           🔒 Live MVP · Hash-chained event store · Public API · GitHub open source
+        </section>
+
+        <section className="section">
+          <article className="card glass-card landing-pressure-card">
+            <div className="landing-pressure-layout">
+              <div className="landing-pressure-copy">
+                <div>
+                  <p className="eyebrow">Real-world pressure</p>
+                  <h2>
+                    The systems running your business are making decisions you{" "}
+                    <span>can&apos;t verify.</span>
+                  </h2>
+                </div>
+                <p className="landing-pressure-body">
+                  Your CI pipeline deploys at 3am. Your payment processor retries silently. Your AI
+                  agent updates a record and moves on. When something breaks - and it will -
+                  you&apos;ll open a log file and hope nothing touched it. That hope is not a system.
+                  Blocklog is.
+                </p>
+              </div>
+              <div className="landing-pressure-panel">
+                <div className="landing-pressure-panel-header">
+                  <div>
+                    <span className="comparison-label">Audit session</span>
+                    <strong>Proof Bundle Verified</strong>
+                  </div>
+                  <div className="landing-pressure-status">Live verification</div>
+                </div>
+                <div className="landing-pressure-checks">
+                  <div className="landing-pressure-check landing-pressure-check-ok">[OK] log chain intact</div>
+                  <div className="landing-pressure-check landing-pressure-check-ok">[OK] timestamp anchored</div>
+                  <div className="landing-pressure-check landing-pressure-check-warn">[WARN] source state was previously untrusted</div>
+                </div>
+                <div className="landing-pressure-console">
+                  <div className="landing-pressure-console-row">
+                    <span>event_id</span>
+                    <strong>evt_29afc11d</strong>
+                  </div>
+                  <div className="landing-pressure-console-row">
+                    <span>batch_id</span>
+                    <strong>b_2026_04_25_0314</strong>
+                  </div>
+                  <div className="landing-pressure-console-row">
+                    <span>anchored_at</span>
+                    <strong>2026-04-25T03:14:22Z</strong>
+                  </div>
+                  <div className="landing-pressure-console-row">
+                    <span>root_hash</span>
+                    <strong>0x8c43...91aa</strong>
+                  </div>
+                  <div className="landing-pressure-console-row">
+                    <span>proof_id</span>
+                    <strong>pf_live_00318</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="landing-pressure-points">
+              {pressurePoints.map((item, index) => (
+                <div className="landing-pressure-point" key={item}>
+                  <span>{`0${index + 1}`}</span>
+                  <p>{item}</p>
+                </div>
+              ))}
+            </div>
+          </article>
         </section>
 
         <section className="section" id="proof-flow">
@@ -486,21 +559,30 @@ $ ./verify.sh proof_bundle.zip
             <h2>Why I built this.</h2>
             <div className="landing-builder-copy">
               <p>
-                I started building Blocklog after an incident review where engineers were trying to
-                reconstruct a timeline from logs that no longer agreed with each other. One system
-                had the record the team trusted, another had already been overwritten, and the
-                whole room was reduced to screenshots, hunches, and who had exported what first.
+                At 2am during a production incident, I watched a senior engineer spend four hours
+                reconstructing what happened - not because the logs were missing, but because no
+                one could prove they hadn&apos;t been touched. The system had integrity. The logs
+                didn&apos;t. We shipped a fix based on a best guess. That&apos;s when I understood the
+                actual problem wasn&apos;t debugging. It was trust.
               </p>
               <p>
-                Blocklog is a live system: running backend, hash-chained Postgres event store,
-                public REST API, and 2 GitHub repos shipping real infrastructure across distributed
-                systems and security.
+                Blocklog is a live system. Hash-chained Postgres event store, public REST API,
+                running backend, 2 shipped GitHub repos. The architecture is the same one
+                append-only databases and certificate transparency logs use - I just put it where
+                logs actually live.
               </p>
               <p>
-                I&apos;m building toward a world where any system - human-operated or autonomous - can
-                prove its own integrity without asking anyone to just trust it.
+                I&apos;m 20. I don&apos;t have a decade of enterprise sales experience. What I have is a
+                system that&apos;s running, a problem that&apos;s getting more urgent as AI agents multiply,
+                and the conviction that infrastructure built for autonomous systems needs to be
+                designed before those systems are everywhere - not after the first major incident
+                proves why.
               </p>
             </div>
+            <p className="landing-builder-close">
+              Logs were never supposed to be trusted blindly. I&apos;m building the layer that makes
+              them trustworthy by default.
+            </p>
             <div className="landing-builder-links">
               {founderLinks.map((item) => (
                 <a href={item.href} key={item.href}>

@@ -2179,6 +2179,210 @@ tbody tr:hover {
   gap: 18px;
 }
 
+.landing-pressure-card {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 34px 36px;
+  border-color: color-mix(in srgb, var(--white-soft-strong) 78%, var(--border));
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at 18% 78%, rgba(255, 160, 79, 0.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(93, 160, 255, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent 34%),
+    color-mix(in srgb, var(--surface-strong) 90%, var(--bg));
+  background-size: 28px 28px, 28px 28px, auto, auto, auto, auto, auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.landing-pressure-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(380px, 1.08fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.landing-pressure-copy {
+  display: grid;
+  gap: 32px;
+}
+
+.landing-pressure-card h2 {
+  max-width: 11ch;
+  margin: 8px 0 0;
+  font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.landing-pressure-card h2 span {
+  color: color-mix(in srgb, #ffb36b 64%, var(--text));
+}
+
+.landing-pressure-body {
+  max-width: 64ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--text) 94%, var(--muted));
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+.landing-pressure-panel {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22%),
+    linear-gradient(135deg, rgba(93, 160, 255, 0.08), transparent 44%),
+    color-mix(in srgb, var(--surface-strong) 92%, var(--bg));
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.landing-pressure-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -12% -22% auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(93, 160, 255, 0.14), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.landing-pressure-panel-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.landing-pressure-panel-header strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.landing-pressure-status {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--success) 50%, var(--accent));
+  background: rgba(62, 213, 152, 0.1);
+  color: color-mix(in srgb, var(--success) 82%, white);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landing-pressure-checks {
+  display: grid;
+  gap: 10px;
+}
+
+.landing-pressure-check {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.landing-pressure-check-ok {
+  color: color-mix(in srgb, var(--success) 86%, white);
+  border-color: color-mix(in srgb, var(--success) 28%, var(--border));
+}
+
+.landing-pressure-check-warn {
+  color: color-mix(in srgb, #ffb36b 84%, white);
+  border-color: color-mix(in srgb, #ff8d4d 30%, var(--border));
+  background:
+    linear-gradient(180deg, rgba(255, 166, 91, 0.08), transparent 100%),
+    color-mix(in srgb, var(--surface-strong) 74%, transparent);
+}
+
+.landing-pressure-console {
+  display: grid;
+  gap: 0;
+  border: 1px solid color-mix(in srgb, var(--white-soft-strong) 65%, var(--border));
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(5, 12, 23, 0.72);
+}
+
+.landing-pressure-console-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-top: 1px solid color-mix(in srgb, var(--white-soft) 84%, var(--border));
+}
+
+.landing-pressure-console-row:first-child {
+  border-top: 0;
+}
+
+.landing-pressure-console-row span {
+  color: color-mix(in srgb, var(--text) 54%, var(--muted));
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.landing-pressure-console-row strong {
+  color: color-mix(in srgb, var(--text) 96%, var(--muted));
+  font-family: var(--font-mono), monospace;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.landing-pressure-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 34px;
+  border-top: 0;
+}
+
+.landing-pressure-point {
+  display: grid;
+  gap: 14px;
+  min-height: 100%;
+  padding: 18px 18px 20px;
+  border: 1px solid color-mix(in srgb, var(--white-soft-strong) 72%, var(--border));
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 100%),
+    color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+.landing-pressure-point span {
+  color: color-mix(in srgb, var(--primary-strong) 78%, var(--muted));
+  font-family: var(--font-mono), monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.landing-pressure-point p {
+  margin: 0;
+  color: color-mix(in srgb, var(--text) 78%, var(--muted));
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .landing-proof-exchange {
   display: grid;
   gap: 14px;
@@ -2327,6 +2531,15 @@ tbody tr:hover {
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 22px;
+}
+
+.landing-builder-close {
+  max-width: 28ch;
+  margin: 28px 0 0;
+  color: color-mix(in srgb, var(--text) 98%, var(--muted));
+  font-size: 1.28rem;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 .landing-builder-links a {
@@ -2641,6 +2854,28 @@ tbody tr:hover {
 
   .hero-value-prop {
     font-size: 1.18rem;
+  }
+
+  .landing-pressure-points {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .landing-pressure-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .landing-pressure-card {
+    padding: 26px 22px;
+  }
+
+  .landing-pressure-card h2 {
+    max-width: 12ch;
+  }
+
+  .landing-pressure-point {
+    padding: 16px 16px 18px;
   }
 
   .landing-proof-strip {
