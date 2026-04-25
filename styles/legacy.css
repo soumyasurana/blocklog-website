@@ -297,8 +297,10 @@ textarea {
 }
 
 .hero-value-prop {
-  font-size: 1.18rem;
-  color: color-mix(in srgb, var(--text) 82%, var(--muted));
+  font-size: 1.3rem;
+  color: color-mix(in srgb, var(--text) 94%, var(--muted));
+  font-weight: 520;
+  line-height: 1.75;
 }
 
 .hero-copy,
@@ -2109,8 +2111,32 @@ tbody tr:hover {
 .landing-hero-action-note,
 .landing-hero-note {
   margin: 0;
-  color: var(--muted);
-  font-size: 0.94rem;
+  color: color-mix(in srgb, var(--text) 84%, var(--muted));
+  font-size: 1rem;
+}
+
+.landing-hero-note em {
+  font-style: italic;
+  display: block;
+}
+
+.landing-proof-strip {
+  width: min(100%, 980px);
+  margin: 18px auto 6px;
+  padding: 12px 18px;
+  border: 1px solid color-mix(in srgb, var(--border-strong) 88%, var(--border));
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 90%),
+    color-mix(in srgb, var(--surface-strong) 88%, var(--bg));
+  color: color-mix(in srgb, var(--text) 72%, var(--muted));
+  text-align: center;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 .landing-hero-confidence {
@@ -2203,6 +2229,30 @@ tbody tr:hover {
   min-height: 180px;
 }
 
+.landing-live-demo-label {
+  display: table;
+  margin: 0 auto 16px;
+  padding: 9px 15px;
+  border: 1px solid color-mix(in srgb, var(--success) 60%, var(--accent));
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(62, 213, 152, 0.18), rgba(62, 213, 152, 0.1)),
+    color-mix(in srgb, var(--surface-strong) 92%, var(--bg));
+  color: color-mix(in srgb, var(--success) 88%, white);
+  box-shadow: 0 14px 32px rgba(16, 159, 102, 0.16);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landing-live-demo-note {
+  margin: 14px 0 0;
+  color: color-mix(in srgb, var(--text) 76%, var(--muted));
+  font-size: 0.92rem;
+  text-align: center;
+}
+
 .landing-outcome-card h3 {
   letter-spacing: -0.02em;
 }
@@ -2240,6 +2290,76 @@ tbody tr:hover {
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 26%),
     linear-gradient(135deg, rgba(123, 247, 212, 0.08), transparent 52%),
     color-mix(in srgb, var(--surface-strong) 78%, transparent);
+}
+
+.landing-builder-card {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px;
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 26%),
+    linear-gradient(135deg, rgba(93, 160, 255, 0.09), transparent 38%),
+    linear-gradient(135deg, rgba(123, 247, 212, 0.08), transparent 58%),
+    color-mix(in srgb, var(--surface-strong) 84%, var(--bg));
+  box-shadow: var(--shadow-lg);
+}
+
+.landing-builder-card h2 {
+  margin: 8px 0 16px;
+}
+
+.landing-builder-copy {
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+
+.landing-builder-copy p {
+  margin: 0;
+  color: color-mix(in srgb, var(--text) 94%, var(--muted));
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.landing-builder-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.landing-builder-links a {
+  color: var(--primary-strong);
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.landing-builder-links a::after {
+  content: " ->";
+}
+
+.landing-page .section,
+.landing-page .landing-proof-strip {
+  position: relative;
+}
+
+.landing-page .section::before {
+  content: "";
+  position: absolute;
+  inset: 0 -24px;
+  z-index: -1;
+  border-radius: calc(var(--radius) + 12px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 45%),
+    color-mix(in srgb, var(--bg-elevated) 86%, var(--bg));
+}
+
+.landing-page .section:nth-of-type(even)::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 42%),
+    linear-gradient(135deg, rgba(93, 160, 255, 0.04), transparent 46%),
+    color-mix(in srgb, var(--bg-elevated) 90%, var(--bg));
 }
 
 .landing-final-cta {
@@ -2517,6 +2637,15 @@ tbody tr:hover {
   .auth-aside,
   .doc-shell {
     padding: 18px;
+  }
+
+  .hero-value-prop {
+    font-size: 1.18rem;
+  }
+
+  .landing-proof-strip {
+    border-radius: 22px;
+    letter-spacing: 0.08em;
   }
 
   .verify-widget-form {

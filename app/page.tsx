@@ -1,11 +1,12 @@
 import Link from "next/link";
 import LandingHeroActions from "@/components/LandingHeroActions";
+import LandingThemeLock from "@/components/LandingThemeLock";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import VerifyProofWidget from "@/components/VerifyProofWidget";
 
 const heroSignals = [
-  { value: "30 seconds", label: "for an auditor to verify a proof bundle" },
+  { value: "30 seconds", label: "for an auditor or agent to verify a proof bundle" },
   { value: "20-day pilot", label: "to prove the workflow before rollout" },
   { value: "No schema changes", label: "for existing JSON log sources" },
 ];
@@ -27,7 +28,7 @@ const heroQuotes = [
 
 const heroConfidencePoints = [
   "Portable proof bundles you can keep",
-  "Independent verification for auditors",
+  "Independent verification for auditors and autonomous systems",
   "Fast pilot with founder-led onboarding",
 ];
 
@@ -36,18 +37,20 @@ const proofSteps = [
     step: "Step 1",
     title: "Send your logs",
     benefit: "One API call. Works with CloudTrail, Cloud Logging, GitHub, or any JSON logs.",
-    detail: "No schema changes. No complex setup.",
+    detail: "No schema changes. No new infrastructure. Blocklog sits beside your existing stack.",
   },
   {
     step: "Step 2",
     title: "We create cryptographic proof",
-    benefit: "Automatically sealed and anchored so tampering becomes visible and independently verifiable.",
+    benefit:
+      "Every event gets a deterministic hash chained to its predecessor - making silent log tampering cryptographically detectable, not just policy-detectable.",
     detail: "Runs in the background. No manual review step required.",
   },
   {
     step: "Step 3",
     title: "Give proof to your auditor",
-    benefit: "Download a proof bundle your auditor can verify without trusting your app or ours.",
+    benefit:
+      "Proof endpoints any system can query - including AI agents that need to verify state before acting.",
     detail: "Includes verification data and an auditor-friendly report.",
   },
 ];
@@ -60,7 +63,7 @@ const auditOutcomes = [
     result: "Result: Faster audit completion and less back-and-forth.",
   },
   {
-    title: "Give auditors what they actually want",
+    title: "Give auditors and autonomous systems what they actually need",
     before: "Before: \"We use locked storage\" and a request to trust your process.",
     after: "After: \"Here is proof you can verify independently.\"",
     result: "Result: Stronger answers, fewer follow-up questions.",
@@ -90,14 +93,14 @@ const auditorPoints = [
   "Independent verification without trusting Blocklog",
   "Professional proof bundles and portable audit evidence",
   "Clear integrity story for SOC 2, ISO 27001, and HIPAA workflows",
-  "Step-by-step verification path for reviewers and external auditors",
+  "Step-by-step verification path for reviewers, external auditors, and autonomous systems",
 ];
 
 const securityQuestions = [
   {
     question: "Where is our data stored?",
     answer:
-      "Blocklog is designed around proof and audit evidence, not opaque storage claims. Teams can keep raw logs in their own systems while using Blocklog for verification workflows, proof bundles, and integrity checks.",
+      "Blocklog is designed around proof and audit evidence, not opaque storage claims. Teams can keep raw logs in their own systems while using Blocklog as verification infrastructure for proof bundles and integrity checks.",
   },
   {
     question: "What if Blocklog gets breached?",
@@ -176,26 +179,33 @@ const docsLinks = [
   },
 ];
 
+const founderLinks = [
+  { href: "https://github.com/soumyasurana", label: "GitHub" },
+  { href: "https://blocklogsecurity.com", label: "blocklogsecurity.com" },
+  { href: "mailto:founder@blocklogsecurity.com", label: "founder@blocklogsecurity.com" },
+];
+
 export default function HomePage() {
   return (
     <>
       <SiteHeader />
-      <main className="container">
+      <LandingThemeLock />
+      <main className="container landing-page">
         <section className="hero">
           <div className="hero-copy">
             <div className="hero-copy-inner">
               <div className="hero-badge">
                 <span className="hero-badge-dot" />
-                Built for security teams, compliance leads, and auditors
+                Built for security teams, compliance leads, auditors, and autonomous systems
               </div>
-              <p className="eyebrow">Tamper-evident audit proof</p>
+              <p className="eyebrow">Cryptographically verifiable audit proof</p>
               <h1>
-                <span className="landing-headline-question">Auditors ask for proof.</span>
-                <span>Blocklog gives you proof.</span>
+                <span className="landing-headline-question">Logs are claims.</span>
+                <span>Blocklog makes them proof.</span>
               </h1>
               <p className="hero-value-prop">
-                Cryptographic proof your audit logs are intact, verifiable by anyone even if
-                Blocklog disappears tomorrow.
+                A cryptographic event layer for systems that can&apos;t afford to be trusted blindly
+                - starting with the audit workflows that still run on screenshots and CSV exports.
               </p>
               <div className="landing-hero-quotes">
                 {heroQuotes.map((item) => (
@@ -207,8 +217,10 @@ export default function HomePage() {
               </div>
               <LandingHeroActions />
               <p className="landing-hero-note">
-                Pilot includes ingestion setup, proof generation, and an auditor-ready verification
-                flow.
+                <em>
+                  Built by a 20-year-old who got tired of watching engineers reconstruct incidents
+                  from corrupt logs.
+                </em>
               </p>
               <div className="landing-hero-confidence">
                 <p className="eyebrow">Why teams start now</p>
@@ -286,11 +298,15 @@ $ ./verify.sh proof_bundle.zip
           </div>
         </section>
 
+        <section className="landing-proof-strip" aria-label="Blocklog proof signals">
+          🔒 Live MVP · Hash-chained event store · Public API · GitHub open source
+        </section>
+
         <section className="section" id="proof-flow">
           <div className="section-header">
             <div>
               <p className="eyebrow">Proof flow</p>
-              <h2>From logs to proof in 3 steps. No complex setup.</h2>
+              <h2>A new primitive for verifiable systems. Three lines of code to start.</h2>
             </div>
           </div>
           <div className="stack-grid landing-proof-grid">
@@ -306,7 +322,7 @@ $ ./verify.sh proof_bundle.zip
               ))}
             </div>
             <article className="card glass-card landing-verification-card">
-              <p className="eyebrow">What the auditor sees</p>
+              <p className="eyebrow">What the auditor and autonomous systems see</p>
               <h3 style={{ marginTop: 8, marginBottom: 12 }}>
                 Your auditor can verify this independently in 30 seconds.
               </h3>
@@ -328,20 +344,29 @@ $ ./verify.sh proof_bundle.zip
               <div className="status-pill">No custom audit scripts</div>
               <div className="status-pill">No manual log stitching</div>
               <div className="status-pill">No screenshot-based evidence</div>
-              <div className="status-pill">No reliance on internal tooling</div>
+              <div className="status-pill">No reliance on internal infrastructure</div>
             </div>
           </article>
         </section>
 
         <section className="section">
+          <div className="landing-live-demo-label">[ Live — this is the actual running system ]</div>
           <VerifyProofWidget />
+          <p className="landing-live-demo-note">
+            Backend live since March 2026. Uptime and hash chain continuity are publicly verifiable.
+          </p>
         </section>
 
         <section className="section">
           <div className="section-header">
             <div>
               <p className="eyebrow">Audit outcomes</p>
-              <h2>What this means for your audit.</h2>
+              <h2>Why logs needed a trust layer before AI agents made it urgent.</h2>
+              <p className="section-lead">
+                Compliance teams have lived with unverifiable logs for decades because humans could
+                catch obvious tampering. AI agents operating autonomously cannot - they execute on
+                whatever state they&apos;re handed. Blocklog is the missing trust primitive.
+              </p>
             </div>
           </div>
           <div className="grid grid-2">
@@ -360,12 +385,12 @@ $ ./verify.sh proof_bundle.zip
           <div className="section-header">
             <div>
               <p className="eyebrow">Two audiences</p>
-              <h2>Built for auditors, not just engineers.</h2>
+              <h2>Built for every layer of the stack - human and automated.</h2>
             </div>
           </div>
           <div className="grid grid-2">
             <article className="card glass-card landing-audience-card">
-              <p className="eyebrow">For engineers</p>
+              <p className="eyebrow">For the systems and agents reading these logs</p>
               <h3 style={{ marginTop: 8 }}>Simple integration</h3>
               <ul className="landing-list">
                 {engineerPoints.map((item) => (
@@ -374,7 +399,7 @@ $ ./verify.sh proof_bundle.zip
               </ul>
             </article>
             <article className="card glass-card landing-audience-card">
-              <p className="eyebrow">For auditors</p>
+              <p className="eyebrow">For compliance &amp; security teams</p>
               <h3 style={{ marginTop: 8 }}>Independent verification</h3>
               <ul className="landing-list">
                 {auditorPoints.map((item) => (
@@ -407,7 +432,12 @@ $ ./verify.sh proof_bundle.zip
           <div className="section-header">
             <div>
               <p className="eyebrow">Use cases</p>
-              <h2>Beyond SOC 2: other ways teams use Blocklog.</h2>
+              <h2>The same primitive that secures audits secures agentic systems.</h2>
+              <p className="section-lead">
+                We started with SOC 2 because the pain was obvious and the buyer existed. The same
+                hash-chain architecture is the foundation AI agent frameworks will need when they
+                have to prove what they did and why.
+              </p>
             </div>
           </div>
           <div className="grid grid-3">
@@ -425,7 +455,7 @@ $ ./verify.sh proof_bundle.zip
           <div className="section-header">
             <div>
               <p className="eyebrow">SOC 2 speed</p>
-              <h2>Save 2 weeks on your SOC 2 audit.</h2>
+              <h2>What teams are cutting with Blocklog.</h2>
             </div>
           </div>
           <div className="comparison-row">
@@ -451,10 +481,41 @@ $ ./verify.sh proof_bundle.zip
         </section>
 
         <section className="section">
+          <article className="card glass-card landing-builder-card">
+            <p className="eyebrow">Founder</p>
+            <h2>Why I built this.</h2>
+            <div className="landing-builder-copy">
+              <p>
+                I started building Blocklog after an incident review where engineers were trying to
+                reconstruct a timeline from logs that no longer agreed with each other. One system
+                had the record the team trusted, another had already been overwritten, and the
+                whole room was reduced to screenshots, hunches, and who had exported what first.
+              </p>
+              <p>
+                Blocklog is a live system: running backend, hash-chained Postgres event store,
+                public REST API, and 2 GitHub repos shipping real infrastructure across distributed
+                systems and security.
+              </p>
+              <p>
+                I&apos;m building toward a world where any system - human-operated or autonomous - can
+                prove its own integrity without asking anyone to just trust it.
+              </p>
+            </div>
+            <div className="landing-builder-links">
+              {founderLinks.map((item) => (
+                <a href={item.href} key={item.href}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="section">
           <div className="landing-final-cta">
             <div className="landing-final-cta-copy">
               <p className="eyebrow">Final call</p>
-              <h2>Your audit is coming. Be ready.</h2>
+              <h2>Your audit is coming. Your agents are already running. Be ready for both.</h2>
               <p className="section-lead" style={{ marginBottom: 0 }}>
                 Don&apos;t wait until the last minute to explain log integrity. Start a 20-day pilot
                 now and have cryptographic proof ready before the audit clock becomes painful.

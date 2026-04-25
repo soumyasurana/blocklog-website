@@ -41,7 +41,8 @@ const pages = [
   {
     name: "Auditor portal",
     href: "/docs/auditor-portal",
-    summary: "Understand the verification surfaces intended for reviewers and external auditors.",
+    summary:
+      "Understand the verification surfaces intended for reviewers, external auditors, and autonomous systems.",
   },
   {
     name: "SDKs",
@@ -52,7 +53,7 @@ const pages = [
 
 const architecturePoints = [
   "Blocklog accepts canonical JSON events over authenticated HTTP endpoints.",
-  "Each event is normalized, timestamped, hashed, and linked into a tamper-evident chain.",
+  "Each event is normalized, timestamped, hashed, and linked into a cryptographically verifiable chain.",
   "Logs can later be sealed into batches, exported as proof bundles, and verified independently.",
   "Operational surfaces expose health, metrics, integrity, usage, and debug signals for production review.",
 ];
@@ -75,7 +76,7 @@ const lifecycleSteps = [
   "Send a single log or a batch of logs with `event_type`, `source`, `data`, and an `idempotency_key` when retries are possible.",
   "Blocklog normalizes the payload, archives raw ingestion context, links the event into the tenant chain, and records verification metadata.",
   "Batches can later be sealed and anchored for stronger audit portability.",
-  "Auditors or operators verify by proof ID, log ID, or batch ID without depending on screenshots or internal assurances.",
+  "Auditors, autonomous systems, or operators verify by proof ID, log ID, or batch ID without depending on screenshots or internal assurances.",
 ];
 
 const operatorChecklist = [
@@ -106,12 +107,14 @@ export default function DocsIndexPage() {
 
         <section className="card glass-card" style={{ marginBottom: 20 }}>
           <p className="eyebrow">What Blocklog Is</p>
-          <h2 style={{ marginTop: 8, marginBottom: 12 }}>A tamper-evident audit evidence layer for logs and verification workflows.</h2>
+          <h2 style={{ marginTop: 8, marginBottom: 12 }}>
+            A cryptographically verifiable audit evidence layer for logs and verification workflows.
+          </h2>
           <p className="section-lead" style={{ marginBottom: 16 }}>
             Blocklog is not just a log viewer and not just a verification widget. It is a product
             and API surface for sending canonical events into an integrity-preserving pipeline,
-            generating portable proof artifacts, and giving operators or auditors a way to validate
-            that records were not silently changed after ingestion.
+            generating portable proof artifacts, and giving operators, auditors, or autonomous
+            systems a way to validate that records were not silently changed after ingestion.
           </p>
           <div className="grid grid-2">
             {architecturePoints.map((item) => (
