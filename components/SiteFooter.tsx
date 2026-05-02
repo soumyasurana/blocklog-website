@@ -19,7 +19,7 @@ export default function SiteFooter() {
           <Link href="/docs/log-ingestion">API</Link>
           <Link href="/docs/sdks">SDK examples</Link>
           <Link href="/docs/getting-started">Quick start</Link>
-          <Link href="/pilot">Start 20-Day Pilot</Link>
+          <Link href="/pilot">Join 60-Day Pilot</Link>
           <a href="https://github.com/Blockloghq" target="_blank" rel="noreferrer">
             GitHub
           </a>

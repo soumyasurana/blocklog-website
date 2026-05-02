@@ -7,7 +7,7 @@ import VerifyProofWidget from "@/components/VerifyProofWidget";
 
 const heroSignals = [
   { value: "30 seconds", label: "for an auditor or agent to verify a proof bundle" },
-  { value: "20-day pilot", label: "to prove the workflow before rollout" },
+  { value: "60-day pilot", label: "to prove the workflow in a real production system" },
   { value: "No schema changes", label: "for existing JSON log sources" },
 ];
 
@@ -29,7 +29,7 @@ const heroQuotes = [
 const heroConfidencePoints = [
   "Portable proof bundles you can keep",
   "Independent verification for auditors and autonomous systems",
-  "Fast pilot with founder-led onboarding",
+  "Free developer tier plus design-partner pilot",
 ];
 
 const proofSteps = [
@@ -175,7 +175,7 @@ const docsLinks = [
   {
     href: "/pilot",
     title: "Start a pilot",
-    detail: "Run a scoped 20-day pilot focused on auditor-ready proof and integration speed.",
+    detail: "Join the 60-day design partnership with full Pro access and structured feedback.",
   },
 ];
 
@@ -298,8 +298,8 @@ $ ./verify.sh proof_bundle.zip
               </div>
               <div className="orbital-card">
                 <p className="eyebrow">Pilot structure</p>
-                <strong>Start a 20-day pilot.</strong>
-                <p className="muted">No credit card required. Keep your data if you continue.</p>
+                <strong>Join the 60-day design partnership.</strong>
+                <p className="muted">Full Pro access, no credit card, and a clear path into Starter or Pro.</p>
               </div>
             </div>
           </div>
@@ -599,22 +599,22 @@ $ ./verify.sh proof_bundle.zip
               <p className="eyebrow">Final call</p>
               <h2>Your audit is coming. Your agents are already running. Be ready for both.</h2>
               <p className="section-lead" style={{ marginBottom: 0 }}>
-                Don&apos;t wait until the last minute to explain log integrity. Start a 20-day pilot
-                now and have cryptographic proof ready before the audit clock becomes painful.
+                Don&apos;t wait until the last minute to explain log integrity. Join the 60-day pilot
+                or move into the right paid tier before the audit clock becomes painful.
               </p>
             </div>
             <div className="landing-final-cta-grid">
               <article className="card glass-card landing-final-primary">
                 <p className="eyebrow">Primary path</p>
-                <h3 style={{ marginTop: 8, marginBottom: 12 }}>Start 20-Day Pilot</h3>
+                <h3 style={{ marginTop: 8, marginBottom: 12 }}>Join 60-Day Pilot</h3>
                 <ul className="landing-list landing-list-compact">
                   <li>No credit card required</li>
-                  <li>Full product access</li>
-                  <li>Founder-led onboarding</li>
+                  <li>Full Pro access</li>
+                  <li>Direct feedback loop with the founder</li>
                 </ul>
                 <div className="button-row" style={{ marginTop: 20 }}>
                   <Link className="btn btn-primary" href="/pilot">
-                    Start Pilot
+                    Join Pilot Program
                   </Link>
                 </div>
               </article>
@@ -631,9 +631,9 @@ $ ./verify.sh proof_bundle.zip
             </div>
             <div className="landing-trust-strip">
               <div className="status-pill">No credit card required</div>
-              <div className="status-pill">Cancel anytime</div>
-              <div className="status-pill">$149 refunded if you convert</div>
-              <div className="status-pill">White-glove onboarding included</div>
+              <div className="status-pill">60 days of full Pro access</div>
+              <div className="status-pill">Structured check-ins at week 2 and week 6</div>
+              <div className="status-pill">Extended 90-day enterprise pilot available</div>
             </div>
           </div>
         </section>
@@ -646,12 +646,12 @@ $ ./verify.sh proof_bundle.zip
             </div>
             <div>
               <p className="section-lead" style={{ marginBottom: 16 }}>
-                Start with a 20-day pilot, prove the evidence flow with your real logs, then expand
-                only if it makes audit review meaningfully easier.
+                Start with a 60-day design partnership, prove the evidence flow with your real
+                logs, then move into Starter, Pro, or Enterprise only if it earns its place.
               </p>
               <div className="button-row">
                 <Link className="btn btn-primary" href="/pilot">
-                  Start 20-Day Pilot
+                  Join 60-Day Pilot
                 </Link>
                 <Link className="btn btn-link" href="/docs/getting-started">
                   View integration path

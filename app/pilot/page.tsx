@@ -5,44 +5,53 @@ import SiteHeader from "@/components/SiteHeader";
 export const metadata = {
   title: "Blocklog Pilot Program",
   description:
-    "Join the 20-day Blocklog pilot with founder-led onboarding, 2M events, and a clear path into Starter, Growth, or Enterprise.",
+    "Join the 60-day Blocklog design partnership with full Pro access, structured feedback, and a clear path into Starter, Pro, or Enterprise.",
 };
 
 const pilotFacts = [
-  ["Duration", "20 days"],
-  ["Price", "$149 upfront"],
-  ["Refund", "Refundable if you convert"],
-  ["Limit", "2M log events"],
-  ["Support", "Founder-led onboarding"],
-  ["Extension", "One 10-day extension included"],
-  ["Payment", "Credited to first month if you convert"],
+  ["Duration", "60 days"],
+  ["Price", "$0"],
+  ["Access", "Full Pro tier access"],
+  ["Format", "Design partnership with structured feedback"],
+  ["Support", "Direct line via Slack or email, with response within hours"],
+  ["Check-ins", "30 minutes after week 2 and week 6"],
+  ["Path", "Continue into Starter or Pro if it proves useful"],
 ];
 
 const pilotIncludes = [
-  "Cryptographic log sealing from day one",
-  "Founder-led onboarding and integration help",
-  "Proof verification workflow setup",
-  "Pilot-scoped evidence and audit review support",
-  "Single extension available if your team needs extra validation time",
+  "Real production integration, not a sandbox walkthrough",
+  "Full Pro features during the pilot window",
+  "Direct integration help and roadmap feedback loop",
+  "Case study option for teams willing to share results",
+  "A clean handoff into paid usage if the workflow sticks",
 ];
 
 const pilotFit = [
-  "Series A/B startups preparing for their first formal audit",
-  "Fintech and SaaS teams selling into compliance-heavy buyers",
-  "Teams that need to prove log integrity before SOC 2 Type II",
+  "Teams willing to run Blocklog in a real production system",
+  "Builders who can give structured feedback on friction and missing features",
+  "Early design partners shaping audit and verification workflows",
 ];
 
 const postPilotSteps = [
-  "Continue into Starter at $299/month or $2,868/year",
-  "Keep your data and continuity intact",
-  "Apply the $149 pilot fee toward the first month if you convert",
+  "Move into Starter at $29/month for smaller production workloads",
+  "Move into Pro at $99/month for SIEM streaming and third-party verification",
+  "Keep the implementation work and evidence flow intact",
 ];
 
 const pilotHighlights = [
-  ["Scope", "Validate ingestion, sealing, anchoring, and verification end to end."],
-  ["Hands-on", "Founder-led onboarding keeps setup tight and decisions fast."],
-  ["Conversion path", "Move into production without redoing the implementation work."],
+  ["What you get", "A real production deployment with enough depth to test whether Blocklog earns its place."],
+  ["What we get", "Specific feedback on integration friction, missing features, and where the proof story lands."],
+  ["Why it exists", "Right now the information is worth more than the subscription revenue."],
 ];
+
+const enterprisePilot = [
+  "90-day pilot for enterprise-only evaluations",
+  "Built for security review, procurement, and internal approval cycles",
+  "Ends with a formal evaluation report and recommendation",
+];
+
+const outreachPitch =
+  '"I\'m looking for 3-5 teams to run Blocklog in production for 60 days at no cost. In exchange, I want 30 minutes of your time after week 2 and week 6 to understand what\'s working and what isn\'t. If it\'s useful, you stay on at Starter or Pro. If it isn\'t, you\'ve lost nothing."';
 
 export default function PilotPage() {
   return (
@@ -53,22 +62,22 @@ export default function PilotPage() {
           <div>
             <p className="eyebrow">Pilot program</p>
             <h1 style={{ fontSize: "clamp(2.7rem, 6vw, 5rem)", margin: 0 }}>
-              A 20-day pilot to prove Blocklog fits before you commit.
+              A 60-day design partnership for teams willing to run Blocklog for real.
             </h1>
           </div>
           <p className="section-lead">
-            Structured for early teams preparing for SOC 2, buyer security reviews, or first audit
-            evidence workflows. Small enough to de-risk fast, serious enough to show real value.
+            This is the most important tier right now. You get full Pro access and direct support.
+            We get the production feedback needed to make Blocklog sharper.
           </p>
         </section>
 
         <section className="console-hero-grid" style={{ marginTop: 20 }}>
           <article className="card glass-card console-hero-card">
-            <p className="eyebrow">Blocklog Pilot Program</p>
-            <h2 style={{ marginTop: 8, marginBottom: 10 }}>Founder-led, fixed-scope, and conversion-friendly.</h2>
+            <p className="eyebrow">Design partnership</p>
+            <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
             <p className="muted" style={{ marginTop: 0 }}>
-              You get enough time and volume to validate ingestion, sealing, anchoring, and proof
-              verification without turning the pilot into an open-ended consulting engagement.
+              The goal is to learn from real systems generating real audit trails, then turn that
+              feedback into a better verification layer.
             </p>
             <div className="button-row" style={{ marginTop: 18, marginBottom: 18 }}>
               <a
@@ -85,7 +94,7 @@ export default function PilotPage() {
                   justifyContent: "center",
                 }}
               >
-                Book Pilot Call
+                Apply for Pilot
               </a>
             </div>
             <div className="grid" style={{ gap: 10 }}>
@@ -132,7 +141,7 @@ export default function PilotPage() {
 
             <article className="card glass-card">
               <p className="eyebrow">Best fit</p>
-              <h2 style={{ marginTop: 8 }}>Who the pilot is designed for.</h2>
+              <h2 style={{ marginTop: 8 }}>Who this program is designed for.</h2>
               <div className="grid" style={{ gap: 10 }}>
                 {pilotFit.map((item) => (
                   <div className="orbital-card" key={item}>
@@ -147,8 +156,30 @@ export default function PilotPage() {
         <section className="section">
           <div className="trust-band">
             <div>
-              <p className="eyebrow">After 20 days</p>
-              <h2>Clear next step, no pricing cliff.</h2>
+              <p className="eyebrow">The ask</p>
+              <h2>The program only works if both sides get something valuable.</h2>
+            </div>
+            <div className="grid" style={{ gap: 10 }}>
+              <div className="status-pill">Run Blocklog in production for 60 days</div>
+              <div className="status-pill">Share structured feedback after week 2 and week 6</div>
+              <div className="status-pill">Tell us where the DX, proof flow, or reporting breaks down</div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <article className="card glass-card">
+            <p className="eyebrow">Outreach pitch</p>
+            <h2 style={{ marginTop: 8 }}>The way to frame it.</h2>
+            <div className="code-pane">{outreachPitch}</div>
+          </article>
+        </section>
+
+        <section className="section">
+          <div className="trust-band">
+            <div>
+              <p className="eyebrow">After 60 days</p>
+              <h2>Clear next step, no weird transition.</h2>
             </div>
             <div className="grid" style={{ gap: 10 }}>
               {postPilotSteps.map((item) => (
@@ -161,33 +192,42 @@ export default function PilotPage() {
         </section>
 
         <section className="section">
-          <div className="section-header">
-            <div>
+          <div className="grid grid-2">
+            <article className="card glass-card">
+              <p className="eyebrow">Extended pilot</p>
+              <h2 style={{ marginTop: 8 }}>For enterprise evaluations that move slower.</h2>
+              <div className="grid" style={{ gap: 10 }}>
+                {enterprisePilot.map((item) => (
+                  <div className="status-pill" key={item}>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="card glass-card">
               <p className="eyebrow">Post-pilot plans</p>
-              <h2>Where teams usually land after the pilot.</h2>
-            </div>
-            <Link className="btn btn-primary" href="/pricing">
-              Compare Plans
-            </Link>
-          </div>
-          <div className="grid grid-3">
-            <article className="card glass-card">
-              <p className="eyebrow">Starter</p>
-              <h3 style={{ marginTop: 8 }}>For first real compliance motion</h3>
-              <p className="muted">$299/month or $2,868/year</p>
-              <p className="muted">Best for Series A/B startups and first SOC 2 Type II audits.</p>
-            </article>
-            <article className="card glass-card">
-              <p className="eyebrow">Growth</p>
-              <h3 style={{ marginTop: 8 }}>For multi-team, multi-region growth</h3>
-              <p className="muted">$799/month or $7,670/year</p>
-              <p className="muted">Best for Series B/C companies with broader compliance scope.</p>
-            </article>
-            <article className="card glass-card">
-              <p className="eyebrow">Enterprise</p>
-              <h3 style={{ marginTop: 8 }}>For high-volume regulated environments</h3>
-              <p className="muted">Starts at $1,999/month</p>
-              <p className="muted">Best for enterprise procurement, custom terms, and multi-cloud scale.</p>
+              <h2 style={{ marginTop: 8 }}>Where teams usually land after the pilot.</h2>
+              <div className="grid" style={{ gap: 10 }}>
+                <div className="orbital-card">
+                  <strong>Starter</strong>
+                  <p className="muted" style={{ margin: "6px 0 0" }}>
+                    $29/month for smaller compliance-sensitive products.
+                  </p>
+                </div>
+                <div className="orbital-card">
+                  <strong>Pro</strong>
+                  <p className="muted" style={{ margin: "6px 0 0" }}>
+                    $99/month for real compliance requirements and external verification.
+                  </p>
+                </div>
+                <div className="orbital-card">
+                  <strong>Enterprise</strong>
+                  <p className="muted" style={{ margin: "6px 0 0" }}>
+                    Custom pricing for regulated deployments, private cloud, and longer retention.
+                  </p>
+                </div>
+              </div>
             </article>
           </div>
         </section>
