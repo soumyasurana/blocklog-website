@@ -180,19 +180,19 @@ const plans: Plan[] = [
 ];
 
 const pilotBridge = [
-  "60-day design partnership",
+  "30-day design partnership",
   "Full Pro access during the pilot",
-  "Structured check-ins at week 2 and week 6",
+  "Structured check-ins at week 2 and week 4",
   "Move into Starter or Pro if it proves useful",
-  "Extended 90-day pilot available for enterprise evaluations",
+  "Extended 60-day pilot available for enterprise evaluations",
 ];
 
 const comparisonRows = [
-  ["Events/month", "10,000", "500,000", "5,000,000", "Per-org flat rate"],
-  ["Retention", "7 days", "12 months", "24 months", "1-12 months"],
-  ["Cryptographic verification", "Yes", "Yes", "Yes", "No"],
-  ["Third-party auditor access", "No", "Yes", "Yes", "No"],
-  ["Price", "$0", "$29", "$99", "$5-$125/org/month"],
+  ["Events/month", "10,000", "500,000", "5,000,000"],
+  ["Retention", "7 days", "12 months", "24 months"],
+  ["Cryptographic verification", "Yes", "Yes", "Yes"],
+  ["Third-party auditor access", "No", "Yes", "Yes"],
+  ["Price", "$0", "$29", "$99"],
 ];
 
 export default function PricingPage() {
@@ -294,7 +294,6 @@ export default function PricingPage() {
                     <th align="left">Blocklog Free</th>
                     <th align="left">Blocklog Starter</th>
                     <th align="left">Blocklog Pro</th>
-                    <th align="left">WorkOS Audit Logs</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -311,7 +310,7 @@ export default function PricingPage() {
               </table>
             </div>
             <p className="muted" style={{ marginBottom: 0 }}>
-              Logs tell you what happened. Blocklog proves it cant be rewritten..
+              Logs tell you what happened. Blocklog proves it can't be rewritten..
             </p>
           </article>
         </section>

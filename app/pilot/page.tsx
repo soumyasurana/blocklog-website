@@ -5,16 +5,16 @@ import SiteHeader from "@/components/SiteHeader";
 export const metadata = {
   title: "Blocklog Pilot Program",
   description:
-    "Join the 60-day Blocklog design partnership with full Pro access, structured feedback, and a clear path into Starter, Pro, or Enterprise.",
+    "Join the 30-day Blocklog design partnership with full Pro access, structured feedback, and a clear path into Starter, Pro, or Enterprise.",
 };
 
 const pilotFacts = [
-  ["Duration", "60 days"],
+  ["Duration", "30 days"],
   ["Price", "$0"],
   ["Access", "Full Pro tier access"],
   ["Format", "Design partnership with structured feedback"],
   ["Support", "Direct line via Slack or email, with response within hours"],
-  ["Check-ins", "30 minutes after week 2 and week 6"],
+  ["Check-ins", "30 minutes after week 2 and week 4"],
   ["Path", "Continue into Starter or Pro if it proves useful"],
 ];
 
@@ -45,13 +45,10 @@ const pilotHighlights = [
 ];
 
 const enterprisePilot = [
-  "90-day pilot for enterprise-only evaluations",
+  "60-day pilot for enterprise-only evaluations",
   "Built for security review, procurement, and internal approval cycles",
   "Ends with a formal evaluation report and recommendation",
 ];
-
-const outreachPitch =
-  '"I\'m looking for 3-5 teams to run Blocklog in production for 60 days at no cost. In exchange, I want 30 minutes of your time after week 2 and week 6 to understand what\'s working and what isn\'t. If it\'s useful, you stay on at Starter or Pro. If it isn\'t, you\'ve lost nothing."';
 
 export default function PilotPage() {
   return (
@@ -62,7 +59,7 @@ export default function PilotPage() {
           <div>
             <p className="eyebrow">Pilot program</p>
             <h1 style={{ fontSize: "clamp(2.7rem, 6vw, 5rem)", margin: 0 }}>
-              A 60-day design partnership for teams willing to run Blocklog for real.
+              A 30-day design partnership for teams willing to run Blocklog for real.
             </h1>
           </div>
           <p className="section-lead">
@@ -160,19 +157,11 @@ export default function PilotPage() {
               <h2>The program only works if both sides get something valuable.</h2>
             </div>
             <div className="grid" style={{ gap: 10 }}>
-              <div className="status-pill">Run Blocklog in production for 60 days</div>
-              <div className="status-pill">Share structured feedback after week 2 and week 6</div>
+              <div className="status-pill">Run Blocklog in production for 30 days</div>
+              <div className="status-pill">Share structured feedback after week 2 and week 4</div>
               <div className="status-pill">Tell us where the DX, proof flow, or reporting breaks down</div>
             </div>
           </div>
-        </section>
-
-        <section className="section">
-          <article className="card glass-card">
-            <p className="eyebrow">Outreach pitch</p>
-            <h2 style={{ marginTop: 8 }}>The way to frame it.</h2>
-            <div className="code-pane">{outreachPitch}</div>
-          </article>
         </section>
 
         <section className="section">
