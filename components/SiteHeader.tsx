@@ -19,7 +19,6 @@ export default function SiteHeader() {
           <span className="brand-mark" />
           <span>
             Blocklog
-            <span className="brand-subtitle">Audit Integrity Cloud</span>
           </span>
         </Link>
         <nav className="nav-links">

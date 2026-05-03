@@ -7,7 +7,7 @@ import VerifyProofWidget from "@/components/VerifyProofWidget";
 
 const heroSignals = [
   { value: "30 seconds", label: "for an auditor or agent to verify a proof bundle" },
-  { value: "60-day pilot", label: "to prove the workflow in a real production system" },
+  { value: "30-day pilot", label: "to prove the workflow in a real production system" },
   { value: "No schema changes", label: "for existing JSON log sources" },
 ];
 
