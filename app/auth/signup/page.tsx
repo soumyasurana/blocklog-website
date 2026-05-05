@@ -26,6 +26,7 @@ export default function SignupPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [companyId, setCompanyId] = useState("");
+  const [workspaceName, setWorkspaceName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -75,10 +76,7 @@ export default function SignupPage() {
 
     try {
       const normalizedCompanyId = companyId.trim().toLowerCase();
-      if (!normalizedCompanyId) {
-        throw new Error("Enter a valid company ID.");
-      }
-      if (!companyState.exists || companyState.checkedId !== normalizedCompanyId) {
+      if (normalizedCompanyId && (!companyState.exists || companyState.checkedId !== normalizedCompanyId)) {
         throw new Error("Company not found. Ask your admin to create the company first.");
       }
 
@@ -89,7 +87,8 @@ export default function SignupPage() {
           username,
           email,
           password,
-          company_id: normalizedCompanyId,
+          company_id: normalizedCompanyId || undefined,
+          workspace_name: workspaceName.trim() || undefined,
         },
       );
       const session = normalizePayload<SignupResponse>(payload, {}, "data");
@@ -103,8 +102,8 @@ export default function SignupPage() {
       );
       if (typeof window !== "undefined" && window.gtag) {
         window.gtag("event", "signup", {
-        method: "email",
-        company_id: normalizedCompanyId,
+          method: "email",
+          company_id: session.company_id ?? normalizedCompanyId,
         });
       }
       const nextPath =
@@ -126,7 +125,7 @@ export default function SignupPage() {
       <section className="card auth-card">
         <h1 style={{ marginTop: 0 }}>Create your Blocklog account</h1>
         <p className="muted" style={{ marginTop: 0 }}>
-          Sign up with an existing company ID. Company provisioning is handled by your admin.
+          Start as an individual developer or optionally join an existing company workspace.
         </p>
         <form className="form" onSubmit={onSubmit}>
           <div>
@@ -139,12 +138,22 @@ export default function SignupPage() {
             />
           </div>
           <div>
-            <label>Company ID</label>
+            <label>Workspace name (optional)</label>
+            <input
+              placeholder="Jane's Workspace"
+              value={workspaceName}
+              onChange={(event) => setWorkspaceName(event.target.value)}
+            />
+            <p className="muted" style={{ margin: "8px 0 0" }}>
+              Leave company blank and Blocklog will create a personal workspace for you automatically.
+            </p>
+          </div>
+          <div>
+            <label>Existing company ID (optional)</label>
             <input
               placeholder="pilot-co"
               value={companyId}
               onChange={(event) => setCompanyId(event.target.value)}
-              required
             />
             {companyId.trim() && (
               <p className="muted" style={{ margin: "8px 0 0" }}>
@@ -152,7 +161,7 @@ export default function SignupPage() {
                   ? "Checking company..."
                   : companyState.exists
                     ? `Company found: ${companyState.companyName ?? companyState.checkedId} (${companyState.status ?? "ACTIVE"})`
-                    : "Company not found. Use a valid company ID."}
+                    : "Company not found. Leave this blank to continue as an individual."}
               </p>
             )}
           </div>
@@ -180,9 +189,9 @@ export default function SignupPage() {
           <button
             className="btn btn-primary"
             type="submit"
-            disabled={loading || companyCheckLoading || !companyState.exists}
+            disabled={loading || companyCheckLoading || (companyId.trim() !== "" && !companyState.exists)}
           >
-            {loading ? "Creating..." : "Start Free"}
+            {loading ? "Creating..." : "Create account"}
           </button>
         </form>
         <p className="muted">

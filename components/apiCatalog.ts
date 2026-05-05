@@ -49,7 +49,7 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     label: "Login",
     method: "POST",
     path: "/auth/login",
-    description: "Exchange credentials for an access token and company scope.",
+    description: "Exchange credentials for an access token and the current workspace scope.",
     samplePayload:
       '{\n  "email": "you@company.com",\n  "password": "super-secure-password"\n}',
   },
@@ -58,9 +58,9 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     label: "Signup",
     method: "POST",
     path: "/auth/signup",
-    description: "Create a user account and optionally bootstrap the first company during signup.",
+    description: "Create a user account, auto-provision a personal workspace, or join an existing company workspace.",
     samplePayload:
-      '{\n  "username": "founder",\n  "email": "you@company.com",\n  "password": "super-secure-password",\n  "company_id": "cmp_84f02",\n  "company_name": "Acme Financial"\n}',
+      '{\n  "username": "founder",\n  "email": "you@company.com",\n  "password": "super-secure-password",\n  "workspace_name": "Founder Workspace"\n}',
   },
   {
     category: "Authentication",
@@ -86,7 +86,7 @@ export const apiCatalog: ApiEndpointDefinition[] = [
     label: "Current User",
     method: "GET",
     path: "/auth/me",
-    description: "Return the authenticated user profile and company association.",
+    description: "Return the authenticated user profile and active workspace association.",
     pageHref: "/dashboard/settings",
   },
   {

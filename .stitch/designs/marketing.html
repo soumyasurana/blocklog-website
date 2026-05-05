@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#e9feff",
+                    "secondary-container": "#42474f",
+                    "tertiary-fixed-dim": "#2ae500",
+                    "on-tertiary-container": "#107100",
+                    "outline-variant": "#3a494a",
+                    "on-secondary-container": "#b1b5bf",
+                    "on-tertiary-fixed-variant": "#095300",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#c2c7d0",
+                    "surface-bright": "#37393e",
+                    "on-secondary-fixed": "#171c23",
+                    "background": "#111318",
+                    "inverse-on-surface": "#2f3035",
+                    "on-secondary-fixed-variant": "#42474f",
+                    "surface-container-low": "#1a1c20",
+                    "surface-variant": "#333539",
+                    "primary-fixed": "#63f7ff",
+                    "tertiary": "#efffe4",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#79ff5b",
+                    "on-background": "#e2e2e8",
+                    "on-primary": "#003739",
+                    "on-tertiary-fixed": "#022100",
+                    "outline": "#849495",
+                    "on-primary-fixed": "#002021",
+                    "surface-container": "#1e2024",
+                    "surface": "#111318",
+                    "on-error": "#690005",
+                    "on-secondary": "#2c3138",
+                    "surface-container-highest": "#333539",
+                    "primary-fixed-dim": "#00dce5",
+                    "surface-tint": "#00dce5",
+                    "surface-dim": "#111318",
+                    "inverse-surface": "#e2e2e8",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#00696e",
+                    "secondary": "#c2c7d0",
+                    "on-primary-container": "#006c71",
+                    "surface-container-lowest": "#0c0e12",
+                    "primary-container": "#00f5ff",
+                    "on-tertiary": "#053900",
+                    "on-surface": "#e2e2e8",
+                    "tertiary-container": "#3bff17",
+                    "surface-container-high": "#282a2e",
+                    "secondary-fixed": "#dee2ec",
+                    "on-surface-variant": "#b9caca",
+                    "on-primary-fixed-variant": "#004f53"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"],
+                    "mono": ["JetBrains Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #111318; color: #e2e2e8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(30, 32, 36, 0.8); backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-on-primary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="bg-[#111318] text-[#00F5FF] font-['Inter'] font-medium text-sm tracking-tight border-b border-[#3A494A]/15 flex justify-between items-center w-full px-6 h-14 fixed top-0 z-50">
+<div class="text-lg font-black text-[#00F5FF] tracking-tighter">BlockLog</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#00F5FF] border-b-2 border-[#00F5FF] pb-1" href="#">Explorer</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Verification</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Nodes</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Network</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[10px] font-mono border border-[#00F5FF]/30 px-2 py-0.5 rounded-sm bg-[#00F5FF]/5 hidden lg:inline-block">Integrity Verified</span>
+<button class="bg-primary-container text-on-primary-fixed px-3 py-1.5 rounded-sm text-xs font-bold hover:brightness-110 transition-all">Workspace</button>
+<div class="flex items-center gap-3 ml-2 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-lg cursor-pointer hover:text-primary-container">notifications</span>
+<span class="material-symbols-outlined text-lg cursor-pointer hover:text-primary-container">settings</span>
+</div>
+</div>
+</nav>
+<main class="pt-14">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center justify-center overflow-hidden px-6">
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-container/20 blur-[120px] rounded-full"></div>
+</div>
+<div class="max-w-5xl w-full z-10 text-center">
+<div class="mb-6 flex justify-center">
+<span class="font-label uppercase text-[11px] tracking-[0.2em] bg-surface-container px-3 py-1 border border-outline-variant/20">Institutional Grade Infrastructure</span>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tightest leading-[0.9] text-on-background mb-8">
+                    Infrastructure for <span class="text-primary-container">Provable</span> <br/>Audit Integrity.
+                </h1>
+<p class="max-w-2xl mx-auto text-lg text-on-surface-variant font-light mb-12 leading-relaxed">
+                    The world’s first immutable ledger for enterprise compliance. Transform volatile logs into cryptographically sealed evidence bundles with sub-second finality.
+                </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="bg-primary-container text-on-primary-fixed px-8 py-4 font-bold text-sm uppercase tracking-widest flex items-center gap-3 hover:brightness-110 transition-all w-full sm:w-auto justify-center">
+                        Start Pilot <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+<button class="bg-surface-container-high text-on-surface px-8 py-4 font-bold text-sm uppercase tracking-widest border border-outline-variant/30 hover:bg-surface-container-highest transition-all w-full sm:w-auto justify-center">
+                        View Evidence Demo
+                    </button>
+</div>
+</div>
+</section>
+<!-- Proof Section: Evidence Bundle Preview -->
+<section class="py-24 px-6 bg-surface-container-low border-y border-outline-variant/10">
+<div class="max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 text-tertiary-container font-label uppercase text-xs tracking-widest font-bold">
+<span class="w-2 h-2 bg-tertiary-container rounded-full animate-pulse"></span>
+                            Live Evidence Node
+                        </div>
+<h2 class="text-4xl font-bold tracking-tight">Audit Portals built for <br/>Zero-Trust Verification.</h2>
+<p class="text-on-surface-variant text-lg">Never fear an audit again. BlockLog provides a cryptographically verifiable history of every event, exported as portable bundles that satisfy the most stringent regulatory bodies.</p>
+<div class="space-y-4 pt-4">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 flex-shrink-0 bg-primary-container/10 flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary-container">history_edu</span>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider mb-1">Immutable Lineage</h4>
+<p class="text-sm text-slate-500">Every log entry is chained to its predecessor, creating an unbroken hash-linked timeline.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 flex-shrink-0 bg-primary-container/10 flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary-container">gavel</span>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider mb-1">Portable Compliance</h4>
+<p class="text-sm text-slate-500">Download self-contained .proof bundles that can be verified offline by any third-party auditor.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento-style Interface Preview -->
+<div class="relative">
+<div class="bg-surface-container p-6 border border-outline-variant/20 shadow-2xl relative overflow-hidden group">
+<!-- Interface Header -->
+<div class="flex justify-between items-center mb-6 border-b border-outline-variant/10 pb-4">
+<div>
+<div class="font-label text-[10px] text-slate-500 uppercase tracking-tighter">Evidence Bundle ID</div>
+<div class="font-mono text-xs text-primary-container">EB-9942-0XAF21C</div>
+</div>
+<div class="text-right">
+<div class="font-label text-[10px] text-slate-500 uppercase tracking-tighter">Verification Status</div>
+<div class="text-[10px] font-bold text-tertiary-container flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">check_circle</span> 100% VALIDATED
+                                    </div>
+</div>
+</div>
+<!-- Interface Table -->
+<div class="space-y-2">
+<div class="grid grid-cols-4 font-label text-[9px] text-slate-500 uppercase tracking-widest mb-4">
+<div class="col-span-2">Hash (Sha-256)</div>
+<div>Timestamp</div>
+<div class="text-right">Integrity</div>
+</div>
+<div class="grid grid-cols-4 items-center bg-surface-container-low p-2 rounded-sm border-l-2 border-primary-container">
+<div class="col-span-2 font-mono text-[10px] truncate text-slate-300">0x84f1...2a1c92e105</div>
+<div class="font-mono text-[10px] text-slate-500">14:02:11.002</div>
+<div class="flex justify-end"><span class="w-1.5 h-1.5 bg-tertiary-container rounded-full"></span></div>
+</div>
+<div class="grid grid-cols-4 items-center p-2 rounded-sm">
+<div class="col-span-2 font-mono text-[10px] truncate text-slate-400">0x3b1c...902a22f1c8</div>
+<div class="font-mono text-[10px] text-slate-500">14:02:10.884</div>
+<div class="flex justify-end"><span class="w-1.5 h-1.5 bg-tertiary-container rounded-full"></span></div>
+</div>
+<div class="grid grid-cols-4 items-center bg-surface-container-low p-2 rounded-sm">
+<div class="col-span-2 font-mono text-[10px] truncate text-slate-400">0xf221...11a0988cc2</div>
+<div class="font-mono text-[10px] text-slate-500">14:02:10.210</div>
+<div class="flex justify-end"><span class="w-1.5 h-1.5 bg-tertiary-container rounded-full"></span></div>
+</div>
+</div>
+<!-- Floating Card -->
+<div class="absolute bottom-4 right-4 glass-panel border border-primary-container/30 p-4 w-48 shadow-lg">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary-container text-sm">verified_user</span>
+<span class="font-label text-[10px] font-bold tracking-widest text-on-surface uppercase">Audit Ready</span>
+</div>
+<div class="text-[9px] text-slate-400 leading-tight">Cryptographic proof generated for SOC2 compliance report.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Logs Fail Audit -->
+<section class="py-32 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="mb-20">
+<h3 class="font-label text-xs tracking-[0.3em] uppercase text-primary-container mb-4">Risk Vectors</h3>
+<h2 class="text-4xl md:text-5xl font-black tracking-tightest">Why Legacy Logs <br/>Fail Institutional Audit.</h2>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:border-primary-container/40 transition-colors group">
+<div class="mb-12">
+<span class="material-symbols-outlined text-error text-3xl">emergency_home</span>
+</div>
+<h4 class="font-bold text-lg mb-4">Tampering Risk</h4>
+<p class="text-sm text-slate-500 leading-relaxed">Centralized logs can be modified or deleted by privileged users, leaving no trace of the alteration in the audit trail.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:border-primary-container/40 transition-colors group">
+<div class="mb-12">
+<span class="material-symbols-outlined text-error text-3xl">analytics</span>
+</div>
+<h4 class="font-bold text-lg mb-4">Unverifiable Mutations</h4>
+<p class="text-sm text-slate-500 leading-relaxed">Standard databases cannot prove that data hasn't been changed between the event time and the audit review.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:border-primary-container/40 transition-colors group">
+<div class="mb-12">
+<span class="material-symbols-outlined text-error text-3xl">account_tree</span>
+</div>
+<h4 class="font-bold text-lg mb-4">No Canonical Lineage</h4>
+<p class="text-sm text-slate-500 leading-relaxed">Disconnected logs across microservices make it impossible to reconstruct a single source of truth during an investigation.</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:border-primary-container/40 transition-colors group">
+<div class="mb-12">
+<span class="material-symbols-outlined text-error text-3xl">upload_file</span>
+</div>
+<h4 class="font-bold text-lg mb-4">No Portable Proof</h4>
+<p class="text-sm text-slate-500 leading-relaxed">Auditors require live access or untrusted exports. BlockLog delivers cryptographically sealed, self-verifying bundles.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Compliance Section -->
+<section class="py-24 px-6 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto text-center">
+<p class="font-label text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-12">Automated Compliance Enforcement</p>
+<div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">SEC</span>
+<span class="text-[9px] font-label text-slate-500">RULE 17A-4</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">GDPR</span>
+<span class="text-[9px] font-label text-slate-500">ARTICLE 30</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">SOC2</span>
+<span class="text-[9px] font-label text-slate-500">TYPE II</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">FINRA</span>
+<span class="text-[9px] font-label text-slate-500">COMPLIANT</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">FCA</span>
+<span class="text-[9px] font-label text-slate-500">SYSC 9.1</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xl font-bold tracking-tighter">MAS</span>
+<span class="text-[9px] font-label text-slate-500">TRM GUIDELINES</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-40 px-6 relative overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-10">
+<div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary-container via-transparent to-transparent"></div>
+</div>
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<h2 class="text-4xl md:text-6xl font-black tracking-tightest mb-12">Secure your audit <br/>pipeline globally.</h2>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary-container text-on-primary-fixed px-10 py-5 font-bold text-sm uppercase tracking-widest hover:brightness-110 transition-all">
+                        Request Institutional Demo
+                    </button>
+<button class="bg-transparent text-white border border-outline-variant px-10 py-5 font-bold text-sm uppercase tracking-widest hover:bg-surface-container transition-all">
+                        Technical Paper
+                    </button>
+</div>
+<div class="mt-12 flex items-center justify-center gap-8 text-slate-500">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">public</span>
+<span class="text-[10px] font-label uppercase tracking-widest">Global Mainnet</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">encrypted</span>
+<span class="text-[10px] font-label uppercase tracking-widest">Quantum-Resistant</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant/10 py-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-2">
+<div class="text-xl font-black text-[#00F5FF] tracking-tighter mb-6">BlockLog</div>
+<p class="text-sm text-slate-500 max-w-sm">The world's standard for verifiable institutional infrastructure. Headquartered in London. Operating globally on decentralized nodes.</p>
+</div>
+<div>
+<h5 class="font-label text-[11px] uppercase tracking-widest text-on-surface font-bold mb-6">Resources</h5>
+<ul class="space-y-3 text-sm text-slate-500">
+<li><a class="hover:text-primary-container transition-colors" href="#">Documentation</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">API Reference</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">Audit Methodology</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">Node Operator Guide</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label text-[11px] uppercase tracking-widest text-on-surface font-bold mb-6">Company</h5>
+<ul class="space-y-3 text-sm text-slate-500">
+<li><a class="hover:text-primary-container transition-colors" href="#">About Integrity</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">Transparency Report</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary-container transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/5">
+<p class="text-[10px] font-label text-slate-600 uppercase tracking-widest mb-4 md:mb-0">© 2024 BLOCKLOG INTEGRITY SYSTEMS LTD.</p>
+<div class="flex gap-6">
+<a class="text-slate-600 hover:text-white" href="#"><span class="material-symbols-outlined text-lg">terminal</span></a>
+<a class="text-slate-600 hover:text-white" href="#"><span class="material-symbols-outlined text-lg">cloud_done</span></a>
+<a class="text-slate-600 hover:text-white" href="#"><span class="material-symbols-outlined text-lg">hub</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

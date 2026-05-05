@@ -6,7 +6,7 @@ const pages = [
   {
     name: "Getting started",
     href: "/docs/getting-started",
-    summary: "Bootstrap a tenant, sign in, create credentials, and send the first log.",
+    summary: "Create an account, start with a personal workspace or company, then send the first log.",
   },
   {
     name: "Authentication",

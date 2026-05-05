@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#e9feff",
+                        "secondary-container": "#42474f",
+                        "tertiary-fixed-dim": "#2ae500",
+                        "on-tertiary-container": "#107100",
+                        "outline-variant": "#3a494a",
+                        "on-secondary-container": "#b1b5bf",
+                        "on-tertiary-fixed-variant": "#095300",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c2c7d0",
+                        "surface-bright": "#37393e",
+                        "on-secondary-fixed": "#171c23",
+                        "background": "#111318",
+                        "inverse-on-surface": "#2f3035",
+                        "on-secondary-fixed-variant": "#42474f",
+                        "surface-container-low": "#1a1c20",
+                        "surface-variant": "#333539",
+                        "primary-fixed": "#63f7ff",
+                        "tertiary": "#efffe4",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#79ff5b",
+                        "on-background": "#e2e2e8",
+                        "on-primary": "#003739",
+                        "on-tertiary-fixed": "#022100",
+                        "outline": "#849495",
+                        "on-primary-fixed": "#002021",
+                        "surface-container": "#1e2024",
+                        "surface": "#111318",
+                        "on-error": "#690005",
+                        "on-secondary": "#2c3138",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed-dim": "#00dce5",
+                        "surface-tint": "#00dce5",
+                        "surface-dim": "#111318",
+                        "inverse-surface": "#e2e2e8",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#00696e",
+                        "secondary": "#c2c7d0",
+                        "on-primary-container": "#006c71",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary-container": "#00f5ff",
+                        "on-tertiary": "#053900",
+                        "on-surface": "#e2e2e8",
+                        "tertiary-container": "#3bff17",
+                        "surface-container-high": "#282a2e",
+                        "secondary-fixed": "#dee2ec",
+                        "on-surface-variant": "#b9caca",
+                        "on-primary-fixed-variant": "#004f53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .technical-grid {
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(58, 73, 74, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-fixed antialiased overflow-hidden">
+<!-- Subtle Background Layer -->
+<div class="fixed inset-0 technical-grid pointer-events-none opacity-40"></div>
+<div class="fixed inset-0 pointer-events-none bg-gradient-to-tr from-surface-container-lowest via-transparent to-transparent"></div>
+<main class="relative min-h-screen flex flex-col items-center justify-center p-6 lg:p-12">
+<!-- Language Selection (Top Right) -->
+<div class="absolute top-8 right-8 flex items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-outline text-[18px]">language</span>
+<span class="font-label text-[11px] uppercase tracking-widest text-on-surface-variant group-hover:text-primary-container transition-colors">English (US)</span>
+<span class="material-symbols-outlined text-outline text-[16px]">expand_more</span>
+</div>
+<!-- Logo/Header -->
+<div class="mb-12 text-center">
+<div class="inline-flex items-center gap-3 mb-4">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed font-bold text-[24px]" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<h1 class="font-headline font-black text-2xl tracking-tighter text-primary-container uppercase">BlockLog</h1>
+</div>
+<p class="font-label text-[11px] uppercase tracking-[0.2em] text-outline">Infrastructure-Grade Integrity</p>
+</div>
+<!-- Auth Card -->
+<div class="w-full max-w-[420px] bg-surface-container-low glow-effect border border-outline-variant/10 p-8 lg:p-10 relative overflow-hidden">
+<!-- Structural Accent -->
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container/20"></div>
+<div class="mb-8">
+<h2 class="font-headline font-bold text-xl text-on-surface mb-2 tracking-tight">Access Mainnet Ledger</h2>
+<p class="text-on-surface-variant text-sm font-medium">Identify to verify immutable nodes.</p>
+</div>
+<!-- SSO Section (Priority) -->
+<div class="space-y-3 mb-8">
+<button class="w-full h-12 bg-surface-container-high hover:bg-surface-variant text-on-surface text-sm font-semibold flex items-center justify-center gap-3 transition-all active:scale-[0.98] group">
+<img alt="Google SSO" class="w-4 h-4 grayscale group-hover:grayscale-0 transition-all" data-alt="Official Google logo icon in a minimalist flat style for authentication services" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuek6PWfLHw7sGlvuDy1l-zHX8Ovgu4-ZP6P7Ss4wO_v2RCNmdIFa6iohiXtW_K57JhI1It7F85JHaPpUuYWgjwtw5rNLa_aXg4Xu6TAdxQRnsiCGuiEltYscdDgp5n87bS3Kdq4HPh7jgG7ZXgWgb8KRa-AsSz8I-gXQQULGXjHrR1QphCBlPW1VEFNazC1R1sve8gmLvi6XxWI9hnELWvIXdLanX-q_VqjreruNRo-WsL7lKZvvy9TK-Gtn6spELBdVL9cvh8S4"/>
+<span>Continue with Enterprise ID</span>
+</button>
+<button class="w-full h-12 bg-surface-container-high hover:bg-surface-variant text-on-surface text-sm font-semibold flex items-center justify-center gap-3 transition-all active:scale-[0.98] group">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span>Authenticate with Hardware Key</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="relative flex items-center gap-4 mb-8">
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">or use credentials</span>
+<div class="flex-grow h-[1px] bg-outline-variant/20"></div>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-6">
+<div class="space-y-1.5">
+<label class="font-label text-[11px] uppercase tracking-widest text-outline block">Operator Address</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-0 border-b border-outline-variant/50 focus:border-primary-container focus:ring-0 text-on-surface font-mono text-sm h-11 px-0 placeholder:text-outline/30 transition-colors" placeholder="name@infrastructure.io" type="email"/>
+<span class="absolute right-0 top-3 material-symbols-outlined text-outline/50 text-[18px]">alternate_email</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-end">
+<label class="font-label text-[11px] uppercase tracking-widest text-outline">Node Secret</label>
+<a class="font-label text-[10px] uppercase tracking-widest text-primary-container hover:text-primary transition-colors" href="#">Reset Key</a>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-0 border-b border-outline-variant/50 focus:border-primary-container focus:ring-0 text-on-surface font-mono text-sm h-11 px-0 placeholder:text-outline/30 transition-colors" placeholder="••••••••••••" type="password"/>
+<span class="absolute right-0 top-3 material-symbols-outlined text-outline/50 text-[18px]">lock</span>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full h-12 bg-primary-container text-on-primary-fixed font-headline font-bold uppercase tracking-widest text-xs hover:brightness-110 active:opacity-80 transition-all flex items-center justify-center gap-2" type="submit">
+<span>Initialize Session</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</form>
+<div class="mt-10 pt-6 border-t border-outline-variant/10 text-center">
+<p class="text-on-surface-variant text-sm">
+                    Unauthorized access is logged. 
+                    <a class="text-primary-container hover:underline font-semibold ml-1" href="#">Request Node Access</a>
+</p>
+</div>
+</div>
+<!-- Footer / Metadata -->
+<div class="mt-12 w-full max-w-[420px] flex justify-between items-center px-2">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim shadow-[0_0_8px_#3bff17]"></div>
+<span class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant">Mainnet-Beta v2.4.0</span>
+</div>
+</div>
+<div class="flex gap-6">
+<a class="font-label text-[10px] uppercase tracking-widest text-outline hover:text-on-surface transition-colors" href="#">Privacy</a>
+<a class="font-label text-[10px] uppercase tracking-widest text-outline hover:text-on-surface transition-colors" href="#">Legal</a>
+</div>
+</div>
+<!-- Technical Metadata Float -->
+<div class="fixed bottom-8 left-8 hidden xl:block">
+<div class="flex flex-col gap-1">
+<span class="font-mono text-[9px] text-outline/40 leading-none uppercase tracking-tighter">Latency: 14ms</span>
+<span class="font-mono text-[9px] text-outline/40 leading-none uppercase tracking-tighter">Zone: us-east-integrity-1</span>
+</div>
+</div>
+</main>
+<!-- Corner Decorative Element -->
+<div class="fixed bottom-0 right-0 w-32 h-32 opacity-10 pointer-events-none overflow-hidden">
+<svg class="w-full h-full text-primary-container fill-current" viewbox="0 0 100 100">
+<path d="M0 100 L100 0 L100 100 Z"></path>
+</svg>
+</div>
+</body></html>

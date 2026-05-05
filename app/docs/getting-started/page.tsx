@@ -10,11 +10,12 @@ export default function GettingStartedPage() {
         <div className="section-header">
           <div>
             <p className="eyebrow">Getting started</p>
-            <h1 style={{ marginTop: 0, marginBottom: 10 }}>Bootstrap a company, sign in, and send the first log.</h1>
+            <h1 style={{ marginTop: 0, marginBottom: 10 }}>Create an account, sign in, and send the first log.</h1>
           </div>
           <p className="section-lead">
-            The current product flow is: create the founder account and company during signup, use bearer
-            auth for the console, and only create an API key when you need an external integration credential.
+            The current product flow is: create an account, let Blocklog provision a personal workspace
+            automatically or join an existing company, use bearer auth for the console, and only create
+            an API key when you need an external integration credential.
           </p>
         </div>
 
@@ -26,10 +27,11 @@ export default function GettingStartedPage() {
   "username": "founder",
   "email": "founder@company.com",
   "password": "ChangeMe123!",
-  "company_id": "acme-financial"
+  "workspace_name": "Founder Workspace"
 }`}</pre>
             <p className="muted" style={{ marginBottom: 0 }}>
-              The company must already exist in the database before signup.
+              Omit `company_id` to start as an individual developer. Add an existing `company_id` only
+              when joining a shared company workspace.
             </p>
           </article>
 
