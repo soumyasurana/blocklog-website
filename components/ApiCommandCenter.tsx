@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { apiCatalog, apiCategories } from "@/components/apiCatalog";
-import { blocklogRequest, type HttpMethod } from "@/lib/blocklog";
+import { blocklogRequest, readSession, type HttpMethod } from "@/lib/blocklog";
+
+type HeaderRow = {
+  id: string;
+  key: string;
+  value: string;
+};
 
 function canSendBody(method: HttpMethod) {
   return method !== "GET" && method !== "DELETE";
@@ -42,10 +48,20 @@ export default function ApiCommandCenter() {
   const [loading, setLoading] = useState(false);
   const [selectedKey, setSelectedKey] = useState("POST /logs");
   const [templateValues, setTemplateValues] = useState<Record<string, string>>({});
+  const [apiKey, setApiKey] = useState("");
+  const [headerRows, setHeaderRows] = useState<HeaderRow[]>([
+    { id: "header-1", key: "", value: "" },
+  ]);
+
+  const session = readSession();
 
   const filteredEndpoints = useMemo(
     () => (category === "All" ? apiCatalog : apiCatalog.filter((endpoint) => endpoint.category === category)),
     [category],
+  );
+  const matchedEndpoint = useMemo(
+    () => apiCatalog.find((endpoint) => endpoint.method === method && endpoint.path === templatePath),
+    [method, templatePath],
   );
 
   const templateKeys = useMemo(() => extractTemplateKeys(templatePath), [templatePath]);
@@ -59,12 +75,51 @@ export default function ApiCommandCenter() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templatePath]);
 
+  useEffect(() => {
+    if (!matchedEndpoint) {
+      return;
+    }
+
+    const nextSelectedKey = `${matchedEndpoint.method} ${matchedEndpoint.path}`;
+    const nextDefaultPayload = defaultPayloadFor(matchedEndpoint.method, matchedEndpoint.path);
+    const currentDefaultPayload = defaultPayloadFor(method, selectedKey.replace(/^[A-Z]+ /, ""));
+
+    setSelectedKey(nextSelectedKey);
+    if (!canSendBody(method)) {
+      setPayload("");
+      return;
+    }
+
+    if (!payload || payload === currentDefaultPayload) {
+      setPayload(nextDefaultPayload);
+    }
+  }, [matchedEndpoint, method, payload, selectedKey]);
+
   function chooseEndpoint(nextMethod: HttpMethod, nextPath: string) {
     setMethod(nextMethod);
     setTemplatePath(nextPath);
     setSelectedKey(`${nextMethod} ${nextPath}`);
     setPayload(defaultPayloadFor(nextMethod, nextPath));
     setResult(`Prepared ${nextMethod} ${nextPath}`);
+  }
+
+  function addHeaderRow() {
+    setHeaderRows((current) => [
+      ...current,
+      { id: `header-${Date.now()}-${current.length + 1}`, key: "", value: "" },
+    ]);
+  }
+
+  function updateHeaderRow(id: string, field: "key" | "value", value: string) {
+    setHeaderRows((current) =>
+      current.map((row) => (row.id === id ? { ...row, [field]: value } : row)),
+    );
+  }
+
+  function removeHeaderRow(id: string) {
+    setHeaderRows((current) =>
+      current.length === 1 ? [{ id: "header-1", key: "", value: "" }] : current.filter((row) => row.id !== id),
+    );
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -77,7 +132,20 @@ export default function ApiCommandCenter() {
       }
 
       const parsedPayload = payload && canSendBody(method) ? JSON.parse(payload) : undefined;
-      const response = await blocklogRequest<unknown>(resolvedPath, method, parsedPayload);
+      const extraHeaders = headerRows.reduce<Record<string, string>>((accumulator, row) => {
+        const key = row.key.trim();
+        const value = row.value.trim();
+        if (key && value) {
+          accumulator[key] = value;
+        }
+        return accumulator;
+      }, {});
+
+      if (apiKey.trim()) {
+        extraHeaders["X-API-Key"] = apiKey.trim();
+      }
+
+      const response = await blocklogRequest<unknown>(resolvedPath, method, parsedPayload, extraHeaders);
       setResult(JSON.stringify(response, null, 2));
     } catch (submitError) {
       setResult(submitError instanceof Error ? submitError.message : "Request failed");
@@ -224,6 +292,77 @@ export default function ApiCommandCenter() {
             <div className="api-path-preview">
               <span className="muted">Resolved path</span>
               <code>{resolvedPath}</code>
+            </div>
+
+            {matchedEndpoint?.path === "/logs/batch" && (
+              <p className="muted" style={{ margin: "12px 0 0" }}>
+                Batch ingestion expects a wrapper object with a <code>logs</code> array, not a single
+                log payload.
+              </p>
+            )}
+
+            <div className="api-param-panel" style={{ marginTop: 12 }}>
+              <div className="api-param-header">
+                <strong>Headers</strong>
+                <span className="muted">
+                  Authorization is added automatically from the logged-in session. Add an API key or
+                  any extra headers below.
+                </span>
+              </div>
+              <div className="grid grid-2">
+                <div>
+                  <label>Authorization</label>
+                  <input
+                    disabled
+                    value={session.accessToken ? "Bearer <auto-added from session>" : "Not available"}
+                  />
+                </div>
+                <div>
+                  <label>X-API-Key (optional)</label>
+                  <input
+                    placeholder="Paste an integration API key"
+                    value={apiKey}
+                    onChange={(event) => setApiKey(event.target.value)}
+                  />
+                </div>
+              </div>
+              <p className="muted" style={{ margin: "10px 0 0" }}>
+                Ingestion requests already work with your logged-in bearer token. If you add an{" "}
+                <code>X-API-Key</code>, the backend will prioritize that key over bearer auth, so a
+                revoked or invalid key will cause the request to fail.
+              </p>
+              <div className="grid" style={{ gap: 10, marginTop: 12 }}>
+                {headerRows.map((row) => (
+                  <div className="grid grid-2" key={row.id} style={{ alignItems: "end" }}>
+                    <div>
+                      <label>Header name</label>
+                      <input
+                        placeholder="X-Custom-Header"
+                        value={row.key}
+                        onChange={(event) => updateHeaderRow(row.id, "key", event.target.value)}
+                      />
+                    </div>
+                    <div style={{ display: "grid", gap: 10, gridTemplateColumns: "minmax(0, 1fr) auto" }}>
+                      <div>
+                        <label>Header value</label>
+                        <input
+                          placeholder="value"
+                          value={row.value}
+                          onChange={(event) => updateHeaderRow(row.id, "value", event.target.value)}
+                        />
+                      </div>
+                      <button className="btn" onClick={() => removeHeaderRow(row.id)} type="button">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="button-row" style={{ marginTop: 12 }}>
+                <button className="btn" onClick={addHeaderRow} type="button">
+                  Add header
+                </button>
+              </div>
             </div>
 
             <div style={{ marginTop: 12 }}>
