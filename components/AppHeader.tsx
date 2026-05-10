@@ -44,7 +44,13 @@ export default function AppHeader() {
           </Link>
         </div>
         <div className="w-8 h-8 rounded-sm grayscale border border-outline-variant/30 bg-surface-container-high overflow-hidden relative">
-           <img alt="Operator Profile" className="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVzK7jtuUPUW5t9SaRVERrRuRZID0MUBE_Gq4CE35ul-UbYDAUN5zPAYF32qL6eRq34f1IAsus_EpJZzcH2EAkRpVZMxWpqwBVoxnuIqh6Op3Pq24ZN8qSdSUeHWMXtMomLb2siv4DaNcPhhNRhQgN2WqOYVc6Jzhfmak6dcLD-s2AU5Y7GtUnmOtjUwJiK1PXSzYro-GFHxAbQhMOiA8KV6s_Fvvw1BWCtHeAVYKIF3fmr-c1CF3S5n8EBSk8WhO7IGV_8z6J4lQ" />
+          <Image
+            alt="Operator Profile"
+            className="object-cover"
+            fill
+            sizes="32px"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVzK7jtuUPUW5t9SaRVERrRuRZID0MUBE_Gq4CE35ul-UbYDAUN5zPAYF32qL6eRq34f1IAsus_EpJZzcH2EAkRpVZMxWpqwBVoxnuIqh6Op3Pq24ZN8qSdSUeHWMXtMomLb2siv4DaNcPhhNRhQgN2WqOYVc6Jzhfmak6dcLD-s2AU5Y7GtUnmOtjUwJiK1PXSzYro-GFHxAbQhMOiA8KV6s_Fvvw1BWCtHeAVYKIF3fmr-c1CF3S5n8EBSk8WhO7IGV_8z6J4lQ"
+          />
         </div>
       </div>
     </header>

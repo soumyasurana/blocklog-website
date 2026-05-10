@@ -1,155 +1,74 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
+
 import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest } from "@/lib/blocklog";
 
-type ExportProofLog = {
+type ExplorerLog = {
   log_id: string;
-  created_at: string;
-  payload_hash: string;
-  chain_hash: string;
-};
-
-type ExportProofResponse = {
-  logs: ExportProofLog[];
-};
-
-type LogDetails = {
-  log_id: string;
-  company_id: string;
+  trace_id: string | null;
+  session_id: string | null;
+  workflow_id: string | null;
   event_type: string;
   source: string;
-  payload: Record<string, unknown>;
-  chain_hash: string;
+  timestamp: string;
   created_at: string;
+  integrity_status: string;
+  chain_hash: string;
+  company_id: string;
   is_deleted: boolean;
 };
 
-type ExplorerLog = {
-  id: string;
-  timestamp: string;
-  event: string;
-  source: string;
-  hash: string;
-  status: string;
-  company: string;
+type ExplorerResponse = {
+  items: ExplorerLog[];
+  next_cursor: string | null;
 };
 
-function getDateRange(range: string) {
-  const now = new Date();
-  const from = new Date(now);
-
-  if (range === "last_7_days") {
-    from.setDate(now.getDate() - 7);
-  } else if (range === "last_30_days") {
-    from.setDate(now.getDate() - 30);
-  } else {
-    from.setDate(now.getDate() - 1);
-  }
-
-  return { from: from.toISOString(), to: now.toISOString() };
-}
-
 export default function LogsPage() {
-  const [dateRange, setDateRange] = useState("last_24_hours");
+  const [logs, setLogs] = useState<ExplorerLog[]>([]);
+  const [query, setQuery] = useState("");
   const [eventType, setEventType] = useState("");
   const [source, setSource] = useState("");
-  const [status, setStatus] = useState("");
-  const [query, setQuery] = useState("");
-  const [logs, setLogs] = useState<ExplorerLog[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [integrity, setIntegrity] = useState("");
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const initialRange = useMemo(() => getDateRange("last_24_hours"), []);
+  const [error, setError] = useState<string | null>(null);
 
-  async function fetchLogs() {
+  const load = useCallback(async (reset = false, next?: string | null) => {
     setLoading(true);
     setError(null);
-
     try {
-      const { from, to } = getDateRange(dateRange);
-      const proof = await blocklogRequest<ExportProofResponse>(
-        `/logs/export-proof?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
-      );
+      const params = new URLSearchParams();
+      if (!reset && next) params.set("cursor", next);
+      if (query) params.set("q", query);
+      if (eventType) params.set("event_type", eventType);
+      if (source) params.set("source", source);
+      if (integrity) params.set("integrity", integrity);
+      params.set("limit", "50");
 
-      const detailedLogs = await Promise.all(
-        proof.logs.slice(0, 50).map(async (log) => {
-          const details = await blocklogRequest<LogDetails>(`/logs/${log.log_id}`);
-          return {
-            id: details.log_id,
-            timestamp: details.created_at,
-            event: details.event_type,
-            source: details.source,
-            hash: details.chain_hash,
-            status: details.is_deleted ? "deleted" : "verified",
-            company: details.company_id,
-          } satisfies ExplorerLog;
-        }),
-      );
-
-      const filtered = detailedLogs.filter((log) => {
-        const q = query.toLowerCase();
-        return (
-          (!q ||
-            log.timestamp.toLowerCase().includes(q) ||
-            log.event.toLowerCase().includes(q) ||
-            log.hash.toLowerCase().includes(q)) &&
-          (!eventType || log.event.toLowerCase().includes(eventType.toLowerCase())) &&
-          (!source || log.source.toLowerCase().includes(source.toLowerCase())) &&
-          (!status || log.status.toLowerCase() === status.toLowerCase())
-        );
-      });
-
-      setLogs(filtered);
-    } catch (fetchError) {
-      setError(fetchError instanceof Error ? fetchError.message : "Failed to load logs");
-      setLogs([]);
+      const response = await blocklogRequest<ExplorerResponse>(`/logs?${params.toString()}`);
+      setLogs((current) => (reset ? response.items : [...current, ...response.items]));
+      setNextCursor(response.next_cursor);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "Failed to load logs");
     } finally {
       setLoading(false);
     }
-  }
+  }, [eventType, integrity, query, source]);
 
   useEffect(() => {
-    async function loadInitialLogs() {
-      setLoading(true);
-      setError(null);
-      try {
-        const proof = await blocklogRequest<ExportProofResponse>(
-          `/logs/export-proof?from=${encodeURIComponent(
-            initialRange.from,
-          )}&to=${encodeURIComponent(initialRange.to)}`,
-        );
-
-        const detailedLogs = await Promise.all(
-          proof.logs.slice(0, 50).map(async (log) => {
-            const details = await blocklogRequest<LogDetails>(`/logs/${log.log_id}`);
-            return {
-              id: details.log_id,
-              timestamp: details.created_at,
-              event: details.event_type,
-              source: details.source,
-              hash: details.chain_hash,
-              status: details.is_deleted ? "deleted" : "verified",
-              company: details.company_id,
-            } satisfies ExplorerLog;
-          }),
-        );
-
-        setLogs(detailedLogs);
-      } catch (loadError) {
-        setError(loadError instanceof Error ? loadError.message : "Failed to load logs");
-      } finally {
-        setLoading(false);
-      }
+    async function loadInitial() {
+      await load(true, null);
     }
 
-    loadInitialLogs();
-  }, [initialRange]);
+    void loadInitial();
+  }, [load]);
 
-  async function onFilter(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await fetchLogs();
+      await load(true, null);
   }
 
   return (
@@ -158,55 +77,34 @@ export default function LogsPage() {
       <section className="card glass-card" style={{ marginBottom: 16 }}>
         <div className="section-header" style={{ marginBottom: 0 }}>
           <div>
-            <p className="eyebrow">Search and inspect</p>
-            <h2 style={{ marginBottom: 8 }}>Explore sealed logs across time, source, and event type.</h2>
+            <p className="eyebrow">Queryable evidence</p>
+            <h2 style={{ marginBottom: 8 }}>Search tamper-evident events directly.</h2>
             <p className="muted" style={{ margin: 0, maxWidth: 760 }}>
-              Since the backend exposes proof export and per-log retrieval rather than a direct list
-              endpoint, this explorer builds a verifiable index from exported proof windows and then
-              enriches each log with its canonical record.
+              Filter by event type, source, trace, and integrity state without reconstructing the index from proof exports.
             </p>
           </div>
         </div>
       </section>
-      <form className="card glass-card" style={{ display: "grid", gap: 12 }} onSubmit={onFilter}>
+
+      <form className="card glass-card" style={{ display: "grid", gap: 12 }} onSubmit={onSubmit}>
         <div className="grid grid-2">
           <div>
-            <label>Date range</label>
-            <select value={dateRange} onChange={(event) => setDateRange(event.target.value)}>
-              <option value="last_24_hours">Last 24 hours</option>
-              <option value="last_7_days">Last 7 days</option>
-              <option value="last_30_days">Last 30 days</option>
-            </select>
-          </div>
-          <div>
             <label>Search</label>
-            <input
-              placeholder="Search timestamp, event, hash"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="event, hash, idempotency key" />
           </div>
           <div>
             <label>Event type</label>
-            <input
-              placeholder="user.login"
-              value={eventType}
-              onChange={(event) => setEventType(event.target.value)}
-            />
+            <input value={eventType} onChange={(event) => setEventType(event.target.value)} placeholder="agent.run.completed" />
           </div>
           <div>
             <label>Source</label>
-            <input
-              placeholder="api"
-              value={source}
-              onChange={(event) => setSource(event.target.value)}
-            />
+            <input value={source} onChange={(event) => setSource(event.target.value)} placeholder="openai-agents" />
           </div>
           <div>
-            <label>Status</label>
-            <select value={status} onChange={(event) => setStatus(event.target.value)}>
-              <option value="">All statuses</option>
-              <option value="verified">verified</option>
+            <label>Integrity</label>
+            <select value={integrity} onChange={(event) => setIntegrity(event.target.value)}>
+              <option value="">All</option>
+              <option value="valid">valid</option>
               <option value="deleted">deleted</option>
             </select>
           </div>
@@ -218,55 +116,59 @@ export default function LogsPage() {
         </div>
       </form>
 
-      {loading && (
-        <div className="notice" style={{ marginTop: 12 }}>
-          <div className="spinner" />
-          <span>Loading logs...</span>
-        </div>
-      )}
-
-      {error && <p className="error-banner">Live API unavailable: {error}</p>}
+      {error && <p className="error-banner">{error}</p>}
 
       <section className="table-shell">
         {logs.length === 0 ? (
-          <div className="empty-state">No logs match the current filters.</div>
+          <div className="empty-state">No logs found for the current filters.</div>
         ) : (
           <table>
             <thead>
               <tr>
                 <th>Timestamp</th>
-                <th>Event type</th>
+                <th>Event</th>
                 <th>Source</th>
+                <th>Trace</th>
+                <th>Integrity</th>
                 <th>Hash</th>
-                <th>Status</th>
-                <th>Company ID</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               {logs.map((log) => (
-                <tr key={log.id}>
-                  <td>{new Date(log.timestamp).toISOString()}</td>
+                <tr key={log.log_id}>
+                  <td>{new Date(log.timestamp).toLocaleString()}</td>
                   <td>
-                    <Link href={`/dashboard/logs/${log.id}`}>{log.event}</Link>
+                    <Link href={`/dashboard/logs/${log.log_id}`}>{log.event_type}</Link>
                   </td>
                   <td>{log.source}</td>
-                  <td>{log.hash}</td>
                   <td>
-                    <span className={`status-pill status-${log.status}`}>{log.status}</span>
+                    {log.trace_id ? <Link href={`/dashboard/traces/${log.trace_id}`}>{log.trace_id.slice(0, 8)}...</Link> : "none"}
                   </td>
-                  <td>{log.company}</td>
                   <td>
-                    <Link className="btn" href={`/dashboard/verify?hash=${encodeURIComponent(log.id)}`}>
-                      Verify
-                    </Link>
+                    <span className={`status-pill status-${log.integrity_status}`}>{log.integrity_status}</span>
                   </td>
+                  <td>{log.chain_hash.slice(0, 16)}...</td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </section>
+
+      {nextCursor && (
+        <div style={{ marginTop: 16 }}>
+          <button
+            className="btn"
+            disabled={loading}
+            onClick={async () => {
+              await load(false, nextCursor);
+            }}
+            type="button"
+          >
+            {loading ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      )}
     </>
   );
 }

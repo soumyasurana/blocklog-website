@@ -310,7 +310,7 @@ export default function PricingPage() {
               </table>
             </div>
             <p className="muted" style={{ marginBottom: 0 }}>
-              Logs tell you what happened. Blocklog proves it can't be rewritten..
+              Logs tell you what happened. Blocklog proves it can&apos;t be rewritten.
             </p>
           </article>
         </section>

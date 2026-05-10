@@ -13,7 +13,7 @@ export default function AppSidebar() {
       : "flex items-center gap-4 px-6 py-2.5 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all";
   };
 
-  const getIconClass = (path: string) => {
+  const getIconClass = () => {
     return "material-symbols-outlined text-[20px]";
   };
 
@@ -46,32 +46,32 @@ export default function AppSidebar() {
         </div>
         
         <Link href="/dashboard" className={pathname === "/dashboard" ? getLinkClass("/dashboard") : "flex items-center gap-4 px-6 py-2.5 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all"}>
-          <span className={getIconClass("/dashboard")}>dashboard</span>
+          <span className={getIconClass()}>dashboard</span>
           <span className={pathname === "/dashboard" ? getTextClass("/dashboard") : "font-['Space_Grotesk'] uppercase text-[11px] tracking-widest"}>Overview</span>
         </Link>
         
         <Link href="/dashboard/ledger" className={getLinkClass("/dashboard/ledger")}>
-          <span className={getIconClass("/dashboard/ledger")}>account_tree</span>
+          <span className={getIconClass()}>account_tree</span>
           <span className={getTextClass("/dashboard/ledger")}>Ledger</span>
         </Link>
         
         <Link href="/dashboard/logs" className={getLinkClass("/dashboard/logs")}>
-          <span className={getIconClass("/dashboard/logs")}>history_edu</span>
+          <span className={getIconClass()}>history_edu</span>
           <span className={getTextClass("/dashboard/logs")}>Audit Trail</span>
         </Link>
         
         <Link href="/dashboard/evidence" className={getLinkClass("/dashboard/evidence")}>
-          <span className={getIconClass("/dashboard/evidence")}>inventory_2</span>
+          <span className={getIconClass()}>inventory_2</span>
           <span className={getTextClass("/dashboard/evidence")}>Evidence Bundles</span>
         </Link>
         
         <Link href="/auditor" className={getLinkClass("/auditor")}>
-          <span className={getIconClass("/auditor")}>shield_person</span>
+          <span className={getIconClass()}>shield_person</span>
           <span className={getTextClass("/auditor")}>Auditor Portal</span>
         </Link>
         
         <Link href="/dashboard/hitl" className={getLinkClass("/dashboard/hitl")}>
-          <span className={getIconClass("/dashboard/hitl")}>verified_user</span>
+          <span className={getIconClass()}>verified_user</span>
           <span className={getTextClass("/dashboard/hitl")}>HITL Approvals</span>
         </Link>
         
@@ -80,12 +80,12 @@ export default function AppSidebar() {
         </div>
         
         <Link href="/dashboard/api-keys" className={getLinkClass("/dashboard/api-keys")}>
-          <span className={getIconClass("/dashboard/api-keys")}>key</span>
+          <span className={getIconClass()}>key</span>
           <span className={getTextClass("/dashboard/api-keys")}>API Keys</span>
         </Link>
         
         <Link href="/dashboard/compliance" className={getLinkClass("/dashboard/compliance")}>
-          <span className={getIconClass("/dashboard/compliance")}>gavel</span>
+          <span className={getIconClass()}>gavel</span>
           <span className={getTextClass("/dashboard/compliance")}>Compliance</span>
         </Link>
       </nav>
