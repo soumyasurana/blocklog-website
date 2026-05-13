@@ -162,10 +162,6 @@ export default function ApiCommandCenter() {
             <div>
               <p className="eyebrow">Developer surface</p>
               <h2 style={{ marginBottom: 8 }}>The playground now acts as the console-grade API command center.</h2>
-              <p className="muted" style={{ margin: 0, maxWidth: 780 }}>
-                Browse the full endpoint catalog, jump to the related console surface, and run
-                requests with structured path inputs instead of editing placeholders by hand.
-              </p>
             </div>
             <div className="button-row">
               <span className="status-pill status-valid">{apiCatalog.length} endpoints mapped</span>
@@ -326,11 +322,6 @@ export default function ApiCommandCenter() {
                   />
                 </div>
               </div>
-              <p className="muted" style={{ margin: "10px 0 0" }}>
-                Ingestion requests already work with your logged-in bearer token. If you add an{" "}
-                <code>X-API-Key</code>, the backend will prioritize that key over bearer auth, so a
-                revoked or invalid key will cause the request to fail.
-              </p>
               <div className="grid" style={{ gap: 10, marginTop: 12 }}>
                 {headerRows.map((row) => (
                   <div className="grid grid-2" key={row.id} style={{ alignItems: "end" }}>
