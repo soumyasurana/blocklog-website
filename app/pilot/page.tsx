@@ -167,7 +167,7 @@ export default function PilotPage() {
         <section className="section">
           <div className="trust-band">
             <div>
-              <p className="eyebrow">After 60 days</p>
+              <p className="eyebrow">After 30 days</p>
               <h2>Clear next step, no weird transition.</h2>
             </div>
             <div className="grid" style={{ gap: 10 }}>
