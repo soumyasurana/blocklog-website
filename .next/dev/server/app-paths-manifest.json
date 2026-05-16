@@ -1,0 +1,9 @@
+{
+  "/dashboard/playground/page": "app/dashboard/playground/page.js",
+  "/dashboard/api-keys/page": "app/dashboard/api-keys/page.js",
+  "/dashboard/logs/page": "app/dashboard/logs/page.js",
+  "/dashboard/audit-trail/page": "app/dashboard/audit-trail/page.js",
+  "/dashboard/system/pipeline/page": "app/dashboard/system/pipeline/page.js",
+  "/dashboard/system/anchoring/page": "app/dashboard/system/anchoring/page.js",
+  "/dashboard/page": "app/dashboard/page.js"
+}

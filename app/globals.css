@@ -1,0 +1,10 @@
+@import "../styles/variables.css";
+@import "../styles/legacy.css";
+@import "../styles/base.css";
+@import "../styles/layout.css";
+@import "../styles/components/buttons.css";
+@import "../styles/components/cards.css";
+@import "../styles/components/forms.css";
+@import "../styles/components/navbar.css";
+@import "../styles/components/surfaces.css";
+@import "../styles/pages/pricing.css";
