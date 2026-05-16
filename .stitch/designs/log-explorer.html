@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111318;
+            color: #e2e2e8;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .label-text {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Custom scrollbar for high-density tables */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a494a;
+            border-radius: 2px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#e9feff",
+                        "secondary-container": "#42474f",
+                        "tertiary-fixed-dim": "#2ae500",
+                        "on-tertiary-container": "#107100",
+                        "outline-variant": "#3a494a",
+                        "on-secondary-container": "#b1b5bf",
+                        "on-tertiary-fixed-variant": "#095300",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c2c7d0",
+                        "surface-bright": "#37393e",
+                        "on-secondary-fixed": "#171c23",
+                        "background": "#111318",
+                        "inverse-on-surface": "#2f3035",
+                        "on-secondary-fixed-variant": "#42474f",
+                        "surface-container-low": "#1a1c20",
+                        "surface-variant": "#333539",
+                        "primary-fixed": "#63f7ff",
+                        "tertiary": "#efffe4",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#79ff5b",
+                        "on-background": "#e2e2e8",
+                        "on-primary": "#003739",
+                        "on-tertiary-fixed": "#022100",
+                        "outline": "#849495",
+                        "on-primary-fixed": "#002021",
+                        "surface-container": "#1e2024",
+                        "surface": "#111318",
+                        "on-error": "#690005",
+                        "on-secondary": "#2c3138",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed-dim": "#00dce5",
+                        "surface-tint": "#00dce5",
+                        "surface-dim": "#111318",
+                        "inverse-surface": "#e2e2e8",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#00696e",
+                        "secondary": "#c2c7d0",
+                        "on-primary-container": "#006c71",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary-container": "#00f5ff",
+                        "on-tertiary": "#053900",
+                        "on-surface": "#e2e2e8",
+                        "tertiary-container": "#3bff17",
+                        "surface-container-high": "#282a2e",
+                        "secondary-fixed": "#dee2ec",
+                        "on-surface-variant": "#b9caca",
+                        "on-primary-fixed-variant": "#004f53"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-[#111318] text-[#00F5FF] font-['Inter'] font-medium text-sm tracking-tight border-b border-[#3A494A]/15 flex justify-between items-center w-full px-6 h-14 z-50 sticky top-0">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black text-[#00F5FF] tracking-tighter">BlockLog</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#00F5FF] border-b-2 border-[#00F5FF] pb-1" href="#">Explorer</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Verification</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Nodes</a>
+<a class="text-slate-400 hover:text-[#00F5FF] transition-colors duration-200" href="#">Network</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center px-3 py-1 bg-tertiary-container/10 border border-tertiary-container/20 rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container mr-2" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="label-text text-[10px] uppercase tracking-widest text-tertiary-container font-bold">Integrity Verified</span>
+</div>
+<button class="bg-surface-container-high px-3 py-1.5 rounded-sm hover:text-[#00F5FF] transition-all">Workspace</button>
+<div class="flex gap-2 ml-2">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-[#00F5FF]">notifications</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-[#00F5FF]">settings</span>
+</div>
+<div class="w-8 h-8 rounded-sm bg-surface-container-highest border border-outline-variant/30 overflow-hidden ml-2">
+<img alt="Operator Profile" class="w-full h-full object-cover opacity-80" data-alt="close-up professional portrait of a tech operations officer in a dark studio setting with teal rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxmW-ejJbiY_aN_C9BGIUAzBu905ERUkZWsutIABc9N5mJgGBOoAl-O5FkIaf5BoitI17LZXUmjHJ8Vc3OK0y55GbF2rUNwiwjhlfHVQ1NhkanA-H7DY6Bjq8X-XbWU4hWkCFMcVPgTBdQ2R7Ip3REau7jjRa-2xZ1sXUD2i11u7QyjTkXbmlF5XZs1RZKclVe9BfRHeKlCFImkBThA1raPWyOIlcYrkTzEaTp_PNBzCifv7gvDiiA9OMLW-Q9cJoJA4kOlsy_3Uc"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-[#1A1C20] flex-col h-full w-64 border-r border-outline-variant/10 shrink-0">
+<div class="p-6 border-b border-outline-variant/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/10 flex items-center justify-center rounded-sm border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container">hub</span>
+</div>
+<div>
+<div class="label-text text-[11px] uppercase tracking-widest text-on-surface">Mainnet-Beta</div>
+<div class="mono text-[10px] text-on-surface-variant">0x84f...2a1c</div>
+</div>
+</div>
+</div>
+<nav class="flex flex-col py-4 gap-1 flex-1 overflow-y-auto">
+<div class="px-4 py-2">
+<button class="w-full bg-primary-container text-on-primary-fixed py-2 px-4 rounded-sm label-text text-[11px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">add_box</span>
+                        New Bundle
+                    </button>
+</div>
+<div class="mt-4 px-6 label-text text-[9px] text-outline tracking-[0.2em] mb-2 uppercase">Ledger Ops</div>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+                    Ledger
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 bg-[#1E2024] text-[#00F5FF] border-l-2 border-[#00F5FF] transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+                    Audit Trail
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                    Evidence Bundles
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">key</span>
+                    API Keys
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">dns</span>
+                    Validators
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+                    Compliance
+                </a>
+<div class="mt-auto pt-4 border-t border-outline-variant/5">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+                        Documentation
+                    </a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:bg-[#282A2E] hover:text-white transition-all label-text text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-[18px]">help_center</span>
+                        Support
+                    </a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col bg-surface overflow-hidden">
+<!-- Filters Bar -->
+<section class="bg-surface-container-low px-6 py-4 flex flex-wrap items-end gap-4 border-b border-outline-variant/10">
+<div class="flex flex-col gap-1.5">
+<label class="label-text text-[10px] text-outline uppercase tracking-widest font-bold">Date Range</label>
+<div class="flex bg-surface-container-lowest rounded-sm overflow-hidden border-b border-outline-variant/30">
+<input class="bg-transparent text-xs p-2 focus:ring-0 border-none outline-none text-on-surface-variant mono" type="date"/>
+<span class="flex items-center px-2 text-outline-variant">→</span>
+<input class="bg-transparent text-xs p-2 focus:ring-0 border-none outline-none text-on-surface-variant mono" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="label-text text-[10px] text-outline uppercase tracking-widest font-bold">Event Type</label>
+<select class="bg-surface-container-lowest text-xs px-3 py-2 border-none border-b border-outline-variant/30 rounded-sm focus:ring-1 focus:ring-primary-container text-on-surface w-40">
+<option>All Events</option>
+<option>Transfer</option>
+<option>Auth Change</option>
+<option>Node Sync</option>
+<option>Contract Call</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="label-text text-[10px] text-outline uppercase tracking-widest font-bold">Region</label>
+<select class="bg-surface-container-lowest text-xs px-3 py-2 border-none border-b border-outline-variant/30 rounded-sm focus:ring-1 focus:ring-primary-container text-on-surface w-36">
+<option>Global (All)</option>
+<option>EU-West-1</option>
+<option>US-East-2</option>
+<option>APAC-South</option>
+<option>MENA-Central</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="label-text text-[10px] text-outline uppercase tracking-widest font-bold">Search Actor / Hash</label>
+<div class="relative">
+<input class="bg-surface-container-lowest text-xs px-8 py-2 border-none border-b border-outline-variant/30 rounded-sm focus:ring-1 focus:ring-primary-container text-on-surface mono w-64" placeholder="0x... or UID" type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-[18px] text-outline">search</span>
+</div>
+</div>
+<button class="bg-surface-container-highest px-4 py-2 rounded-sm text-xs label-text uppercase font-bold tracking-widest hover:bg-outline-variant/20 transition-all flex items-center gap-2 ml-auto">
+<span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
+                    Reset
+                </button>
+<button class="bg-primary-container text-on-primary-fixed px-5 py-2 rounded-sm text-xs label-text uppercase font-bold tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(0,245,255,0.2)] flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">ios_share</span>
+                    Export to Evidence Bundle
+                </button>
+</section>
+<!-- Data Table -->
+<section class="flex-1 overflow-auto bg-surface-container">
+<table class="w-full border-collapse text-left">
+<thead class="sticky top-0 bg-surface-container-low z-10 shadow-sm">
+<tr>
+<th class="px-6 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20">Timestamp</th>
+<th class="px-4 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20">Event Type</th>
+<th class="px-4 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20">Actor ID</th>
+<th class="px-4 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20">Jurisdiction</th>
+<th class="px-4 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20 text-right">Amount</th>
+<th class="px-4 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20">Hash</th>
+<th class="px-6 py-4 label-text text-[10px] text-outline uppercase tracking-widest border-b border-outline-variant/20 text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/50 cursor-pointer transition-colors group">
+<td class="px-6 py-3 mono text-[11px] text-on-surface-variant">2023-11-24 14:02:11.882</td>
+<td class="px-4 py-3">
+<span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-tighter">Transfer</span>
+</td>
+<td class="px-4 py-3 mono text-[11px] text-primary-fixed">0x71C9...88A2</td>
+<td class="px-4 py-3 label-text text-[11px] text-on-surface uppercase tracking-wide">EU-Luxembourg</td>
+<td class="px-4 py-3 mono text-[11px] text-right text-on-surface">1,402.00 <span class="text-[9px] text-outline">BLog</span></td>
+<td class="px-4 py-3 mono text-[10px] text-outline truncate max-w-[120px]">f42a98...ce01</td>
+<td class="px-6 py-3 text-center">
+<span class="material-symbols-outlined text-tertiary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<!-- Expanded Details Row 1 (Simulated active) -->
+<tr class="bg-surface-container-lowest">
+<td class="px-6 py-4 border-l-2 border-primary-container" colspan="7">
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-8">
+<div class="label-text text-[9px] text-outline uppercase tracking-[0.2em] mb-2">Detailed Payload (JSON)</div>
+<pre class="mono text-[10px] bg-surface p-4 rounded-sm border border-outline-variant/10 text-[#00F5FF]/80 leading-relaxed overflow-x-auto">
+{
+  "header": { "v": 1, "nonce": "44a2...ff01", "sig": "0x882...11c" },
+  "payload": {
+    "source": "vault_main_01",
+    "destination": "sub_custody_eu",
+    "method": "instant_settlement",
+    "gas_limit": 21000,
+    "priority": "high",
+    "metadata": {
+      "aml_status": "cleared",
+      "kyc_id": "8812-99-AX",
+      "geo_lock": "enabled"
+    }
+  },
+  "integrity_witness": "validator_09, validator_12, validator_44"
+}</pre>
+</div>
+<div class="col-span-4 flex flex-col gap-4">
+<div>
+<div class="label-text text-[9px] text-outline uppercase tracking-[0.2em] mb-2">Audit Chain Path</div>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></div>
+<div class="h-0.5 w-8 bg-outline-variant/30"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></div>
+<div class="h-0.5 w-8 bg-outline-variant/30"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></div>
+</div>
+<div class="mt-2 text-[10px] text-on-surface-variant">Validated by 14 network nodes. Consensus reached in 1.2ms.</div>
+</div>
+<div class="mt-auto flex gap-2">
+<button class="flex-1 bg-surface-container-high py-2 text-[10px] uppercase font-bold tracking-widest label-text rounded-sm hover:bg-outline-variant/20">Flag Entry</button>
+<button class="flex-1 border border-outline-variant/30 py-2 text-[10px] uppercase font-bold tracking-widest label-text rounded-sm hover:bg-surface-container-high">Raw Logs</button>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/50 cursor-pointer transition-colors group">
+<td class="px-6 py-3 mono text-[11px] text-on-surface-variant">2023-11-24 14:01:55.201</td>
+<td class="px-4 py-3">
+<span class="bg-on-tertiary-fixed-variant text-tertiary-fixed-dim px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-tighter">Auth Change</span>
+</td>
+<td class="px-4 py-3 mono text-[11px] text-primary-fixed">0x99A1...FF21</td>
+<td class="px-4 py-3 label-text text-[11px] text-on-surface uppercase tracking-wide">US-Delaware</td>
+<td class="px-4 py-3 mono text-[11px] text-right text-on-surface">0.00 <span class="text-[9px] text-outline">BLog</span></td>
+<td class="px-4 py-3 mono text-[10px] text-outline truncate max-w-[120px]">a1188d...8892</td>
+<td class="px-6 py-3 text-center">
+<span class="material-symbols-outlined text-tertiary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/50 cursor-pointer transition-colors group">
+<td class="px-6 py-3 mono text-[11px] text-on-surface-variant">2023-11-24 14:01:42.110</td>
+<td class="px-4 py-3">
+<span class="bg-secondary-container/30 text-secondary px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-tighter">Node Sync</span>
+</td>
+<td class="px-4 py-3 mono text-[11px] text-primary-fixed">0x42E2...CD31</td>
+<td class="px-4 py-3 label-text text-[11px] text-on-surface uppercase tracking-wide">Singapore</td>
+<td class="px-4 py-3 mono text-[11px] text-right text-on-surface">0.00 <span class="text-[9px] text-outline">BLog</span></td>
+<td class="px-4 py-3 mono text-[10px] text-outline truncate max-w-[120px]">99d21c...fa21</td>
+<td class="px-6 py-3 text-center">
+<span class="material-symbols-outlined text-tertiary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/50 cursor-pointer transition-colors group bg-error-container/5">
+<td class="px-6 py-3 mono text-[11px] text-on-surface-variant">2023-11-24 14:00:12.001</td>
+<td class="px-4 py-3">
+<span class="bg-error text-on-error px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-tighter">Contract Call</span>
+</td>
+<td class="px-4 py-3 mono text-[11px] text-error">0x0000...DEAD</td>
+<td class="px-4 py-3 label-text text-[11px] text-on-surface uppercase tracking-wide">Unknown</td>
+<td class="px-4 py-3 mono text-[11px] text-right text-on-surface">5,000.00 <span class="text-[9px] text-outline">BLog</span></td>
+<td class="px-4 py-3 mono text-[10px] text-outline truncate max-w-[120px]">ERROR_INVALID_HASH</td>
+<td class="px-6 py-3 text-center">
+<span class="material-symbols-outlined text-error text-[18px]">error</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-high/50 cursor-pointer transition-colors group">
+<td class="px-6 py-3 mono text-[11px] text-on-surface-variant">2023-11-24 13:59:44.902</td>
+<td class="px-4 py-3">
+<span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-tighter">Transfer</span>
+</td>
+<td class="px-4 py-3 mono text-[11px] text-primary-fixed">0x12C8...66B1</td>
+<td class="px-4 py-3 label-text text-[11px] text-on-surface uppercase tracking-wide">Brazil-East</td>
+<td class="px-4 py-3 mono text-[11px] text-right text-on-surface">250,000.00 <span class="text-[9px] text-outline">BLog</span></td>
+<td class="px-4 py-3 mono text-[10px] text-outline truncate max-w-[120px]">de9982...110a</td>
+<td class="px-6 py-3 text-center">
+<span class="material-symbols-outlined text-tertiary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Status Bar / Footer -->
+<footer class="bg-surface-container-low px-6 py-2 border-t border-outline-variant/10 flex justify-between items-center h-10">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<span class="label-text text-[9px] uppercase tracking-widest text-on-surface-variant">Network: Stable</span>
+</div>
+<div class="label-text text-[9px] uppercase tracking-widest text-outline">Current Block: <span class="mono text-primary-container">#19,228,441</span></div>
+<div class="label-text text-[9px] uppercase tracking-widest text-outline">TPS: <span class="mono text-primary-container">4,291</span></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<span class="label-text text-[9px] uppercase tracking-widest text-outline">Items per page</span>
+<select class="bg-transparent border-none text-[9px] mono text-primary-container focus:ring-0 cursor-pointer">
+<option>50</option>
+<option>100</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-[16px] text-outline hover:text-primary-container">chevron_left</button>
+<span class="label-text text-[9px] uppercase tracking-widest text-on-surface">Page 1 of 4,882</span>
+<button class="material-symbols-outlined text-[16px] text-outline hover:text-primary-container">chevron_right</button>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>
