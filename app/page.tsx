@@ -3,7 +3,6 @@ import LandingHeroActions from "@/components/LandingHeroActions";
 import LandingThemeLock from "@/components/LandingThemeLock";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import VerifyProofWidget from "@/components/VerifyProofWidget";
 
 const heroSignals = [
   { value: "30 seconds", label: "for an auditor or agent to verify a proof bundle" },
@@ -82,19 +81,7 @@ const auditOutcomes = [
   },
 ];
 
-const engineerPoints = [
-  "One ingestion endpoint for new and existing JSON logs",
-  "Python and Node SDKs for faster rollout",
-  "No schema changes required for common log sources",
-  "Detailed docs, proof export, and verification endpoints",
-];
 
-const auditorPoints = [
-  "Independent verification without trusting Blocklog",
-  "Professional proof bundles and portable audit evidence",
-  "Clear integrity story for SOC 2, ISO 27001, and HIPAA workflows",
-  "Step-by-step verification path for reviewers, external auditors, and autonomous systems",
-];
 
 const securityQuestions = [
   {
@@ -147,37 +134,7 @@ const currentUseCases = [
   },
 ];
 
-const withoutBlocklog = [
-  "CloudTrail exports and app logs assembled by hand",
-  "Manual formatting for auditor review",
-  "Integrity questions answered with process descriptions",
-  "Repeated evidence requests during audit review",
-];
 
-const withBlocklog = [
-  "Send logs once through the ingestion pipeline",
-  "Proof bundle generated automatically",
-  "Auditor verifies independently in seconds",
-  "Fewer follow-up requests and faster approval",
-];
-
-const docsLinks = [
-  {
-    href: "/docs/log-ingestion",
-    title: "Log ingestion docs",
-    detail: "Authentication, ingestion, proof export, and verification endpoints.",
-  },
-  {
-    href: "/docs/sdks",
-    title: "SDK references",
-    detail: "Node and Python clients with retries, batching, timestamps, and idempotency support.",
-  },
-  {
-    href: "/pilot",
-    title: "Start a pilot",
-    detail: "Join the 60-day design partnership with full Pro access and structured feedback.",
-  },
-];
 
 const founderLinks = [
   { href: "https://github.com/soumyasurana", label: "GitHub" },
@@ -296,11 +253,6 @@ $ ./verify.sh proof_bundle.zip
                 <p className="eyebrow">Why buyers care</p>
                 <strong>Move from &quot;trust our process&quot; to proof your auditor can check.</strong>
               </div>
-              <div className="orbital-card">
-                <p className="eyebrow">Pilot structure</p>
-                <strong>Join the 60-day design partnership.</strong>
-                <p className="muted">Full Pro access, no credit card, and a clear path into Starter or Pro.</p>
-              </div>
             </div>
           </div>
         </section>
@@ -382,52 +334,32 @@ $ ./verify.sh proof_bundle.zip
               <h2>A new primitive for verifiable systems. Three lines of code to start.</h2>
             </div>
           </div>
-          <div className="stack-grid landing-proof-grid">
-            <div className="grid">
-              {proofSteps.map((item) => (
-                <article className="card glass-card landing-step-card" key={item.title}>
-                  <div className="capability-icon" />
-                  <p className="eyebrow">{item.step}</p>
-                  <h3 style={{ marginTop: 8, marginBottom: 10 }}>{item.title}</h3>
-                  <p style={{ marginTop: 0, marginBottom: 10 }}>{item.benefit}</p>
-                  <p className="muted" style={{ marginBottom: 0 }}>{item.detail}</p>
-                </article>
-              ))}
-            </div>
-            <article className="card glass-card landing-verification-card">
-              <p className="eyebrow">What the auditor and autonomous systems see</p>
-              <h3 style={{ marginTop: 8, marginBottom: 12 }}>
-                Your auditor can verify this independently in 30 seconds.
-              </h3>
-              <div className="code-pane">{`./verify.sh proof_bundle.zip
+          <div className="grid grid-3" style={{ marginBottom: 24 }}>
+            {proofSteps.map((item) => (
+              <article className="card glass-card landing-step-card" key={item.title}>
+                <div className="capability-icon" />
+                <p className="eyebrow">{item.step}</p>
+                <h3 style={{ marginTop: 8, marginBottom: 10 }}>{item.title}</h3>
+                <p style={{ marginTop: 0, marginBottom: 10 }}>{item.benefit}</p>
+                <p className="muted" style={{ marginBottom: 0 }}>{item.detail}</p>
+              </article>
+            ))}
+          </div>
+          <article className="card glass-card landing-verification-card">
+            <p className="eyebrow">What the auditor and autonomous systems see</p>
+            <h3 style={{ marginTop: 8, marginBottom: 12 }}>
+              Your auditor can verify this independently in 30 seconds.
+            </h3>
+            <div className="code-pane" style={{ marginBottom: 12 }}>{`./verify.sh proof_bundle.zip
 
 [OK] bundle signature valid
 [OK] log hashes match
 [OK] anchor timestamp found
 [OK] evidence ready for review`}</div>
-              <p className="muted" style={{ marginBottom: 0 }}>
-                No screenshots. No custom explanation. No trust leap.
-              </p>
-            </article>
-          </div>
-          <article className="card glass-card landing-no-work-card" style={{ marginTop: 16 }}>
-            <p className="eyebrow">What you don&apos;t have to do</p>
-            <h3 style={{ marginTop: 8, marginBottom: 10 }}>No extra work required.</h3>
-            <div className="grid grid-2">
-              <div className="status-pill">No custom audit scripts</div>
-              <div className="status-pill">No manual log stitching</div>
-              <div className="status-pill">No screenshot-based evidence</div>
-              <div className="status-pill">No reliance on internal infrastructure</div>
-            </div>
+            <p className="muted" style={{ marginBottom: 0 }}>
+              No screenshots. No custom explanation. No trust leap.
+            </p>
           </article>
-        </section>
-
-        <section className="section">
-          <div className="landing-live-demo-label">[ Live — this is the actual running system ]</div>
-          <VerifyProofWidget />
-          <p className="landing-live-demo-note">
-            Backend live since March 2026. Uptime and hash chain continuity are publicly verifiable.
-          </p>
         </section>
 
         <section className="section">
@@ -451,35 +383,6 @@ $ ./verify.sh proof_bundle.zip
                 <p className="muted" style={{ marginBottom: 0 }}>{item.result}</p>
               </article>
             ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-header">
-            <div>
-              <p className="eyebrow">Two audiences</p>
-              <h2>Built for every layer of the stack - human and automated.</h2>
-            </div>
-          </div>
-          <div className="grid grid-2">
-            <article className="card glass-card landing-audience-card">
-              <p className="eyebrow">For the systems and agents reading these logs</p>
-              <h3 style={{ marginTop: 8 }}>Simple integration</h3>
-              <ul className="landing-list">
-                {engineerPoints.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-            <article className="card glass-card landing-audience-card">
-              <p className="eyebrow">For compliance &amp; security teams</p>
-              <h3 style={{ marginTop: 8 }}>Independent verification</h3>
-              <ul className="landing-list">
-                {auditorPoints.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
           </div>
         </section>
 
@@ -521,35 +424,6 @@ $ ./verify.sh proof_bundle.zip
                 <p className="muted" style={{ marginBottom: 0 }}>{item.detail}</p>
               </article>
             ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-header">
-            <div>
-              <p className="eyebrow">SOC 2 speed</p>
-              <h2>What teams are cutting with Blocklog.</h2>
-            </div>
-          </div>
-          <div className="comparison-row">
-            <article className="comparison-card comparison-card-muted">
-              <span className="comparison-label">Without Blocklog</span>
-              <ul className="landing-list">
-                {withoutBlocklog.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <p className="landing-summary">Typical result: long evidence cycles and repeated integrity questions.</p>
-            </article>
-            <article className="comparison-card comparison-card-strong">
-              <span className="comparison-label">With Blocklog</span>
-              <ul className="landing-list">
-                {withBlocklog.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <p className="landing-summary">Typical result: faster approval, clearer evidence, less audit friction.</p>
-            </article>
           </div>
         </section>
 
@@ -635,46 +509,6 @@ $ ./verify.sh proof_bundle.zip
               <div className="status-pill">Structured check-ins at week 2 and week 6</div>
               <div className="status-pill">Extended 90-day enterprise pilot available</div>
             </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="trust-band">
-            <div>
-              <p className="eyebrow">Pilot clarity</p>
-              <h2>Run the workflow before committing.</h2>
-            </div>
-            <div>
-              <p className="section-lead" style={{ marginBottom: 16 }}>
-                Start with a 60-day design partnership, prove the evidence flow with your real
-                logs, then move into Starter, Pro, or Enterprise only if it earns its place.
-              </p>
-              <div className="button-row">
-                <Link className="btn btn-primary" href="/pilot">
-                  Join 60-Day Pilot
-                </Link>
-                <Link className="btn btn-link" href="/docs/getting-started">
-                  View integration path
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-header">
-            <div>
-              <p className="eyebrow">Documentation</p>
-              <h2>Everything needed to integrate quickly.</h2>
-            </div>
-          </div>
-          <div className="grid grid-3">
-            {docsLinks.map((item) => (
-              <Link className="card glass-card" href={item.href} key={item.href}>
-                <h3>{item.title}</h3>
-                <p className="muted" style={{ marginBottom: 0 }}>{item.detail}</p>
-              </Link>
-            ))}
           </div>
         </section>
       </main>
