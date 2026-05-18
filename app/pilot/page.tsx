@@ -32,11 +32,6 @@ const pilotFit = [
   "Early design partners shaping audit and verification workflows",
 ];
 
-const postPilotSteps = [
-  "Move into Starter at $29/month for smaller production workloads",
-  "Move into Pro at $99/month for SIEM streaming and third-party verification",
-  "Keep the implementation work and evidence flow intact",
-];
 
 const pilotHighlights = [
   ["What you get", "A real production deployment with enough depth to test whether Blocklog earns its place."],
@@ -160,22 +155,6 @@ export default function PilotPage() {
               <div className="status-pill">Run Blocklog in production for 30 days</div>
               <div className="status-pill">Share structured feedback after week 2 and week 4</div>
               <div className="status-pill">Tell us where the DX, proof flow, or reporting breaks down</div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="trust-band">
-            <div>
-              <p className="eyebrow">After 30 days</p>
-              <h2>Clear next step, no weird transition.</h2>
-            </div>
-            <div className="grid" style={{ gap: 10 }}>
-              {postPilotSteps.map((item) => (
-                <div className="status-pill" key={item}>
-                  {item}
-                </div>
-              ))}
             </div>
           </div>
         </section>

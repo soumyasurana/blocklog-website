@@ -157,10 +157,6 @@ export default function HomePage() {
         <section className="hero">
           <div className="hero-copy">
             <div className="hero-copy-inner">
-              <div className="hero-badge">
-                <span className="hero-badge-dot" />
-                Built for security teams, compliance leads, auditors, and autonomous systems
-              </div>
               <p className="eyebrow">Cryptographically verifiable audit proof</p>
               <h1>
                 <span className="landing-headline-question">Logs are claims.</span>
@@ -480,7 +476,7 @@ $ ./verify.sh proof_bundle.zip
             <div className="landing-final-cta-grid">
               <article className="card glass-card landing-final-primary">
                 <p className="eyebrow">Primary path</p>
-                <h3 style={{ marginTop: 8, marginBottom: 12 }}>Join 60-Day Pilot</h3>
+                <h3 style={{ marginTop: 8, marginBottom: 12 }}>Join 30-Day Pilot</h3>
                 <ul className="landing-list landing-list-compact">
                   <li>No credit card required</li>
                   <li>Full Pro access</li>
@@ -505,7 +501,7 @@ $ ./verify.sh proof_bundle.zip
             </div>
             <div className="landing-trust-strip">
               <div className="status-pill">No credit card required</div>
-              <div className="status-pill">60 days of full Pro access</div>
+              <div className="status-pill">30 days of full Pro access</div>
               <div className="status-pill">Structured check-ins at week 2 and week 6</div>
               <div className="status-pill">Extended 90-day enterprise pilot available</div>
             </div>

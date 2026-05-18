@@ -1,40 +1,396 @@
-[00:00:01.878] Server  LOG     ✓ Ready in 1586ms
-[00:00:05.907] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:05.907] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:00:01.717] Server  LOG     ✓ Ready in 1414ms
+[00:00:07.128] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:57.414] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:01.209] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:19.161] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:25.382] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:05:05.292] Server  ERROR   ⨯ ReferenceError: postPilotSteps is not defined
+[00:05:05.711] Browser ERROR   uncaughtError: ReferenceError: postPilotSteps is not defined
+[00:05:18.348] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:168:1]
+ 165 │               <p className="eyebrow">After 30 days</p>
+ 166 │               <h2>Clear next step, no weird transition.</h2>
+ 167 │             </div>
+ 168 │               ))}
+     ·                 ▲
+ 169 │             </div>
+ 170 │           </div>
+ 171 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:170:1]
+ 167 │                 </div>
+ 168 │                   ))}
+ 169 │                 </div>
+ 170 │ ╭─▶           </div>
+ 171 │ ╰─▶         </section>
+ 172 │     
+ 173 │             <section className="section">
+ 174 │               <div className="grid grid-2">
+     ╰────
 
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
+Caused by:
+    Syntax Error
 
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:18.711] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:168:1]
+ 165 │               <p className="eyebrow">After 30 days</p>
+ 166 │               <h2>Clear next step, no weird transition.</h2>
+ 167 │             </div>
+ 168 │               ))}
+     ·                 ▲
+ 169 │             </div>
+ 170 │           </div>
+ 171 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:170:1]
+ 167 │                 </div>
+ 168 │                   ))}
+ 169 │                 </div>
+ 170 │ ╭─▶           </div>
+ 171 │ ╰─▶         </section>
+ 172 │     
+ 173 │             <section className="section">
+ 174 │               <div className="grid grid-2">
+     ╰────
 
-https://react.dev/link/hydration-mismatch
+Caused by:
+    Syntax Error
 
-  ...
-    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-      <LoadingBoundary name="/" loading={null}>
-        <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-          <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-            <RedirectBoundary>
-              <RedirectErrorBoundary router={{...}}>
-                <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
-                  <SegmentViewNode type="page" pagePath="page.tsx">
-                    <SegmentTrieNode>
-                    <HomePage>
-                      <HomePage>
-                        <SiteHeader>
-                          <header className="site-header">
-                            <div className="container ...">
-                              <LinkComponent>
-                              <nav>
-                              <ThemeToggle>
-                                <button className="theme-btn" onClick={function onClick} type="button">
-+                                 Light Mode
--                                 Dark Mode
-                      ...
-                  ...
-                ...
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:27.371] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:27.580] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
 
-[00:02:31.511] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:27.719] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:27.719] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:29.259] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:29.640] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:05:30.152] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:30.716] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:31.271] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:31.628] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:31.970] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:32.505] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:25.343] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:07:37.869] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │
+  │         )'
+    ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:62:1]
+ 59 │               </div>
+ 60 │               <p className="section-lead">
+ 61 │                 This is the most important tier right now. You get full Pro access and direct support.
+ 62 │ ╭─▶         </section>
+ 63 │ │   
+ 64 │ ╰─▶         <section className="console-hero-grid" style={{ marginTop: 20 }}>
+ 65 │               <article className="card glass-card console-hero-card">
+ 66 │                 <p className="eyebrow">Design partnership</p>
+ 67 │                 <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
+    ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:37.942] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │
+  │         )'
+    ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:62:1]
+ 59 │               </div>
+ 60 │               <p className="section-lead">
+ 61 │                 This is the most important tier right now. You get full Pro access and direct support.
+ 62 │ ╭─▶         </section>
+ 63 │ │   
+ 64 │ ╰─▶         <section className="console-hero-grid" style={{ marginTop: 20 }}>
+ 65 │               <article className="card glass-card console-hero-card">
+ 66 │                 <p className="eyebrow">Design partnership</p>
+ 67 │                 <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
+    ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:41.193] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │
+  │         )'
+    ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:63:1]
+ 60 │               <p className="section-lead">
+ 61 │                 This is the most important tier right now. You get full Pro access and direct support.
+ 62 │                 We get the production feedback needed to make Blocklog sharper.
+ 63 │ ╭─▶         </section>
+ 64 │ │   
+ 65 │ ╰─▶         <section className="console-hero-grid" style={{ marginTop: 20 }}>
+ 66 │               <article className="card glass-card console-hero-card">
+ 67 │                 <p className="eyebrow">Design partnership</p>
+ 68 │                 <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
+    ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:41.709] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │
+  │         )'
+    ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:63:1]
+ 60 │               <p className="section-lead">
+ 61 │                 This is the most important tier right now. You get full Pro access and direct support.
+ 62 │                 We get the production feedback needed to make Blocklog sharper.
+ 63 │ ╭─▶         </section>
+ 64 │ │   
+ 65 │ ╰─▶         <section className="console-hero-grid" style={{ marginTop: 20 }}>
+ 66 │               <article className="card glass-card console-hero-card">
+ 67 │                 <p className="eyebrow">Design partnership</p>
+ 68 │                 <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
+    ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:43.405] Server  ERROR   ⨯ ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:43.711] Browser ERROR   ./app/pilot/page.tsx
+Error:   × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:164:1]
+ 161 │ 
+ 162 │         <section className="section">
+ 163 │           <div className="trust-band">
+ 164 │               ))}
+     ·                 ▲
+ 165 │             </div>
+ 166 │           </div>
+ 167 │         </section>
+     ╰────
+  × Expected '</', got 'jsx text (
+  │         )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pilot/page.tsx:166:1]
+ 163 │               <div className="trust-band">
+ 164 │                   ))}
+ 165 │                 </div>
+ 166 │ ╭─▶           </div>
+ 167 │ ╰─▶         </section>
+ 168 │     
+ 169 │             <section className="section">
+ 170 │               <div className="grid grid-2">
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pilot/page.tsx
+[00:07:46.985] Server  WARN    ⚠ Fast Refresh had to perform a full reload when ty/Frontend/components/SiteHeader.tsx","ids":["default"]}, ty/Frontend/node_modules/next/dist/client/app-dir/link.js","ids":[]} changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:07:47.601] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

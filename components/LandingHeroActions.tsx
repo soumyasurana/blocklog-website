@@ -15,7 +15,7 @@ export default function LandingHeroActions() {
     <div className="landing-hero-actions">
       <div className="button-row" style={{ marginTop: 18 }}>
         <Link className="btn btn-primary" href={loggedIn ? "/dashboard" : "/pilot"}>
-          {loggedIn ? "Open Console" : "Join 60-Day Pilot"}
+          {loggedIn ? "Open Console" : "Join 30-Day Pilot"}
         </Link>
         <Link className="btn btn-link" href="#proof-flow">
           See 3-Step Proof Flow
