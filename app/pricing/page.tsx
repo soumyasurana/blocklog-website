@@ -57,7 +57,7 @@ const plans: Plan[] = [
   },
   {
     name: "Starter",
-    price: "$29/month",
+    price: "$49/month",
     annual: "Overage: $5 per additional 100,000 events",
     subtitle:
       "For startups and small teams building compliance-sensitive products that need a verifiable audit trail.",
@@ -137,7 +137,7 @@ const plans: Plan[] = [
   {
     name: "Enterprise",
     price: "Custom",
-    annual: "Typical deal size: $500-$2,000/month",
+    annual: "Typical deal size: $1000-5000/month",
     subtitle:
       "For regulated industries and large-scale deployments where legal, compliance, and deployment constraints shape the buying process.",
     groups: [
@@ -192,7 +192,7 @@ const comparisonRows = [
   ["Retention", "7 days", "12 months", "24 months"],
   ["Cryptographic verification", "Yes", "Yes", "Yes"],
   ["Third-party auditor access", "No", "Yes", "Yes"],
-  ["Price", "$0", "$29", "$99"],
+  ["Price", "$0", "$49", "$99"],
 ];
 
 export default function PricingPage() {

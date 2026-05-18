@@ -180,7 +180,7 @@ export default function PilotPage() {
                 <div className="orbital-card">
                   <strong>Starter</strong>
                   <p className="muted" style={{ margin: "6px 0 0" }}>
-                    $29/month for smaller compliance-sensitive products.
+                    $49/month for smaller compliance-sensitive products.
                   </p>
                 </div>
                 <div className="orbital-card">
