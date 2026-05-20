@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import DashboardTopBar from "@/components/DashboardTopBar";
 import { blocklogRequest } from "@/lib/blocklog";
+import { trackEvent } from "@/lib/analytics";
 
 type ApiKey = {
   key_id: string;
@@ -56,12 +57,10 @@ export default function ApiKeysPage() {
           rate_limit_per_minute: Number(rateLimit),
         },
       );
-      if (typeof window !== "undefined" && window.gtag) {
-        window.gtag("event", "api_key_created", {
+      trackEvent("api_key_created", {
         key_name: keyName,
         rate_limit: Number(rateLimit),
-        });
-      }
+      });
 
       setKeyName("");
       setNotice(`API key created: ${created.api_key}`);

@@ -8,6 +8,7 @@ import {
   normalizePayload,
   writeSession,
 } from "@/lib/blocklog";
+import { trackEvent } from "@/lib/analytics";
 
 type SignupResponse = {
   access_token?: string;
@@ -100,12 +101,10 @@ export default function SignupPage() {
         },
         session.expires_in ? session.expires_in * 1000 : undefined,
       );
-      if (typeof window !== "undefined" && window.gtag) {
-        window.gtag("event", "signup", {
-          method: "email",
-          company_id: session.company_id ?? normalizedCompanyId,
-        });
-      }
+      trackEvent("signup", {
+        method: "email",
+        company_id: session.company_id ?? normalizedCompanyId,
+      });
       const nextPath =
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Blocklog",
@@ -18,7 +19,7 @@ export default function RootLayout({
       <head>
         {/* Google Analytics Script */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-254DW7H7BM"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
 
@@ -29,8 +30,9 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             window.gtag = gtag;
             gtag('js', new Date());
-            gtag('config', 'G-254DW7H7BM', {
-              page_path: window.location.pathname,
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              send_page_view: false,
+              anonymize_ip: true,
             });
           `}
         </Script>
