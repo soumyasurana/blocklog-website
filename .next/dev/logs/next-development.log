@@ -134,3 +134,156 @@ Attempted import error: 'GA_MEASUREMENT_ID' is not exported from '@/lib/analytic
 
 Import trace for requested module:
 ./app/layout.tsx
+[02:30:04.190] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:30:04.527] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:52:13.932] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:52:15.124] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:57:20.056] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:57:20.186] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/dashboard" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+                      <SegmentViewNode type="layout" pagePath="dashboard/...">
+                        <SegmentTrieNode>
+                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
+                          <DashboardLayout params={Promise}>
++                           <div className="dashboard">
+-                           <main className="auth-page">
+                    ...
+        ...
+
+[03:02:57.146] Server  ERROR   ⨯ ./app/dashboard/page.tsx
+Error:   × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:757:1]
+ 754 │     </>
+ 755 │   );
+ 756 │ }
+ 757 │ "use client";
+     · ─────────────
+ 758 │ 
+ 759 │ import Link from "next/link";
+ 760 │ import { useEffect, useState } from "react";
+     ╰────
+  × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+      ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:1067:1]
+ 1064 │     </>
+ 1065 │   );
+ 1066 │ }
+ 1067 │ "use client";
+      · ─────────────
+ 1068 │ 
+ 1069 │ import Link from "next/link";
+ 1070 │ import { useEffect, useState } from "react";
+      ╰────
+
+Import trace for requested module:
+./app/dashboard/page.tsx
+[03:02:57.803] Browser ERROR   ./app/dashboard/page.tsx
+Error:   × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:757:1]
+ 754 │     </>
+ 755 │   );
+ 756 │ }
+ 757 │ "use client";
+     · ─────────────
+ 758 │ 
+ 759 │ import Link from "next/link";
+ 760 │ import { useEffect, useState } from "react";
+     ╰────
+  × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+      ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:1067:1]
+ 1064 │     </>
+ 1065 │   );
+ 1066 │ }
+ 1067 │ "use client";
+      · ─────────────
+ 1068 │ 
+ 1069 │ import Link from "next/link";
+ 1070 │ import { useEffect, useState } from "react";
+      ╰────
+
+Import trace for requested module:
+./app/dashboard/page.tsx
+[03:05:06.532] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:05:06.652] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/dashboard" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+                      <SegmentViewNode type="layout" pagePath="dashboard/...">
+                        <SegmentTrieNode>
+                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
+                          <DashboardLayout params={Promise}>
++                           <div className="dashboard">
+-                           <main className="auth-page">
+                    ...
+        ...
+
+[03:08:39.831] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:19:01.949] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:19:02.815] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<SegmentViewNode>} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/dashboard..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+                      <SegmentViewNode type="layout" pagePath="dashboard/...">
+                        <SegmentTrieNode>
+                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
+                          <DashboardLayout params={Promise}>
++                           <div className="dashboard">
+-                           <main className="auth-page">
+                    ...
+        ...
+
