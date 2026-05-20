@@ -1,30 +1,29 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { pageview, trackEvent } from "../lib/analytics";
 
 export default function AnalyticsTracker() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const url =
-      pathname +
-      (searchParams?.toString()
-        ? `?${searchParams.toString()}`
-        : "") +
+      window.location.pathname +
+      window.location.search +
       window.location.hash;
 
     pageview(url);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as Element | null;
+
       if (!target) return;
 
       const anchor = target.closest("a");
+
       if (!anchor || !anchor.href) return;
 
       const url = anchor.href;
@@ -46,25 +45,27 @@ export default function AnalyticsTracker() {
       // Internal links
       if (url.startsWith(origin)) return;
 
-      // Email
+      // Email tracking
       if (url.startsWith("mailto:")) {
         trackEvent("email_click", {
           email_address: url.replace(/^mailto:/i, ""),
           link_text: label,
         });
+
         return;
       }
 
-      // Phone
+      // Phone tracking
       if (url.startsWith("tel:")) {
         trackEvent("phone_click", {
           phone_number: url.replace(/^tel:/i, ""),
           link_text: label,
         });
+
         return;
       }
 
-      // Downloads
+      // File download tracking
       if (
         /\.(pdf|zip|docx|xlsx|pptx|csv|json)(?:[?#].*)?$/i.test(url)
       ) {
@@ -73,10 +74,11 @@ export default function AnalyticsTracker() {
           file_name: url.split("/").pop(),
           link_text: label,
         });
+
         return;
       }
 
-      // External links
+      // External link tracking
       trackEvent("outbound_click", {
         link_url: url,
         link_text: label,

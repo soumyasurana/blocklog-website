@@ -1,9 +1,7 @@
 {
-  "/page": "app/page.js",
   "/status/page": "app/status/page.js",
   "/login/page": "app/login/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/playground/page": "app/dashboard/playground/page.js",
   "/dashboard/logs/page": "app/dashboard/logs/page.js",
   "/dashboard/verify/page": "app/dashboard/verify/page.js"
 }
