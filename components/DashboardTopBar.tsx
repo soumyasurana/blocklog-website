@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { clearSession, readSession } from "@/lib/blocklog";
-import ThemeToggle from "./ThemeToggle";
 
 export default function DashboardTopBar({ title }: { title: string }) {
   const router = useRouter();
@@ -27,7 +26,6 @@ export default function DashboardTopBar({ title }: { title: string }) {
         <button className="btn" onClick={logout} type="button">
           Logout
         </button>
-        <ThemeToggle />
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import LandingHeroActions from "@/components/LandingHeroActions";
-import LandingThemeLock from "@/components/LandingThemeLock";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -152,7 +151,6 @@ export default function HomePage() {
   return (
     <>
       <SiteHeader />
-      <LandingThemeLock />
       <main className="container landing-page">
         <section className="hero">
           <div className="hero-copy">

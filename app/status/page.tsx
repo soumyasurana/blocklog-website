@@ -60,10 +60,6 @@ export default function StatusPage() {
             <p className="eyebrow">Service health</p>
             <h1 style={{ margin: 0, fontSize: "clamp(2.6rem, 5vw, 4.5rem)" }}>System status</h1>
           </div>
-          <p className="section-lead">
-            Live signals from health, integrity, and usage endpoints. This page is tuned to the
-            actual API surface rather than a fake synthetic status model.
-          </p>
         </div>
         {error && <p className="error-banner">Live API unavailable: {error}</p>}
         <div className="table-shell">

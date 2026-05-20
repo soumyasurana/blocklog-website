@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { readSession, subscribeSession } from "@/lib/blocklog";
-import ThemeToggle from "./ThemeToggle";
 
 function getSnapshot() {
   return Boolean(readSession().accessToken);
@@ -30,7 +29,6 @@ export default function SiteHeader() {
           {!loggedIn && <Link href="/login">Login</Link>}
           <Link className="header-cta subtle" href="/dashboard">Console</Link>
         </nav>
-        <ThemeToggle />
       </div>
     </header>
   );
