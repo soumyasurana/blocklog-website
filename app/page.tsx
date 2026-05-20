@@ -176,12 +176,6 @@ export default function HomePage() {
                 ))}
               </div>
               <LandingHeroActions />
-              <p className="landing-hero-note">
-                <em>
-                  Built by a 20-year-old who got tired of watching engineers reconstruct incidents
-                  from corrupt logs.
-                </em>
-              </p>
               <div className="landing-hero-confidence">
                 <p className="eyebrow">Why teams start now</p>
                 <div className="landing-hero-confidence-list">
@@ -245,10 +239,6 @@ $ ./verify.sh proof_bundle.zip
 [OK] timestamp anchored
 [OK] proof independently verifiable`}</div>
             <div className="hero-orbit">
-              <div className="orbital-card">
-                <p className="eyebrow">Why buyers care</p>
-                <strong>Move from &quot;trust our process&quot; to proof your auditor can check.</strong>
-              </div>
             </div>
           </div>
         </section>
@@ -469,7 +459,7 @@ $ ./verify.sh proof_bundle.zip
               <p className="eyebrow">Final call</p>
               <h2>Your audit is coming. Your agents are already running. Be ready for both.</h2>
               <p className="section-lead" style={{ marginBottom: 0 }}>
-                Don&apos;t wait until the last minute to explain log integrity. Join the 60-day pilot
+                Don&apos;t wait until the last minute to explain log integrity. Join the 30-day pilot
                 or move into the right paid tier before the audit clock becomes painful.
               </p>
             </div>
@@ -502,8 +492,8 @@ $ ./verify.sh proof_bundle.zip
             <div className="landing-trust-strip">
               <div className="status-pill">No credit card required</div>
               <div className="status-pill">30 days of full Pro access</div>
-              <div className="status-pill">Structured check-ins at week 2 and week 6</div>
-              <div className="status-pill">Extended 90-day enterprise pilot available</div>
+              <div className="status-pill">Structured check-ins at week 2 and week 4</div>
+              <div className="status-pill">Extended 60-day enterprise pilot available</div>
             </div>
           </div>
         </section>
