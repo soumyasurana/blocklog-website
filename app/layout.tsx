@@ -19,8 +19,9 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Blocklog",
-  description: "Cryptographically verifiable governance infrastructure for AI financial systems",
+  title: "Blocklog — Security Evidence, Not Trust Language",
+  description:
+    "Blocklog keeps security reviews focused on verifiable proof, operational controls, and clear documentation — not vague trust language. Built for security buyers who want architecture clarity and scope boundaries.",
 };
 
 export default function RootLayout({
