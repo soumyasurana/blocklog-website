@@ -1,6 +1,8 @@
-[00:00:01.776] Server  LOG     ✓ Ready in 1508ms
-[00:00:05.033] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:05.218] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:00:02.453] Server  LOG     ✓ Ready in 2.2s
+[00:00:06.565] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:48.829] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:04:46.935] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:47.109] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -13,217 +15,573 @@ It can also happen if the client has a browser extension installed which messes 
 https://react.dev/link/hydration-mismatch
 
   ...
-    <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-      <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-        <LoadingBoundary name="pricing/" loading={null}>
-          <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
-            <RedirectBoundary>
-              <RedirectErrorBoundary router={{...}}>
-                <InnerLayoutRouter url="/pricing" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
-                  <SegmentViewNode type="page" pagePath="pricing/pa...">
-                    <SegmentTrieNode>
-                    <PricingPage>
-                      <PricingPage>
-                        <SiteHeader>
-                          <header className="site-header">
-                            <div className="container ...">
-                              <LinkComponent>
-                              <nav>
-                              <ThemeToggle>
-                                <button className="theme-btn" onClick={function onClick} type="button">
-+                                 Light Mode
--                                 Dark Mode
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="console/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/console" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="console/pa...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function ConsolePage} serverProvidedParams={{...}}>
+                          <ConsolePage params={Promise} searchParams={Promise}>
++                           <div className="page-shell">
+-                           <Suspense>
                       ...
-                  ...
-                ...
-      ...
-
-[00:07:23.200] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:26.091] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:11:19.181] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:19.303] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <ScrollAndFocusHandler segmentPath={[...]}>
-      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-          <LoadingBoundary name="/" loading={null}>
-            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-              <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<SegmentViewNode>} ...>
-                <RedirectBoundary>
-                  <RedirectErrorBoundary router={{...}}>
-                    <InnerLayoutRouter url="/dashboard..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-                      <SegmentViewNode type="layout" pagePath="dashboard/...">
-                        <SegmentTrieNode>
-                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
-                          <DashboardLayout params={Promise}>
-+                           <div className="dashboard">
--                           <main className="auth-page">
                     ...
-        ...
+          ...
 
-[00:11:22.669] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:11:43.417] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:12:34.332] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:13:15.531] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:13:15.534] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:13:15.534] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:13:15.534] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:15:13.459] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:15:13.460] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:15:13.460] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:15:13.460] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:40:47.663] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:40:47.666] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:40:47.666] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:40:47.666] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[02:01:02.037] Server  WARN    ⚠ ./app/layout.tsx
-Attempted import error: 'GA_MEASUREMENT_ID' is not exported from '@/lib/analytics' (imported as 'GA_MEASUREMENT_ID').
-
-Import trace for requested module:
-./app/layout.tsx
-
-./app/layout.tsx
-Attempted import error: 'GA_MEASUREMENT_ID' is not exported from '@/lib/analytics' (imported as 'GA_MEASUREMENT_ID').
-
-Import trace for requested module:
-./app/layout.tsx
-[02:30:04.190] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:30:04.527] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[02:52:13.932] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:52:15.124] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[02:57:20.056] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:57:20.186] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <ScrollAndFocusHandler segmentPath={[...]}>
-      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-          <LoadingBoundary name="/" loading={null}>
-            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-              <HTTPAccessFallbackErrorBoundary pathname="/dashboard" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-                <RedirectBoundary>
-                  <RedirectErrorBoundary router={{...}}>
-                    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-                      <SegmentViewNode type="layout" pagePath="dashboard/...">
-                        <SegmentTrieNode>
-                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
-                          <DashboardLayout params={Promise}>
-+                           <div className="dashboard">
--                           <main className="auth-page">
-                    ...
-        ...
-
-[03:02:57.146] Server  ERROR   ⨯ ./app/dashboard/page.tsx
-Error:   × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:757:1]
- 754 │     </>
- 755 │   );
- 756 │ }
- 757 │ "use client";
-     · ─────────────
- 758 │ 
- 759 │ import Link from "next/link";
- 760 │ import { useEffect, useState } from "react";
+[00:05:02.587] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
      ╰────
-  × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
-      ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:1067:1]
- 1064 │     </>
- 1065 │   );
- 1066 │ }
- 1067 │ "use client";
-      · ─────────────
- 1068 │ 
- 1069 │ import Link from "next/link";
- 1070 │ import { useEffect, useState } from "react";
-      ╰────
+
+Caused by:
+    Syntax Error
 
 Import trace for requested module:
-./app/dashboard/page.tsx
-[03:02:57.803] Browser ERROR   ./app/dashboard/page.tsx
-Error:   × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:757:1]
- 754 │     </>
- 755 │   );
- 756 │ }
- 757 │ "use client";
-     · ─────────────
- 758 │ 
- 759 │ import Link from "next/link";
- 760 │ import { useEffect, useState } from "react";
+./app/console/page.tsx
+[00:05:02.923] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
      ╰────
-  × The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
-      ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/dashboard/page.tsx:1067:1]
- 1064 │     </>
- 1065 │   );
- 1066 │ }
- 1067 │ "use client";
-      · ─────────────
- 1068 │ 
- 1069 │ import Link from "next/link";
- 1070 │ import { useEffect, useState } from "react";
-      ╰────
+
+Caused by:
+    Syntax Error
 
 Import trace for requested module:
-./app/dashboard/page.tsx
-[03:05:06.532] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:05:06.652] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+./app/console/page.tsx
+[00:05:02.972] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:04.048] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:04.214] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:04.511] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:04.623] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:06.378] Server  LOG     ○ Compiling /_error ...
+[00:05:10.907] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:11.014] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:11.199] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:11.200] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:11.348] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:11.351] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:11.606] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:11.719] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:14.144] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:14.246] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:615:1]
+ 612 │                 </motion.div>
+ 613 │               ) : null}
+ 614 │             </AnimatePresence>
+ 615 │ ╭─▶       </PageFrame>
+ 616 │ ╰─▶     </div>
+ 617 │       );
+ 618 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:20.135] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:20.257] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:20.429] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:20.429] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:20.613] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:20.617] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:05:20.886] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:21.271] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:27.693] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:27.794] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:38.243] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:38.346] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:43.737] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:05:43.838] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:05:59.723] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:05:59.820] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:06:00.021] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:06:00.021] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:06:00.176] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:06:00.179] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:06:00.442] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:06:00.692] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:06:02.693] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:06:02.794] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:667:1]
+ 664 │                 </motion.div>
+ 665 │               ) : null}
+ 666 │             </AnimatePresence>
+ 667 │ ╭─▶       </PageFrame>
+ 668 │ ╰─▶     </div>
+ 669 │       );
+ 670 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:06:25.019] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:06:25.134] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:06:26.114] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:06:26.794] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:28.702] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:08:50.086] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:50.315] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -236,27 +594,28 @@ It can also happen if the client has a browser extension installed which messes 
 https://react.dev/link/hydration-mismatch
 
   ...
-    <ScrollAndFocusHandler segmentPath={[...]}>
-      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-          <LoadingBoundary name="/" loading={null}>
-            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-              <HTTPAccessFallbackErrorBoundary pathname="/dashboard" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="console/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
                 <RedirectBoundary>
                   <RedirectErrorBoundary router={{...}}>
-                    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-                      <SegmentViewNode type="layout" pagePath="dashboard/...">
+                    <InnerLayoutRouter url="/console" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="console/pa...">
                         <SegmentTrieNode>
-                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
-                          <DashboardLayout params={Promise}>
-+                           <div className="dashboard">
--                           <main className="auth-page">
+                        <ClientPageRoot Component={function ConsolePage} serverProvidedParams={{...}}>
+                          <ConsolePage params={Promise} searchParams={Promise}>
++                           <div className="page-shell">
+-                           <Suspense>
+                      ...
                     ...
-        ...
+          ...
 
-[03:08:39.831] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[03:19:01.949] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:19:02.815] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:09:09.161] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:09:18.443] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:18.565] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -269,22 +628,458 @@ It can also happen if the client has a browser extension installed which messes 
 https://react.dev/link/hydration-mismatch
 
   ...
-    <ScrollAndFocusHandler segmentPath={[...]}>
-      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-          <LoadingBoundary name="/" loading={null}>
-            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
-              <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<SegmentViewNode>} ...>
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="console/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
                 <RedirectBoundary>
                   <RedirectErrorBoundary router={{...}}>
-                    <InnerLayoutRouter url="/dashboard..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-                      <SegmentViewNode type="layout" pagePath="dashboard/...">
+                    <InnerLayoutRouter url="/console" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="console/pa...">
                         <SegmentTrieNode>
-                        <ClientSegmentRoot Component={function DashboardLayout} slots={{...}} ...>
-                          <DashboardLayout params={Promise}>
-+                           <div className="dashboard">
--                           <main className="auth-page">
+                        <ClientPageRoot Component={function ConsolePage} serverProvidedParams={{...}}>
+                          <ConsolePage params={Promise} searchParams={Promise}>
++                           <div className="page-shell">
+-                           <Suspense>
+                      ...
                     ...
-        ...
+          ...
 
-[04:32:45.172] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:10:39.443] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:10:39.551] Server  ERROR   ⨯ TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:40.401] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:40.694] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:43.770] Server  ERROR   ⨯ TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:44.229] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:44.694] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:47.172] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:10:47.632] Server  ERROR   ⨯ TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:48.083] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:48.692] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:52.783] Server  ERROR   ⨯ TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:53.207] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:53.406] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:53.493] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:10:54.002] Server  ERROR   ⨯ TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:54.342] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:54.506] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'accessToken')
+[00:10:58.772] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:10:59.016] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:10:59.018] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:10:59.408] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:10:59.508] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:11:02.281] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:11:02.423] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:11:02.423] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:02.501] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:11:02.654] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:02.656] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:02.981] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:11:03.083] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:11:20.892] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:11:20.994] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:11:25.694] Browser ERROR   {}
+[00:11:25.916] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:11:26.692] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:11:32.026] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:11:32.172] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:11:32.365] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:11:32.365] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:32.558] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:32.561] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:11:32.839] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:11:32.941] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:12:04.006] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:04.262] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:04.262] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:12:04.370] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:04.490] Server  ERROR   ⨯ ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:12:04.493] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/console/page.tsx
+[00:12:04.723] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:12:05.691] Browser ERROR   ./app/console/page.tsx
+Error:   × Expected ';', got ')'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/console/page.tsx:223:1]
+ 220 │           anchorsCreated: integrityStatus.anchors_created ?? 0,
+ 221 │           gbProcessed: usage.gb_processed ?? 0,
+ 222 │           apiCalls: usage.api_calls ?? 0,
+ 223 │         });
+     ·          ─
+ 224 │         setDecisions(mappedDecisions);
+ 225 │       } catch (loadError) {
+ 226 │         if (!cancelled) {
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:12:47.370] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:47.472] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:48.321] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:49.229] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:24:16.321] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:53:03.790] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

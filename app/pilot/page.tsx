@@ -1,206 +1,174 @@
-import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
+"use client";
 
-export const metadata = {
-  title: "Blocklog Pilot Program",
-  description:
-    "Join the 30-day Blocklog design partnership with full Pro access, structured feedback, and a clear path into Starter, Pro, or Enterprise.",
-};
+import { useState } from "react";
+import { Footer, PageFrame, PrimaryButton, Reveal, SiteHeader } from "@/components/site/Primitives";
 
-const pilotFacts = [
-  ["Duration", "30 days"],
-  ["Price", "$0"],
-  ["Access", "Full Pro tier access"],
-  ["Format", "Design partnership with structured feedback"],
-  ["Support", "Direct line via Slack or email, with response within hours"],
-  ["Check-ins", "30 minutes after week 2 and week 4"],
-  ["Path", "Continue into Starter or Pro if it proves useful"],
+const pilotTimeline = [
+  ["Day 0", "SDK installed, shadow mode active"],
+  ["Day 1-7", "First governance records appearing"],
+  ["Day 7-14", "Staleness patterns emerging"],
+  ["Day 14-21", "Approval gap analysis building"],
+  ["Day 21-30", "Forensic report generating"],
+  ["Day 30", "Report delivered. Compliance conversation begins."],
 ];
 
-const pilotIncludes = [
-  "Real production integration, not a sandbox walkthrough",
-  "Full Pro features during the pilot window",
-  "Direct integration help and roadmap feedback loop",
-  "Case study option for teams willing to share results",
-  "A clean handoff into paid usage if the workflow sticks",
+const qualifications = [
+  "AI agent in production making financial decisions such as refunds, fraud, credit, or chargebacks",
+  "One engineer willing to spend 4-6 hours on integration",
+  "A compliance or risk function that would benefit from the forensic report",
 ];
 
-const pilotFit = [
-  "Teams willing to run Blocklog in a real production system",
-  "Builders who can give structured feedback on friction and missing features",
-  "Early design partners shaping audit and verification workflows",
-];
-
-
-const pilotHighlights = [
-  ["What you get", "A real production deployment with enough depth to test whether Blocklog earns its place."],
-  ["What we get", "Specific feedback on integration friction, missing features, and where the proof story lands."],
-  ["Why it exists", "Right now the information is worth more than the subscription revenue."],
-];
-
-const enterprisePilot = [
-  "60-day pilot for enterprise-only evaluations",
-  "Built for security review, procurement, and internal approval cycles",
-  "Ends with a formal evaluation report and recommendation",
+const disqualifications = [
+  "AI making recommendations only, no autonomous financial action",
+  "No regulatory exposure",
+  "18-month procurement cycles",
 ];
 
 export default function PilotPage() {
+  const [form, setForm] = useState({
+    company: "",
+    role: "",
+    teamSize: "1-20",
+    framework: "LangChain",
+    decisions: "",
+    trigger: "Recent incident",
+    email: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
   return (
-    <>
+    <div className="page-shell">
       <SiteHeader />
-      <main className="container section">
-        <section className="section-header">
-          <div>
-            <p className="eyebrow">Pilot program</p>
-            <h1 style={{ fontSize: "clamp(2.7rem, 6vw, 5rem)", margin: 0 }}>
-              A 30-day design partnership for teams willing to run Blocklog for real.
-            </h1>
+      <PageFrame>
+        <section className="section-block pt-32">
+          <div className="content-wrap">
+            <Reveal className="max-w-4xl">
+              <p className="eyebrow">{`// 30-Day Pilot`}</p>
+              <h1 className="section-title">Shadow Mode. Real Data. Real Report. No Risk.</h1>
+              <p className="mt-6 max-w-3xl text-base leading-7 text-white/74">
+                Install the SDK in under 5 minutes. Blocklog observes every AI financial decision alongside your existing system.
+                After 30 days, you get a forensic report from your own production data showing what happened, why, and what your regulator would ask about it.
+              </p>
+              <div className="mt-8">
+                <PrimaryButton href="/signup">Start Your Pilot</PrimaryButton>
+              </div>
+            </Reveal>
           </div>
-          <p className="section-lead">
-            This is the most important tier right now. You get full Pro access and direct support.
-            We get the production feedback needed to make Blocklog sharper.
-          </p>
         </section>
 
-        <section className="console-hero-grid" style={{ marginTop: 20 }}>
-          <article className="card glass-card console-hero-card">
-            <p className="eyebrow">Design partnership</p>
-            <h2 style={{ marginTop: 8, marginBottom: 10 }}>Not a discount. A trade of product access for signal.</h2>
-            <p className="muted" style={{ marginTop: 0 }}>
-              The goal is to learn from real systems generating real audit trails, then turn that
-              feedback into a better verification layer.
-            </p>
-            <div className="button-row" style={{ marginTop: 18, marginBottom: 18 }}>
-              <a
-                className="btn btn-primary"
-                href="https://calendly.com/founder-blocklogsecurity/audit-readiness-call-20-min"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  minHeight: 58,
-                  padding: "16px 28px",
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  flex: "1 1 100%",
-                  justifyContent: "center",
-                }}
-              >
-                Apply for Pilot
-              </a>
-            </div>
-            <div className="grid" style={{ gap: 10 }}>
-              {pilotHighlights.map(([label, detail]) => (
-                <div className="orbital-card" key={label}>
-                  <strong>{label}</strong>
-                  <p className="muted" style={{ margin: "6px 0 0" }}>{detail}</p>
+        <section className="section-block">
+          <div className="content-wrap grid gap-6 lg:grid-cols-3">
+            {[
+              ["Zero Production Impact", "Shadow mode runs in parallel. No changes to your execution path. No payment processor integration. No procurement committee."],
+              ["Forensic Report at Day 30", "Real decisions from your system. Real dollar amounts. Real staleness data. Real compliance implications."],
+              ["The Gate Conversation", "After 30 days, you will see exactly which decisions would have required human review under your stated policy."],
+            ].map(([title, copy], index) => (
+              <Reveal delay={index * 0.08} key={title}>
+                <div className="liquid-glass-strong rounded-[2rem] p-6">
+                  <div className="text-2xl serif-italic">{title}</div>
+                  <p className="mt-4 text-sm leading-7 text-white/72">{copy}</p>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="content-wrap">
+            <Reveal className="max-w-3xl">
+              <h2 className="section-title">Pilot Timeline</h2>
+            </Reveal>
+            <div className="mt-10 grid gap-4">
+              {pilotTimeline.map(([label, detail], index) => (
+                <Reveal className="grid gap-4 md:grid-cols-[120px_1px_1fr]" delay={index * 0.07} key={label}>
+                  <div className="text-sm uppercase tracking-[0.24em] text-white/38">{label}</div>
+                  <div className="trace-line hidden min-h-24 md:block" />
+                  <div className="liquid-glass rounded-[2rem] p-5 text-sm leading-7 text-white/76">{detail}</div>
+                </Reveal>
               ))}
             </div>
-            <div className="button-row" style={{ marginTop: 16 }}>
-              <Link className="btn" href="/pricing">
-                View Pricing
-              </Link>
-            </div>
-          </article>
-
-          <article className="card glass-card console-hero-card">
-            <p className="eyebrow">Pilot terms</p>
-            <div className="grid" style={{ gap: 10 }}>
-              {pilotFacts.map(([label, value]) => (
-                <div className="orbital-card" key={label}>
-                  <strong>{label}</strong>
-                  <p className="muted" style={{ margin: "6px 0 0" }}>{value}</p>
-                </div>
-              ))}
-            </div>
-          </article>
-        </section>
-
-        <section className="section">
-          <div className="grid grid-2">
-            <article className="card glass-card">
-              <p className="eyebrow">What’s included</p>
-              <h2 style={{ marginTop: 8 }}>What you get during the pilot.</h2>
-              <div className="grid" style={{ gap: 10 }}>
-                {pilotIncludes.map((item) => (
-                  <div className="status-pill" key={item}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            <article className="card glass-card">
-              <p className="eyebrow">Best fit</p>
-              <h2 style={{ marginTop: 8 }}>Who this program is designed for.</h2>
-              <div className="grid" style={{ gap: 10 }}>
-                {pilotFit.map((item) => (
-                  <div className="orbital-card" key={item}>
-                    <strong>{item}</strong>
-                  </div>
-                ))}
-              </div>
-            </article>
           </div>
         </section>
 
-        <section className="section">
-          <div className="trust-band">
-            <div>
-              <p className="eyebrow">The ask</p>
-              <h2>The program only works if both sides get something valuable.</h2>
-            </div>
-            <div className="grid" style={{ gap: 10 }}>
-              <div className="status-pill">Run Blocklog in production for 30 days</div>
-              <div className="status-pill">Share structured feedback after week 2 and week 4</div>
-              <div className="status-pill">Tell us where the DX, proof flow, or reporting breaks down</div>
-            </div>
+        <section className="section-block">
+          <div className="content-wrap grid gap-6 lg:grid-cols-2">
+            <Reveal>
+              <div className="liquid-glass rounded-[2rem] p-6">
+                <p className="eyebrow">The Right Fit for This Pilot</p>
+                <div className="mt-6 grid gap-3">
+                  {qualifications.map((item) => (
+                    <div className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/74" key={item}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="liquid-glass rounded-[2rem] p-6">
+                <p className="eyebrow">Hard Disqualifications</p>
+                <div className="mt-6 grid gap-3">
+                  {disqualifications.map((item) => (
+                    <div className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/56" key={item}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        <section className="section">
-          <div className="grid grid-2">
-            <article className="card glass-card">
-              <p className="eyebrow">Extended pilot</p>
-              <h2 style={{ marginTop: 8 }}>For enterprise evaluations that move slower.</h2>
-              <div className="grid" style={{ gap: 10 }}>
-                {enterprisePilot.map((item) => (
-                  <div className="status-pill" key={item}>
-                    {item}
+        <section className="section-block">
+          <div className="content-wrap">
+            <Reveal className="mx-auto max-w-3xl">
+              <div className="liquid-glass-strong rounded-[2.5rem] p-6 md:p-8">
+                <p className="eyebrow">Pilot Application</p>
+                <h2 className="mt-4 text-4xl serif-italic">Apply for the 30-Day Pilot</h2>
+                {submitted ? (
+                  <div className="mt-8 rounded-[2rem] border border-white/10 p-6">
+                    <div className="text-3xl serif-italic">Application received.</div>
+                    <p className="mt-4 text-sm leading-7 text-white/72">
+                      We review every application personally. Response within 48 hours.
+                    </p>
                   </div>
-                ))}
+                ) : (
+                  <div className="mt-8 grid gap-4">
+                    <input className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28" placeholder="Company name" value={form.company} onChange={(event) => setForm({ ...form, company: event.target.value })} />
+                    <input className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28" placeholder="Your role" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })} />
+                    <select className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white" value={form.teamSize} onChange={(event) => setForm({ ...form, teamSize: event.target.value })}>
+                      {["1-20", "20-100", "100-300", "300+"].map((value) => <option className="bg-black" key={value}>{value}</option>)}
+                    </select>
+                    <select className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white" value={form.framework} onChange={(event) => setForm({ ...form, framework: event.target.value })}>
+                      {["LangChain", "OpenAI Agents SDK", "CrewAI", "Temporal", "Custom", "Other"].map((value) => <option className="bg-black" key={value}>{value}</option>)}
+                    </select>
+                    <textarea className="liquid-glass min-h-32 rounded-[2rem] px-5 py-4 bg-transparent text-white placeholder:text-white/28" placeholder="What financial decisions does your AI make?" value={form.decisions} onChange={(event) => setForm({ ...form, decisions: event.target.value })} />
+                    <div className="grid gap-3 md:grid-cols-2">
+                      {["Recent incident", "Upcoming audit", "New deployment", "Board/investor question"].map((value) => (
+                        <button
+                          className={`liquid-glass rounded-full px-4 py-3 text-left text-sm ${form.trigger === value ? "text-white" : "text-white/58"}`}
+                          key={value}
+                          onClick={() => setForm({ ...form, trigger: value })}
+                          type="button"
+                        >
+                          {value}
+                        </button>
+                      ))}
+                    </div>
+                    <input className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28" placeholder="Contact email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
+                    <button className="rounded-full bg-white px-5 py-4 text-sm font-medium text-black" onClick={() => setSubmitted(true)} type="button">
+                      Apply for Pilot
+                    </button>
+                    <p className="text-sm text-white/46">We review every application personally. Response within 48 hours.</p>
+                  </div>
+                )}
               </div>
-            </article>
-
-            <article className="card glass-card">
-              <p className="eyebrow">Post-pilot plans</p>
-              <h2 style={{ marginTop: 8 }}>Where teams usually land after the pilot.</h2>
-              <div className="grid" style={{ gap: 10 }}>
-                <div className="orbital-card">
-                  <strong>Starter</strong>
-                  <p className="muted" style={{ margin: "6px 0 0" }}>
-                    $49/month for smaller compliance-sensitive products.
-                  </p>
-                </div>
-                <div className="orbital-card">
-                  <strong>Pro</strong>
-                  <p className="muted" style={{ margin: "6px 0 0" }}>
-                    $99/month for real compliance requirements and external verification.
-                  </p>
-                </div>
-                <div className="orbital-card">
-                  <strong>Enterprise</strong>
-                  <p className="muted" style={{ margin: "6px 0 0" }}>
-                    Custom pricing for regulated deployments, private cloud, and longer retention.
-                  </p>
-                </div>
-              </div>
-            </article>
+            </Reveal>
           </div>
         </section>
-      </main>
-      <SiteFooter />
-    </>
+
+        <Footer />
+      </PageFrame>
+    </div>
   );
 }

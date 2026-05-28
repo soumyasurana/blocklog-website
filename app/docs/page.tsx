@@ -1,291 +1,153 @@
-import Link from "next/link";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+"use client";
 
-const pages = [
-  {
-    name: "Getting started",
-    href: "/docs/getting-started",
-    summary: "Create an account, start with a personal workspace or company, then send the first log.",
-  },
-  {
-    name: "Authentication",
-    href: "/docs/authentication",
-    summary: "Understand bearer tokens, integration API keys, and when each is appropriate.",
-  },
-  {
-    name: "Log ingestion",
-    href: "/docs/log-ingestion",
-    summary: "Send canonical events, choose idempotency keys, and understand ingestion behavior.",
-  },
-  {
-    name: "Batch logs",
-    href: "/docs/batch-logs",
-    summary: "Ingest larger event sets safely and prepare them for later proof generation.",
-  },
-  {
-    name: "Verification",
-    href: "/docs/verification",
-    summary: "Verify proofs by proof ID, log ID, or batch ID across public and tenant scopes.",
-  },
-  {
-    name: "Operations",
-    href: "/docs/operations",
-    summary: "Operate the system with health, usage, integrity, webhook, and metrics endpoints.",
-  },
-  {
-    name: "Admin portal",
-    href: "/docs/admin-portal",
-    summary: "Review company-level controls, API keys, kill switches, and operational posture.",
-  },
-  {
-    name: "Auditor portal",
-    href: "/docs/auditor-portal",
-    summary:
-      "Understand the verification surfaces intended for reviewers, external auditors, and autonomous systems.",
-  },
-  {
-    name: "SDKs",
-    href: "/docs/sdks",
-    summary: "Use the Node and Python reference SDKs for retries, batching, timestamps, and idempotency.",
-  },
-] as const;
+import { useMemo, useState } from "react";
+import { Footer, PageFrame, Reveal, SiteHeader } from "@/components/site/Primitives";
+import { SearchIcon } from "@/components/site/icons";
 
-const architecturePoints = [
-  "Blocklog accepts canonical JSON events over authenticated HTTP endpoints.",
-  "Each event is normalized, timestamped, hashed, and linked into a cryptographically verifiable chain.",
-  "Logs can later be sealed into batches, exported as proof bundles, and verified independently.",
-  "Operational surfaces expose health, metrics, integrity, usage, and debug signals for production review.",
-];
-
-const authModes = [
+const docsTree = [
   {
-    title: "Bearer auth for product surfaces",
-    detail:
-      "Use bearer tokens for console-driven product workflows such as dashboard views, admin actions, and authenticated verification. This is the default mode for signed-in users.",
+    category: "Getting Started",
+    items: ["Introduction", "How Blocklog Works", "Quick Start (5 minutes)", "Shadow Mode Setup", "Your First Governance Record"],
   },
   {
-    title: "API keys for external integrations",
-    detail:
-      "Use company API keys for server-to-server ingestion and stable integration credentials. This is the right choice for production services sending logs continuously.",
+    category: "SDK Reference",
+    items: ["TypeScript SDK", "Python SDK", "Configuration Options", "Event Types", "Error Handling"],
+  },
+  {
+    category: "Authorization Gate",
+    items: ["Overview", "Policy Engine", "Approval Workflows", "Token Verification", "Revocation"],
+  },
+  {
+    category: "Forensic Replay",
+    items: ["Overview", "Running a Replay", "Counterfactual Analysis", "Staleness Analysis", "Approval Lineage"],
+  },
+  {
+    category: "Compliance Reports",
+    items: ["Overview", "Report Structure", "Regulatory Mappings", "PDF Export", "Automated Delivery"],
+  },
+  {
+    category: "Framework Integrations",
+    items: ["LangChain", "OpenAI Agents SDK", "CrewAI", "Temporal", "n8n", "Celery"],
+  },
+  {
+    category: "API Reference",
+    items: ["Authentication", "Governance Record API", "Authorization Gate API", "Forensic Replay API", "Compliance Report API", "Verification API"],
+  },
+  {
+    category: "Security",
+    items: ["Cryptographic Attestation", "Hash Chaining", "Agent Identity", "Key Management", "SOC2"],
+  },
+  {
+    category: "Regulatory",
+    items: ["EU AI Act Article 12", "EU AI Act Article 14", "SR 11-7", "Colorado AI Act", "CFPB", "FCA"],
   },
 ];
 
-const lifecycleSteps = [
-  "Authenticate as a user or an integration.",
-  "Send a single log or a batch of logs with `event_type`, `source`, `data`, and an `idempotency_key` when retries are possible.",
-  "Blocklog normalizes the payload, archives raw ingestion context, links the event into the tenant chain, and records verification metadata.",
-  "Batches can later be sealed and anchored for stronger audit portability.",
-  "Auditors, autonomous systems, or operators verify by proof ID, log ID, or batch ID without depending on screenshots or internal assurances.",
-];
+const docBodies: Record<string, string> = {
+  Introduction: "Blocklog is the control plane protecting autonomous financial operations. It observes, authorizes, reconstructs, and proves AI financial decisions using cryptographic evidence rather than screenshots and institutional memory.",
+  "How Blocklog Works": "Blocklog captures every decision with timestamps, staleness data, policy version, approval lineage, and cryptographic chain position. Replay, report generation, and authorization all consume the same record.",
+  "Quick Start (5 minutes)": "Install the SDK, set mode=shadow, wrap the financial decision call, and let Blocklog emit governance records without changing the execution path.",
+  "Shadow Mode Setup": "Shadow mode records the full governance envelope without blocking live execution. That is how Blocklog enters production before procurement friction arrives.",
+  "Your First Governance Record": "The first valuable output is not a dashboard tile. It is a decision record with decision_id, agent_id, policy_version, input_staleness_ms, and execution context.",
+};
 
-const operatorChecklist = [
-  "Create a company and founder account before onboarding real traffic.",
-  "Use bearer auth for interactive product usage and API keys only for long-running integrations.",
-  "Prefer explicit `idempotency_key` values whenever clients might retry requests.",
-  "Treat `data` as the canonical event body for ingestion requests.",
-  "Check `/usage`, `/integrity/status`, `/integrity/report`, and `/metrics` during rollout and incident review.",
-  "Export proof bundles early in pilot evaluations so stakeholders can review the full evidence path.",
-];
+const quickStart = `import { Blocklog } from '@blocklog/sdk';
 
-export default function DocsIndexPage() {
+const blocklog = new Blocklog({
+  apiKey: process.env.BLOCKLOG_API_KEY,
+  mode: 'shadow',
+  agentId: 'refund-agent-v2',
+});
+
+const decision = await blocklog.observe(async () => {
+  return await yourRefundAgent.process(transaction);
+});
+
+// Governance record created.
+// Forensic replay available immediately.
+// Compliance report generating.`;
+
+export default function DocsPage() {
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState("Quick Start (5 minutes)");
+
+  const filteredTree = useMemo(() => {
+    if (!query.trim()) return docsTree;
+    const needle = query.toLowerCase();
+    return docsTree
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => item.toLowerCase().includes(needle)),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [query]);
+
   return (
-    <>
+    <div className="page-shell">
       <SiteHeader />
-      <main className="container section">
-        <div className="section-header">
-          <div>
-            <p className="eyebrow">Documentation</p>
-            <h1 style={{ marginTop: 0, marginBottom: 10 }}>Blocklog docs: product model, API contract, and operating guide.</h1>
-          </div>
-          <p className="section-lead">
-            This page is the high-level map of the platform. It explains what Blocklog does, how
-            the API is structured, how proof generation fits into the product, which credentials to
-            use, which endpoints matter in production, and where to go next for deeper details.
-          </p>
-        </div>
+      <PageFrame>
+        <section className="section-block pt-32">
+          <div className="content-wrap">
+            <Reveal className="grid gap-6 lg:grid-cols-[320px_1fr]">
+              <aside className="liquid-glass h-fit rounded-[2rem] p-4 lg:sticky lg:top-28">
+                <div className="mb-4 flex items-center gap-3 rounded-full border border-white/10 px-4 py-3">
+                  <SearchIcon width={15} height={15} />
+                  <input
+                    className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/28"
+                    placeholder="Search documentation..."
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                  />
+                </div>
+                <div className="scrollbar-thin max-h-[70vh] overflow-auto pr-2">
+                  {filteredTree.map((group) => (
+                    <div className="mb-5" key={group.category}>
+                      <p className="mb-3 text-xs uppercase tracking-[0.2em] text-white/38">{group.category}</p>
+                      <div className="grid gap-2">
+                        {group.items.map((item) => (
+                          <button
+                            className={`rounded-full px-4 py-3 text-left text-sm ${active === item ? "bg-white text-black" : "liquid-glass text-white/72"}`}
+                            key={item}
+                            onClick={() => setActive(item)}
+                            type="button"
+                          >
+                            {item}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </aside>
 
-        <section className="card glass-card" style={{ marginBottom: 20 }}>
-          <p className="eyebrow">What Blocklog Is</p>
-          <h2 style={{ marginTop: 8, marginBottom: 12 }}>
-            A cryptographically verifiable audit evidence layer for logs and verification workflows.
-          </h2>
-          <p className="section-lead" style={{ marginBottom: 16 }}>
-            Blocklog is not just a log viewer and not just a verification widget. It is a product
-            and API surface for sending canonical events into an integrity-preserving pipeline,
-            generating portable proof artifacts, and giving operators, auditors, or autonomous
-            systems a way to validate that records were not silently changed after ingestion.
-          </p>
-          <div className="grid grid-2">
-            {architecturePoints.map((item) => (
-              <div className="status-pill" key={item}>
-                {item}
+              <div className="space-y-6">
+                <Reveal>
+                  <div className="liquid-glass-strong rounded-[2.4rem] p-6 md:p-8">
+                    <p className="eyebrow">Documentation Hub</p>
+                    <h1 className="mt-4 text-5xl serif-italic">Blocklog Docs</h1>
+                    <p className="mt-5 max-w-3xl text-base leading-7 text-white/72">
+                      Default view starts with the quick start path, but the underlying structure is designed for engineering, risk, security, and audit teams to work from the same source.
+                    </p>
+                  </div>
+                </Reveal>
+                <Reveal delay={0.08}>
+                  <div className="liquid-glass rounded-[2.4rem] p-6 md:p-8">
+                    <p className="eyebrow">{active}</p>
+                    <div className="mt-4 text-sm leading-7 text-white/74">
+                      {docBodies[active] ?? "Detailed reference content for this section is being prepared. The structure is already aligned to the authorization gate, replay, reporting, and regulatory workflows."}
+                    </div>
+                    <pre className="mt-8 overflow-auto rounded-[1.8rem] border border-white/10 bg-white/[0.02] p-5 text-sm text-white/74">
+                      {quickStart}
+                    </pre>
+                  </div>
+                </Reveal>
               </div>
-            ))}
+            </Reveal>
           </div>
         </section>
 
-        <section className="grid grid-3" style={{ marginBottom: 24 }}>
-          {pages.map((page) => (
-            <Link key={page.href} href={page.href} className="card glass-card">
-              <strong>{page.name}</strong>
-              <p className="muted" style={{ marginBottom: 0, marginTop: 10 }}>{page.summary}</p>
-            </Link>
-          ))}
-        </section>
-
-        <section className="grid grid-2" style={{ marginBottom: 24 }}>
-          <article className="card glass-card">
-            <p className="eyebrow">Mental Model</p>
-            <h2 style={{ marginTop: 8, marginBottom: 12 }}>The normal request lifecycle.</h2>
-            <ol className="landing-list" style={{ marginTop: 0 }}>
-              {lifecycleSteps.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ol>
-          </article>
-          <article className="card glass-card">
-            <p className="eyebrow">Reference Flow</p>
-            <h2 style={{ marginTop: 8, marginBottom: 12 }}>The API flow most teams start with.</h2>
-            <pre className="code-pane">{`POST /api/v1/auth/login
-POST /api/v1/auth/api_keys
-POST /api/v1/logs
-POST /api/v1/logs/batch
-POST /api/v1/batches/seal
-POST /api/v1/batches/{batch_id}/anchor
-GET  /api/v1/logs/{log_id}/verify
-GET  /api/v1/public/verify/{proof_id}
-GET  /api/v1/usage
-GET  /api/v1/integrity/status`}</pre>
-          </article>
-        </section>
-
-        <section className="grid grid-2" style={{ marginBottom: 24 }}>
-          {authModes.map((mode) => (
-            <article className="card glass-card" key={mode.title}>
-              <p className="eyebrow">Authentication mode</p>
-              <h2 style={{ marginTop: 8, marginBottom: 12 }}>{mode.title}</h2>
-              <p className="muted" style={{ marginBottom: 0 }}>{mode.detail}</p>
-            </article>
-          ))}
-        </section>
-
-        <section className="card glass-card" style={{ marginBottom: 24 }}>
-          <p className="eyebrow">Canonical Ingestion Contract</p>
-          <h2 style={{ marginTop: 8, marginBottom: 12 }}>What a correct ingestion payload looks like.</h2>
-          <p className="section-lead" style={{ marginBottom: 16 }}>
-            For current ingestion endpoints, treat `data` as the event body, `event_type` as the
-            semantic event label, `source` as the producing system, and `idempotency_key` as the
-            replay guard. If the client omits a timestamp, the SDKs or backend can supply one.
-          </p>
-          <div className="grid grid-2">
-            <article>
-              <p className="eyebrow">Single log</p>
-              <pre className="code-pane">{`POST /api/v1/logs
-X-API-Key: <integration_key>
-
-{
-  "event_type": "payment.created",
-  "source": "payments-api",
-  "idempotency_key": "evt_payment_123_created",
-  "timestamp": "2026-03-27T10:20:00Z",
-  "data": {
-    "user_id": "123",
-    "amount": 2000,
-    "currency": "USD"
-  }
-}`}</pre>
-            </article>
-            <article>
-              <p className="eyebrow">Batch ingestion</p>
-              <pre className="code-pane">{`POST /api/v1/logs/batch
-X-API-Key: <integration_key>
-
-{
-  "logs": [
-    {
-      "event_type": "payment.created",
-      "source": "payments-api",
-      "idempotency_key": "evt_payment_123_created",
-      "data": {
-        "user_id": "123",
-        "amount": 2000
-      }
-    },
-    {
-      "event_type": "payment.updated",
-      "source": "payments-api",
-      "idempotency_key": "evt_payment_123_updated",
-      "data": {
-        "user_id": "123",
-        "status": "captured"
-      }
-    }
-  ]
-}`}</pre>
-            </article>
-          </div>
-        </section>
-
-        <section className="grid grid-2" style={{ marginBottom: 24 }}>
-          <article className="card glass-card">
-            <p className="eyebrow">Verification Surfaces</p>
-            <h2 style={{ marginTop: 8, marginBottom: 12 }}>How reviewers validate evidence.</h2>
-            <pre className="code-pane">{`GET /api/v1/public/verify/{proof_id}
-GET /api/v1/verify/log/{log_id}
-GET /api/v1/logs/{log_id}/verify
-GET /api/v1/verify/batch/{batch_id}
-GET /api/v1/evidence/batch/{batch_id}
-POST /api/v1/exports/{batch_id}`}</pre>
-            <p className="muted" style={{ marginBottom: 0 }}>
-              Use public verification for portable proof checks and tenant-scoped verification when
-              operators need richer context tied to the company boundary.
-            </p>
-          </article>
-          <article className="card glass-card">
-            <p className="eyebrow">Operational Endpoints</p>
-            <h2 style={{ marginTop: 8, marginBottom: 12 }}>What operators should watch in production.</h2>
-            <pre className="code-pane">{`GET /api/v1/health
-GET /api/v1/health/live
-GET /api/v1/health/ready
-GET /api/v1/metrics
-GET /api/v1/usage
-GET /api/v1/integrity/status
-GET /api/v1/integrity/report
-GET /api/v1/logs/debug/recent
-GET /api/v1/webhooks/events`}</pre>
-            <p className="muted" style={{ marginBottom: 0 }}>
-              These endpoints support rollout verification, system health review, integrity checks,
-              usage tracking, and ingestion troubleshooting.
-            </p>
-          </article>
-        </section>
-
-        <section className="card glass-card" style={{ marginBottom: 24 }}>
-          <p className="eyebrow">Operator Checklist</p>
-          <h2 style={{ marginTop: 8, marginBottom: 12 }}>What to verify before sending production traffic.</h2>
-          <div className="grid grid-2">
-            {operatorChecklist.map((item) => (
-              <div className="status-pill" key={item}>
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid grid-3">
-          <Link className="btn btn-primary" href="/docs/getting-started">
-            Start with Getting Started
-          </Link>
-          <Link className="btn" href="/docs/log-ingestion">
-            Go to Log Ingestion
-          </Link>
-          <Link className="btn" href="/docs/operations">
-            Go to Operations
-          </Link>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
+        <Footer />
+      </PageFrame>
+    </div>
   );
 }

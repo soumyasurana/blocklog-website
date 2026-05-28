@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
+import { Barlow, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
+const barlow = Barlow({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-heading",
+});
+
 export const metadata: Metadata = {
   title: "Blocklog",
-  description: "Tamper-proof audit logs and trust infrastructure for modern systems",
+  description: "Cryptographically verifiable governance infrastructure for AI financial systems",
 };
 
 export default function RootLayout({
@@ -38,9 +52,10 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body>
+      <body className={`${barlow.variable} ${instrumentSerif.variable}`}>
         <AnalyticsTracker />
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
