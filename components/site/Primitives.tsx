@@ -14,9 +14,7 @@ import {
 } from "@/components/site/icons";
 
 // ─── Motion Presets ────────────────────────────────────────────────────────
-// Deliberately slow, mechanical — every transition signals "this is serious".
-
-const EASE_INST = [0.16, 1, 0.3, 1] as const; // institutional ease: fast in, breathes out
+const EASE_INST = [0.16, 1, 0.3, 1] as const; 
 
 const PAGE_TRANSITION = {
   initial: { opacity: 0, y: 10 },
@@ -93,26 +91,8 @@ const footerColumns = [
   },
 ];
 
-// ─── Live scan line ────────────────────────────────────────────────────────
-function ScanLine() {
-  return (
-    <motion.div
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 z-[9] w-full"
-      style={{
-        height: 1,
-        background:
-          "linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.06) 20%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 80%,transparent 100%)",
-      }}
-      initial={{ top: "-2px" }}
-      animate={{ top: "101vh" }}
-      transition={{ duration: 8, repeat: Infinity, ease: "linear", repeatDelay: 6 }}
-    />
-  );
-}
 
 // ─── Trace grid ────────────────────────────────────────────────────────────
-// Fine-grained architectural grid — graphite lines at low opacity.
 function TraceGrid() {
   return (
     <div
@@ -130,8 +110,6 @@ function TraceGrid() {
 }
 
 // ─── Proof ticker ──────────────────────────────────────────────────────────
-// Scrolling mono evidence strip — horizontally marquees cryptographic hashes
-// and trace IDs across the top of the viewport, like a Bloomberg status bar.
 const TICKER_ITEMS = [
   "AUTH:VERIFIED · TXN-9F2A · 0xC4E9…3B1F",
   "REPLAY:OK · CHAIN-7D4C · POLICY:ENFORCED",
@@ -174,11 +152,6 @@ function ProofTicker() {
 }
 
 // ─── Live Backdrop ─────────────────────────────────────────────────────────
-// Institutional motion system:
-//   • fine architectural grid
-//   • animated trace propagation
-//   • cold/warm ambient field so pages do not read as flat black
-//   • sparse verification nodes and a moving sweep beam
 export function LiveBackdrop({ minimal = false }: { minimal?: boolean }) {
   const traces = minimal
     ? [
@@ -354,7 +327,6 @@ export function PageFrame({
       animate={PAGE_TRANSITION.animate}
     >
       <ProofTicker />
-      <ScanLine />
       <TraceGrid />
       <LiveBackdrop />
       {children}

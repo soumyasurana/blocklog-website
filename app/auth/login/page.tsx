@@ -42,7 +42,7 @@ export default function LoginPage() {
         typeof window !== "undefined"
           ? new URLSearchParams(window.location.search).get("next")
           : null;
-      router.push(nextPath || "/console");
+      router.push(nextPath || "/dashboard");
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Unable to sign in");
     } finally {

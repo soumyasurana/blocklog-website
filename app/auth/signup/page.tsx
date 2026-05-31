@@ -18,6 +18,10 @@ type SignupResponse = {
   expires_in?: number;
 };
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
 export default function SignupPage() {
   const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -44,10 +48,25 @@ export default function SignupPage() {
       .replace(/^_+|_+$/g, "");
     if (fromName.length >= 3) return fromName.slice(0, 40);
     const emailLocal = form.email.split("@")[0]?.toLowerCase().replace(/[^a-z0-9_]/g, "") || "pilot_user";
-    return emailLocal.slice(0, 40);
+    const fallback = emailLocal.length >= 3 ? emailLocal : `${emailLocal}001`;
+    return fallback.slice(0, 40);
   };
 
+  const stepOneError = (() => {
+    if (!form.name.trim()) return "Enter your full name.";
+    if (!isValidEmail(form.email)) return "Enter a valid work email.";
+    if (!form.company.trim()) return "Enter your company name.";
+    if (form.password.length < 8) return "Password must be at least 8 characters.";
+    return null;
+  })();
+
   const submit = async () => {
+    if (stepOneError) {
+      setError(stepOneError);
+      setStep(1);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -56,12 +75,15 @@ export default function SignupPage() {
         "POST",
         {
           username: buildUsername(),
-          email: form.email,
+          email: form.email.trim(),
           password: form.password,
-          workspace_name: form.company,
+          workspace_name: form.company.trim(),
         },
       );
       const session = normalizePayload<SignupResponse>(payload, {}, "data");
+      if (!session.access_token || !session.company_id) {
+        throw new Error("Signup succeeded but no session was returned.");
+      }
       writeSession(
         {
           accessToken: session.access_token,
@@ -97,7 +119,16 @@ export default function SignupPage() {
                 <select className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white" value={form.companySize} onChange={(event) => setForm({ ...form, companySize: event.target.value })}>
                   {companySizes.map((item) => <option className="bg-black" key={item}>{item}</option>)}
                 </select>
-                <button className="rounded-full bg-white px-5 py-4 text-sm font-medium text-black" onClick={() => setStep(2)} type="button">
+                {stepOneError ? <p className="text-sm text-white/64">{stepOneError}</p> : null}
+                <button
+                  className="rounded-full bg-white px-5 py-4 text-sm font-medium text-black disabled:opacity-60"
+                  disabled={Boolean(stepOneError)}
+                  onClick={() => {
+                    setError(null);
+                    setStep(2);
+                  }}
+                  type="button"
+                >
                   Continue
                 </button>
               </div>

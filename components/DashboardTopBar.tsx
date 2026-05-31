@@ -1,11 +1,33 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { clearSession, readSession } from "@/lib/blocklog";
+import { useSyncExternalStore } from "react";
+
+import {
+  clearSession,
+  readSession,
+  subscribeSession,
+  type BlocklogSession,
+} from "@/lib/blocklog";
+
+const EMPTY_SESSION: BlocklogSession = {};
+
+function getSessionSnapshot() {
+  return readSession();
+}
+
+function getServerSessionSnapshot(): BlocklogSession {
+  return EMPTY_SESSION;
+}
 
 export default function DashboardTopBar({ title }: { title: string }) {
   const router = useRouter();
-  const companyId = readSession().companyId ?? "not-set";
+  const session = useSyncExternalStore(
+    subscribeSession,
+    getSessionSnapshot,
+    getServerSessionSnapshot,
+  );
+  const companyId = session.companyId ?? "not-set";
 
   function logout() {
     clearSession();

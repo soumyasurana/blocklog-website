@@ -1,15 +1,29 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import DashboardSidebar from "@/components/DashboardSidebar";
-import { readSession } from "@/lib/blocklog";
+import { readSession, subscribeSession, type BlocklogSession } from "@/lib/blocklog";
+
+const EMPTY_SESSION: BlocklogSession = {};
+
+function getSessionSnapshot() {
+  return readSession();
+}
+
+function getServerSessionSnapshot(): BlocklogSession {
+  return EMPTY_SESSION;
+}
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const session = readSession();
+  const session = useSyncExternalStore(
+    subscribeSession,
+    getSessionSnapshot,
+    getServerSessionSnapshot,
+  );
   const ready = Boolean(session.accessToken);
 
   useEffect(() => {

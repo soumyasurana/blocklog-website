@@ -6,6 +6,9 @@ export type BlocklogSession = {
   expiresAt?: number;
 };
 
+const EMPTY_SESSION: BlocklogSession = {};
+let cachedSessionRaw: string | null = null;
+let cachedSessionValue: BlocklogSession = EMPTY_SESSION;
 const SESSION_KEY = "blocklog-session";
 const SESSION_COOKIE = "blocklog_session";
 const DEFAULT_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
@@ -46,12 +49,21 @@ export function isSessionValid(session: BlocklogSession) {
 
 export function readSession(): BlocklogSession {
   if (!hasWindow()) {
-    return {};
+    return EMPTY_SESSION;
   }
 
   try {
     const raw = window.localStorage.getItem(SESSION_KEY);
-    if (!raw) return {};
+    if (!raw) {
+      cachedSessionRaw = null;
+      cachedSessionValue = EMPTY_SESSION;
+      return EMPTY_SESSION;
+    }
+
+    if (raw === cachedSessionRaw) {
+      return cachedSessionValue;
+    }
+
     const parsed = JSON.parse(raw) as BlocklogSession & { token?: string };
     const session: BlocklogSession = {
       accessToken: parsed.accessToken ?? parsed.token,
@@ -60,11 +72,16 @@ export function readSession(): BlocklogSession {
     };
     if (!isSessionValid(session)) {
       clearSession();
-      return {};
+      return EMPTY_SESSION;
     }
+
+    cachedSessionRaw = raw;
+    cachedSessionValue = session;
     return session;
   } catch {
-    return {};
+    cachedSessionRaw = null;
+    cachedSessionValue = EMPTY_SESSION;
+    return EMPTY_SESSION;
   }
 }
 
@@ -88,6 +105,8 @@ export function clearSession() {
     return;
   }
 
+  cachedSessionRaw = null;
+  cachedSessionValue = EMPTY_SESSION;
   window.localStorage.removeItem(SESSION_KEY);
   syncSessionCookie();
   emitSessionChange();

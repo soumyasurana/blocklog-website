@@ -4,12 +4,30 @@ import { useState } from "react";
 import { Footer, PageFrame, PrimaryButton, Reveal, SiteHeader } from "@/components/site/Primitives";
 
 const pilotTimeline = [
-  ["Day 0", "SDK installed, shadow mode active"],
-  ["Day 1-7", "First governance records appearing"],
-  ["Day 7-14", "Staleness patterns emerging"],
-  ["Day 14-21", "Approval gap analysis building"],
-  ["Day 21-30", "Forensic report generating"],
-  ["Day 30", "Report delivered. Compliance conversation begins."],
+  [
+    "Day 0",
+    "SDK installed. Shadow mode activated. No impact on production execution.",
+  ],
+  [
+    "Day 1–7",
+    "Blocklog begins recording every AI financial decision and workflow event.",
+  ],
+  [
+    "Day 7–14",
+    "Decision lineage, approval paths, and context freshness patterns become visible.",
+  ],
+  [
+    "Day 14–21",
+    "Approval gaps, audit blind spots, and high-risk workflows are identified.",
+  ],
+  [
+    "Day 21–30",
+    "Forensic analysis and compliance evidence are generated from real production activity.",
+  ],
+  [
+    "Day 30",
+    "Executive report delivered. Findings reviewed with your team.",
+  ],
 ];
 
 const qualifications = [

@@ -1,3 +1,4 @@
+//Old Website
 "use client";
 
 import Link from "next/link";
@@ -27,7 +28,7 @@ export default function SiteHeader() {
           <Link href="/docs">Docs</Link>
           <Link href="/status">Status</Link>
           {!loggedIn && <Link href="/login">Login</Link>}
-          <Link className="header-cta subtle" href="/dashboard">Console</Link>
+          <Link className="header-cta subtle" href="/console">Console</Link>
         </nav>
       </div>
     </header>
