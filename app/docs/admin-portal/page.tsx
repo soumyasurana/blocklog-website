@@ -1,11 +1,9 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
+
 
 export default function AdminPortalDocsPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <div className="section-header">
           <div>
@@ -33,7 +31,6 @@ POST   /api/v1/admin/companies/{company_id}/kill-switch`}</pre>
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }

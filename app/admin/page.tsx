@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
 import { blocklogRequest, normalizePayload, readSession } from "@/lib/blocklog";
 
 type MePayload = {
@@ -368,7 +366,6 @@ export default function AdminPortalPage() {
 
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <section className="section-header">
           <div>
@@ -764,7 +761,6 @@ export default function AdminPortalPage() {
           </>
         )}
       </main>
-      <SiteFooter />
     </>
   );
 }

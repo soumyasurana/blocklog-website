@@ -36,9 +36,11 @@ const REVEAL = {
 
 // ─── Video Sources ─────────────────────────────────────────────────────────
 export const HERO_VIDEO =
-  "https://videos.pexels.com/video-files/14388669/14388669-hd_1920_1080_24fps.mp4";
+  "https://www.pexels.com/download/video/29874954/";
 export const SYSTEM_VIDEO =
-  "https://videos.pexels.com/video-files/19217899/19217899-uhd_3840_2160_30fps.mp4";
+  "https://www.pexels.com/download/video/3141207/";
+export const ADOPTION_VIDEO =
+  "https://www.pexels.com/download/video/2792370/"
 
 // ─── Nav ───────────────────────────────────────────────────────────────────
 const navLinks = [
@@ -55,7 +57,7 @@ const footerColumns = [
     title: "Product",
     links: [
       ["Platform",            "/"],
-      ["Timeline",            "/platform"],
+      ["Timeline",            "/timeline"],
       ["Forensic Replay",     "/"],
       ["Authorization Gate",  "/"],
       ["Cryptographic Proof", "/"],
@@ -77,16 +79,16 @@ const footerColumns = [
       ["About",        "/"],
       ["Pilot Program","/pilot"],
       ["Pricing",      "/pricing"],
-      ["Contact",      "mailto:founder@blocklogsecurity.com"],
+      ["Contact",      "/contact"],
     ],
   },
   {
     title: "Legal",
     links: [
-      ["Privacy Policy",    "/docs"],
-      ["Terms of Service",  "/docs"],
+      ["Privacy Policy",    "/privacy_policy"],
+      ["Terms of Service",  "/terms_of_service"],
       ["Security",          "/docs"],
-      ["SOC2",              "/platform"],
+      ["SOC2",              "/"],
     ],
   },
 ];
@@ -135,7 +137,7 @@ function ProofTicker() {
       <motion.div
         className="flex items-center h-full whitespace-nowrap"
         style={{
-          fontFamily: "'IBM Plex Mono', monospace",
+          fontFamily: "var(--font-heading), serif",
           fontSize: 9,
           letterSpacing: "0.14em",
           color: "rgba(255,255,255,0.30)",
@@ -273,15 +275,16 @@ export function LiveBackdrop({ minimal = false }: { minimal?: boolean }) {
           {Array.from({ length: 12 }).map((_, index) => (
             <motion.div
               key={`node-${index}`}
-              className="absolute rounded-full border border-white/18 bg-white/8"
+              className="absolute rounded-full bg-white/20"
               style={{
                 width: 8 + (index % 3) * 4,
                 height: 8 + (index % 3) * 4,
                 top: `${12 + (index % 6) * 13}%`,
                 left: `${8 + ((index * 13) % 74)}%`,
-                boxShadow: "0 0 18px rgba(255,255,255,0.16)",
+                boxShadow: "0 0 20px 4px rgba(255,255,255,0.2)",
+                filter: "blur(3px)",
               }}
-              animate={{ opacity: [0.22, 0.82, 0.22], scale: [1, 1.22, 1] }}
+              animate={{ opacity: [0.1, 0.6, 0.1], scale: [0.8, 1.4, 0.8] }}
               transition={{ duration: 3 + (index % 4), repeat: Infinity, ease: "easeInOut" }}
             />
           ))}
@@ -373,7 +376,7 @@ export function MonoTag({
     <span
       className={className}
       style={{
-        fontFamily: "'IBM Plex Mono', monospace",
+        fontFamily: "var(--font-heading), serif",
         fontSize: 9,
         letterSpacing: "0.18em",
         textTransform: "uppercase",
@@ -400,7 +403,7 @@ export function VerificationBadge({ label = "VERIFIED" }: { label?: string }) {
         display: "inline-flex",
         alignItems: "center",
         gap: 5,
-        fontFamily: "'IBM Plex Mono', monospace",
+        fontFamily: "var(--font-heading), serif",
         fontSize: 9,
         letterSpacing: "0.16em",
         color: "rgba(140,188,140,0.85)",
@@ -450,7 +453,7 @@ export function SiteHeader({
             className="hidden-mobile flex items-center gap-2 rounded-sm px-4 py-2 text-xs text-white/60 transition hover:text-white/90"
           >
             <BellIcon width={14} height={14} />
-            <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: "0.12em" }}>
+            <span style={{ fontFamily: "var(--font-heading), serif", fontSize: 10, letterSpacing: "0.12em" }}>
               3 ALERTS
             </span>
           </button>
@@ -464,7 +467,7 @@ export function SiteHeader({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-heading), serif",
               fontSize: 11,
               letterSpacing: "0.08em",
               color: "rgba(255,255,255,0.6)",
@@ -485,7 +488,7 @@ export function SiteHeader({
         >
           <span
             style={{
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "0.14em",
             }}
           >
@@ -498,11 +501,11 @@ export function SiteHeader({
           style={{
             background: "rgba(255,255,255,0.94)",
             color: "#0a0b0d",
-            fontFamily: "'IBM Plex Mono', monospace",
+            fontFamily: "var(--font-heading), serif",
             letterSpacing: "0.14em",
           }}
         >
-          JOIN PILOT
+          INSTALL FREE
           <ArrowUpRightIcon width={13} height={13} />
         </Link>
       </div>
@@ -580,7 +583,7 @@ export function SiteHeader({
                 ))}
                 <span
                   style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontFamily: "var(--font-heading), serif",
                     fontSize: 11,
                     color: "rgba(255,255,255,0.80)",
                     letterSpacing: "0.04em",
@@ -593,7 +596,7 @@ export function SiteHeader({
               {/* Wordmark */}
               <span
                 style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontFamily: "var(--font-heading), serif",
                   fontSize: 11,
                   letterSpacing: "0.22em",
                   color: "rgba(255,255,255,0.72)",
@@ -610,7 +613,7 @@ export function SiteHeader({
                 <div
                   className="flex items-center gap-3"
                   style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontFamily: "var(--font-heading), serif",
                     fontSize: 10,
                     letterSpacing: "0.16em",
                   }}
@@ -627,7 +630,7 @@ export function SiteHeader({
                     key={link.label}
                     href={link.href}
                     style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontFamily: "var(--font-heading), serif",
                       fontSize: 10,
                       letterSpacing: "0.16em",
                       color: "rgba(255,255,255,0.45)",
@@ -683,7 +686,7 @@ export function SiteHeader({
                       href={link.href}
                       onClick={() => setOpen(false)}
                       style={{
-                        fontFamily: "'IBM Plex Mono', monospace",
+                        fontFamily: "var(--font-heading), serif",
                         fontSize: 10,
                         letterSpacing: "0.18em",
                         color: "rgba(255,255,255,0.45)",
@@ -699,7 +702,7 @@ export function SiteHeader({
                   <Link
                     href="/login"
                     style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontFamily: "var(--font-heading), serif",
                       fontSize: 10,
                       letterSpacing: "0.18em",
                       color: "rgba(255,255,255,0.45)",
@@ -714,7 +717,7 @@ export function SiteHeader({
                   <Link
                     href="/signup"
                     style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontFamily: "var(--font-heading), serif",
                       fontSize: 10,
                       letterSpacing: "0.18em",
                       background: "rgba(255,255,255,0.92)",
@@ -726,7 +729,7 @@ export function SiteHeader({
                       textAlign: "center",
                     }}
                   >
-                    JOIN PILOT →
+                    INSTALL FREE →
                   </Link>
                 </div>
               </motion.div>
@@ -777,7 +780,7 @@ export function Footer() {
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-heading), serif",
                 fontSize: 9,
                 letterSpacing: "0.18em",
               }}
@@ -847,7 +850,7 @@ export function Footer() {
               ))}
               <span
                 style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontFamily: "var(--font-heading), serif",
                   fontSize: 12,
                   color: "rgba(255,255,255,0.75)",
                 }}
@@ -877,7 +880,7 @@ export function Footer() {
             <div key={col.title}>
               <p
                 style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontFamily: "var(--font-heading), serif",
                   fontSize: 9,
                   letterSpacing: "0.22em",
                   color: "rgba(255,255,255,0.24)",
@@ -926,7 +929,7 @@ export function Footer() {
         >
           <span
             style={{
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-heading)",
               fontSize: 9,
               letterSpacing: "0.16em",
               color: "rgba(255,255,255,0.22)",
@@ -936,7 +939,7 @@ export function Footer() {
           </span>
           <span
             style={{
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-heading)",
               fontSize: 9,
               letterSpacing: "0.14em",
               color: "rgba(255,255,255,0.18)",
@@ -971,7 +974,7 @@ export function PrimaryButton({
         alignItems: "center",
         gap: 8,
         padding: "10px 20px",
-        fontFamily: "'IBM Plex Mono', monospace",
+        fontFamily: "var(--font-heading), serif",
         fontSize: 10,
         letterSpacing: "0.18em",
         textTransform: "uppercase",
@@ -1009,7 +1012,7 @@ export function SecondaryLink({
       href={href}
       className="inline-flex items-center gap-2 transition"
       style={{
-        fontFamily: "'IBM Plex Mono', monospace",
+        fontFamily: "var(--font-heading), serif",
         fontSize: 9,
         letterSpacing: "0.18em",
         color: "rgba(255,255,255,0.40)",
@@ -1077,7 +1080,7 @@ export function PlayTextButton({
       </span>
       <span
         style={{
-          fontFamily: "'IBM Plex Mono', monospace",
+          fontFamily: "var(--font-heading), serif",
           fontSize: 9,
           letterSpacing: "0.18em",
           color: "rgba(255,255,255,0.50)",

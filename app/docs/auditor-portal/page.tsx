@@ -1,11 +1,9 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
+
 
 export default function AuditorPortalDocsPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <div className="section-header">
           <div>
@@ -36,7 +34,6 @@ GET /api/v1/logs/export-proof?from=...&to=...`}</pre>
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }

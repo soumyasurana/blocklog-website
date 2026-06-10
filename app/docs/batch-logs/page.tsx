@@ -1,11 +1,8 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
 
 export default function BatchLogsDocsPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <div className="section-header">
           <div>
@@ -40,7 +37,6 @@ GET  /api/v1/exports/{export_id}/download`}</pre>
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }

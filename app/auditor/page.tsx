@@ -1,7 +1,5 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
-import VerifyProofWidget from "@/components/VerifyProofWidget";
+
 
 const auditorCapabilities = [
   "Read-only verification surface",
@@ -28,7 +26,6 @@ export const metadata = {
 export default function AuditorPortalPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <section className="section-header">
           <div>
@@ -58,7 +55,6 @@ export default function AuditorPortalPage() {
         </section>
 
         <section className="section">
-          <VerifyProofWidget />
         </section>
 
         <section className="grid grid-2">
@@ -102,7 +98,6 @@ export default function AuditorPortalPage() {
           </article>
         </section>
       </main>
-      <SiteFooter />
     </>
   );
 }

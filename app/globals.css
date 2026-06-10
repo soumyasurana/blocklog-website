@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/legacy.css";
 
 :root {
   --bg: #020304;
@@ -479,3 +480,371 @@ video {
     width: min(var(--container), calc(100% - 4rem));
   }
 }
+
+/* Dashboard Landing Page */
+.dashboard-landing {
+  display: grid;
+  gap: 1.5rem;
+  animation: revealUp 600ms ease both;
+}
+
+.dashboard-landing-header {
+  display: grid;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.dashboard-landing-header h1 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.dashboard-kpis {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.dashboard-panels {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.dashboard-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent);
+}
+
+.kpi-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent);
+}
+
+.kpi-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kpi-card-value {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.kpi-card-delta {
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.5rem;
+  background: rgba(62, 213, 152, 0.1);
+  color: var(--success);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.metric-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent);
+}
+
+.metric-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dashboard-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-health-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.quick-links-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.quick-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(93, 160, 255, 0.08), transparent);
+  color: var(--text-soft);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  transition: all 200ms ease;
+  text-decoration: none;
+}
+
+.quick-link-card:hover {
+  background: linear-gradient(135deg, rgba(93, 160, 255, 0.16), rgba(93, 160, 255, 0.08));
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.table-shell {
+  overflow-x: auto;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table-shell table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-shell thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.table-shell th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.table-shell td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.95rem;
+}
+
+.table-shell tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+}
+
+.loading-state .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(93, 160, 255, 0.8);
+  border-radius: 999px;
+  animation: spin 1s linear infinite;
+}
+
+.error-banner {
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 108, 127, 0.1);
+  border: 1px solid rgba(255, 108, 127, 0.3);
+  color: rgba(255, 108, 127, 0.9);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-pill.status-success,
+.status-pill.status-valid {
+  background: rgba(62, 213, 152, 0.1);
+  color: var(--success);
+}
+
+.status-pill.status-warning,
+.status-pill.status-pending {
+  background: rgba(255, 191, 71, 0.1);
+  color: var(--warning);
+}
+
+.status-pill.status-danger,
+.status-pill.status-failed {
+  background: rgba(255, 108, 127, 0.1);
+  color: var(--danger);
+}
+
+.status-pill.status-neutral,
+.status-pill.status-muted {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  margin: 0.5rem 0 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.section-header .eyebrow {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes navPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 6px rgba(123, 247, 212, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(123, 247, 212, 0.04);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   BLOCKLOG SHARED SHELL + SIDEBAR NAV SYSTEM
+   ══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Shell — suppress the liquid-glass-strong ::before gradient border on
+ * full-width fixed bars so the subtle borderBottom we set inline is the
+ * only separation line.
+ */
+#blocklog-shell::before,
+#dashboard-mobile-tabs::before,
+#governance-mobile-tabs::before {
+  display: none;
+}
+
+/**
+ * Sidebar nav pills — liquid-glass applied to <a> / <button> elements.
+ * Override the class's default overflow:hidden so the blur backdrop still
+ * works and the border-radius is enforced explicitly.
+ */
+#dashboard-sidebar a.liquid-glass,
+#governance-sidebar a.liquid-glass {
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+/**
+ * Eyebrow inside sidebars — the decorative leading line is too wide in the
+ * narrow sidebar; tighten it to a small dot-width tick.
+ */
+#dashboard-sidebar .eyebrow::before,
+#governance-sidebar .eyebrow::before {
+  width: 0.6rem;
+  opacity: 0.5;
+}
+
+/**
+ * Scrollbar — thin translucent track inside both fixed sidebars.
+ */
+#dashboard-sidebar::-webkit-scrollbar,
+#governance-sidebar::-webkit-scrollbar {
+  width: 3px;
+}
+
+#dashboard-sidebar::-webkit-scrollbar-thumb,
+#governance-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+#dashboard-sidebar::-webkit-scrollbar-track,
+#governance-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/**
+ * Mobile — add bottom padding on the content wrappers to clear the 64 px
+ * fixed tab bar. The Tailwind pb-16 utility on the element handles this
+ * for most cases; this rule is a safety net for nested scroll containers.
+ */
+@media (max-width: 767px) {
+  #dashboard-content > *,
+  #governance-content > * {
+    padding-bottom: 0; /* don't double-pad child elements */
+  }
+}
+
+/**
+ * Fade-in animation for the More drawer.
+ */
+@keyframes drawerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#dashboard-more-drawer,
+#governance-more-drawer {
+  animation: drawerSlideUp 180ms ease both;
+}
+

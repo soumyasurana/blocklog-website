@@ -1,102 +1,475 @@
-[00:00:01.379] Server  LOG     ✓ Ready in 1154ms
-[00:03:55.349] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:55.669] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:03:55.669] Browser ERROR   uncaughtError: Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
-[00:03:57.246] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:04:28.160] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:04:28.317] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:04:28.317] Browser ERROR   uncaughtError: Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
-[00:04:46.843] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:23.791] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:23.971] Browser ERROR   The result of getSnapshot should be cached to avoid an infinite loop
-[00:05:23.971] Browser ERROR   uncaughtError: Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
-[00:05:40.426] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:40.625] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:05:52.103] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:40.286] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:40.883] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:49.149] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:07:52.553] Browser ERROR   The result of getSnapshot should be cached to avoid an infinite loop
-[00:07:52.553] Browser ERROR   uncaughtError: Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
-[00:08:34.582] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:34.878] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:08:35.095] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:12.377] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:12.598] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:11:12.831] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:12:29.601] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:12:29.800] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:14:16.153] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:14:17.097] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:14:18.002] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:20:48.469] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:20:48.792] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:20:49.006] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:20:49.993] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:06.531] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+[00:00:01.880] Server  LOG     ✓ Ready in 1591ms
+[00:00:05.350] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:08.423] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:24.908] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:36:40.236] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:36:42.079] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:38:44.660] Server  ERROR   ⨯ ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
 
-Check the render method of `tbody`.  It was passed a child from DecisionsTable.
-[00:21:12.258] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:12.591] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:21:12.729] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+Caused by:
+    Syntax Error
 
-Check the render method of `tbody`.  It was passed a child from DecisionsTable.
-[00:21:12.900] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:21:13.114] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:22:20.576] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:22:21.311] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:22:22.025] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:24:50.709] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:24:50.934] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:24:51.182] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:25:40.342] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:25:40.342] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:25:41.941] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:42.386] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:42.388] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:25:42.388] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:02.612] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:26:04.784] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:05.386] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:26:05.386] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:05.419] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:12.717] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:26:14.251] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:14.373] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:26:14.374] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:14.713] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:36.495] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:26:37.432] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:37.562] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:26:37.562] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:37.876] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:45.549] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:26:46.439] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:46.561] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:26:46.561] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:46.924] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:57.524] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:26:57.636] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:26:57.636] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:26:57.990] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:08.600] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:27:09.489] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:09.612] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:27:09.613] Browser ERROR   uncaughtError: ReferenceError: SiteHeader is not defined
-[00:27:09.944] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:19.016] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:27:21.678] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:22.389] Browser ERROR   The result of getServerSnapshot should be cached to avoid an infinite loop
-[00:27:23.323] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:27:25.080] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:25.917] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:27:28.392] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:29:08.413] Server  WARN    ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:29:08.472] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:41:57.829] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:41:59.792] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:42:29.032] Server  LOG     ○ Compiling /signup ...
-[00:42:39.149] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:42:40.266] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:42:41.006] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:44.743] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:44.743] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:45.613] Server  ERROR   ⨯ ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:45.789] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:46.122] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:38:46.556] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:46.556] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
+ 134 │       },
+ 135 │       {
+ 136 │         label: "2. Ingest your first log",
+ 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 138 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 139 │   -H "Content-Type: application/json" \\
+ 140 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:38:46.641] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:46.744] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:46.744] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
+ 135 │       },
+ 136 │       {
+ 137 │         label: "2. Ingest your first log",
+ 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 139 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 140 │   -H "Content-Type: application/json" \\
+ 141 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:46.847] Server  ERROR   ⨯ ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
+ 135 │       },
+ 136 │       {
+ 137 │         label: "2. Ingest your first log",
+ 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 139 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 140 │   -H "Content-Type: application/json" \\
+ 141 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:46.850] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
+ 135 │       },
+ 136 │       {
+ 137 │         label: "2. Ingest your first log",
+ 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 139 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 140 │   -H "Content-Type: application/json" \\
+ 141 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/docs/page.tsx
+[00:38:47.104] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
+ 135 │       },
+ 136 │       {
+ 137 │         label: "2. Ingest your first log",
+ 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 139 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 140 │   -H "Content-Type: application/json" \\
+ 141 │   -d '{
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:38:47.742] Browser ERROR   ./app/docs/page.tsx
+Error:   × Expected ',', got 'curl'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
+ 135 │       },
+ 136 │       {
+ 137 │         label: "2. Ingest your first log",
+ 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+     ·                   ────
+ 139 │   -H "X-API-Key: YOUR_API_KEY" \\
+ 140 │   -H "Content-Type: application/json" \\
+ 141 │   -d '{
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:38:48.105] Server  LOG     ○ Compiling /_error ...
+[00:38:50.398] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:50.502] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:51.196] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:38:52.000] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:43:41.194] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:43:44.239] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:54:20.674] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:54:33.461] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:56:29.260] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:56:30.011] Server  ERROR   ⨯ ReferenceError: fal is not defined
+[00:56:31.131] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:57:31.615] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:57:41.429] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:57:41.589] Server  ERROR   ⨯ ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:57:41.621] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:57:41.930] Server  ERROR   ⨯ ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:57:41.954] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:57:42.191] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:57:42.293] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:57:42.827] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:57:42.929] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
+ 507 │             </section>
+ 508 │     
+ 509 │             <Footer />
+ 510 │ ╭─▶       </PageFrame>
+ 511 │ ╰─▶     </div>
+ 512 │       );
+ 513 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:57:44.597] Server  LOG     ○ Compiling /_error ...
+[00:57:47.718] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:57:47.817] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:57:48.586] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:57:49.053] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:08.494] Server  ERROR   ⨯ ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
+ 509 │             </section>
+ 510 │     
+ 511 │             <Footer />
+ 512 │ ╭─▶       </PageFrame>
+ 513 │ ╰─▶     </div>
+ 514 │       );
+ 515 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:58:08.515] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
+ 509 │             </section>
+ 510 │     
+ 511 │             <Footer />
+ 512 │ ╭─▶       </PageFrame>
+ 513 │ ╰─▶     </div>
+ 514 │       );
+ 515 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:58:08.515] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
+ 509 │             </section>
+ 510 │     
+ 511 │             <Footer />
+ 512 │ ╭─▶       </PageFrame>
+ 513 │ ╰─▶     </div>
+ 514 │       );
+ 515 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/pricing/page.tsx
+[00:58:08.767] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
+ 509 │             </section>
+ 510 │     
+ 511 │             <Footer />
+ 512 │ ╭─▶       </PageFrame>
+ 513 │ ╰─▶     </div>
+ 514 │       );
+ 515 │     }
+     ╰────
+
+
+Caused by:
+    Syntax Error
+[00:58:09.741] Browser ERROR   ./app/pricing/page.tsx
+Error:   × Expected '</', got 'jsx text (
+  │     )'
+     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
+ 509 │             </section>
+ 510 │     
+ 511 │             <Footer />
+ 512 │ ╭─▶       </PageFrame>
+ 513 │ ╰─▶     </div>
+ 514 │       );
+ 515 │     }
+     ╰────
+
+Caused by:
+    Syntax Error
+[00:58:32.008] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:58:32.109] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:58:32.613] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:58:33.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:00:14.293] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

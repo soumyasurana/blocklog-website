@@ -4,6 +4,7 @@ export type BlocklogSession = {
   accessToken?: string;
   companyId?: string;
   expiresAt?: number;
+  role?: string;
 };
 
 const EMPTY_SESSION: BlocklogSession = {};
@@ -69,6 +70,7 @@ export function readSession(): BlocklogSession {
       accessToken: parsed.accessToken ?? parsed.token,
       companyId: parsed.companyId,
       expiresAt: parsed.expiresAt,
+      role: typeof parsed.role === "string" ? parsed.role : undefined,
     };
     if (!isSessionValid(session)) {
       clearSession();
@@ -220,7 +222,7 @@ export async function blocklogRequest<T>(
   return data as T;
 }
 
-function buildApiUrl(path: string) {
+export function buildApiUrl(path: string) {
   if (/^https?:\/\//i.test(path)) {
     return path;
   }

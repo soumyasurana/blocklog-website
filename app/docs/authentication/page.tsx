@@ -1,11 +1,8 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
 
 export default function AuthenticationDocsPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <div className="section-header">
           <div>
@@ -52,7 +49,6 @@ Authorization: Bearer <access_token>
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }

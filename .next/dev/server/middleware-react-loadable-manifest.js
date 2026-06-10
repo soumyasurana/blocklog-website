@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"app/console/page.tsx -> pdf-lib\":{\"id\":\"app/console/page.tsx -> pdf-lib\",\"files\":[\"static/chunks/_app-pages-browser_node_modules_pdf-lib_es_index_js.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"

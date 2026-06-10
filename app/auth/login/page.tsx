@@ -12,6 +12,10 @@ type LoginResponse = {
   expires_in?: number;
 };
 
+type MeResponse = {
+  is_admin?: boolean;
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -31,10 +35,25 @@ export default function LoginPage() {
         { email, password },
       );
       const session = normalizePayload<LoginResponse>(payload, {}, "data");
+      let role = "ANALYST";
+      if (session.access_token) {
+        try {
+          const me = await fetch(
+            `${process.env.NEXT_PUBLIC_BLOCKLOG_API_BASE_URL ?? process.env.BLOCKLOG_API_BASE_URL ?? "http://127.0.0.1:8000/api/v1"}/auth/me`,
+            {
+              headers: { Authorization: `Bearer ${session.access_token}` },
+            },
+          ).then((response) => response.json() as Promise<MeResponse>);
+          role = me.is_admin ? "ADMIN" : "ANALYST";
+        } catch {
+          role = "ANALYST";
+        }
+      }
       writeSession(
         {
           accessToken: session.access_token,
           companyId: session.company_id,
+          role,
         },
         session.expires_in ? session.expires_in * 1000 : undefined,
       );

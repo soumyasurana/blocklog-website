@@ -1,5 +1,7 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import DashboardLanding from "@/components/dashboard/landing/DashboardLanding";
 
 export default function DashboardPage() {
-  redirect("/console");
+  return <DashboardLanding />;
 }

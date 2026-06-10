@@ -1,10 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/login/page": "app/login/page.js",
-  "/console/page": "app/console/page.js",
-  "/docs/page": "app/docs/page.js",
-  "/logout/page": "app/logout/page.js",
-  "/signup/page": "app/signup/page.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/pricing/page": "app/pricing/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/status/page": "app/status/page.js",
+  "/docs/page": "app/docs/page.js",
+  "/pilot/page": "app/pilot/page.js"
 }

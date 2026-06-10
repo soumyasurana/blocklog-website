@@ -88,6 +88,7 @@ export default function SignupPage() {
         {
           accessToken: session.access_token,
           companyId: session.company_id,
+          role: "ADMIN",
         },
         session.expires_in ? session.expires_in * 1000 : undefined,
       );
@@ -115,9 +116,6 @@ export default function SignupPage() {
                 <input className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28" placeholder="Create password" type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
                 <select className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}>
                   {roles.map((item) => <option className="bg-black" key={item}>{item}</option>)}
-                </select>
-                <select className="liquid-glass rounded-full px-5 py-4 bg-transparent text-white" value={form.companySize} onChange={(event) => setForm({ ...form, companySize: event.target.value })}>
-                  {companySizes.map((item) => <option className="bg-black" key={item}>{item}</option>)}
                 </select>
                 {stepOneError ? <p className="text-sm text-white/64">{stepOneError}</p> : null}
                 <button
@@ -168,7 +166,7 @@ export default function SignupPage() {
               <p className="mt-4 text-sm text-white/68">We&apos;ll review your application and send SDK installation instructions within 48 hours.</p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Link className="rounded-full bg-white px-5 py-4 text-center text-sm font-medium text-black" href="/docs">
-                  Read the Quick Start Docs
+                  Docs & API Reference
                 </Link>
                 <button className="liquid-glass rounded-full px-5 py-4 text-center text-sm text-white/78" onClick={() => router.push("/console")} type="button">
                   Open Console

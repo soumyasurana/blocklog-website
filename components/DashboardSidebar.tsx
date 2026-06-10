@@ -24,12 +24,27 @@ const overviewLink: NavLink = {
 
 const groups: NavGroup[] = [
   {
-    title: "Core workflows",
+    title: "Evidence",
     links: [
       { href: "/dashboard/logs", label: "Logs Explorer" },
       { href: "/dashboard/traces", label: "Traces" },
       { href: "/dashboard/verify", label: "Verify", aliases: ["/dashboard/verification-tools"] },
+    ],
+  },
+  {
+    title: "Investigations",
+    links: [
+      { href: "/dashboard/decisions", label: "Decisions" },
+      { href: "/dashboard/forensics", label: "Forensics" },
+      { href: "/dashboard/incidents", label: "Incidents" },
+      { href: "/dashboard/hitl", label: "HITL" },
+    ],
+  },
+  {
+    title: "Governance",
+    links: [
       { href: "/dashboard/audit-trail", label: "Audit Trail" },
+      { href: "/dashboard/monitoring/integrity", label: "Integrity Monitor" },
     ],
   },
   {
@@ -46,10 +61,7 @@ const groups: NavGroup[] = [
         label: "Error Monitor",
         aliases: ["/dashboard/errors"],
       },
-      {
-        href: "/dashboard/monitoring/integrity",
-        label: "Integrity Monitor",
-      },
+      { href: "/dashboard/notifications", label: "Notifications" },
     ],
   },
   {
@@ -59,13 +71,6 @@ const groups: NavGroup[] = [
       { href: "/dashboard/system/anchoring", label: "Anchoring" },
       { href: "/dashboard/settings", label: "Settings" },
       { href: "/dashboard/api-keys", label: "API Keys" },
-      { href: "/dashboard/notifications", label: "Notifications" },
-    ],
-  },
-  {
-    title: "Developer Surface",
-    links: [
-      { href: "/dashboard/playground", label: "Playground" },
     ],
   },
 ];
@@ -113,18 +118,9 @@ export default function DashboardSidebar() {
         <Link className="brand" href="/">
           <span className="brand-mark" />
           <span>
-            Blocklog Console
-            <span className="brand-subtitle">Next-gen Operations Layer</span>
+            Blocklog Dashboard
           </span>
         </Link>
-        <div className="sidebar-chip">
-          <strong>Operational trust</strong>
-          <span>Connected project workspace for trust operations, system flow, and API execution.</span>
-        </div>
-        <div className="sidebar-chip">
-          <strong>Project scope</strong>
-          <span>{companyId}</span>
-        </div>
       </div>
 
       <div className="sidebar-nav-shell">
@@ -142,8 +138,8 @@ export default function DashboardSidebar() {
       </div>
 
       <div className="sidebar-group-links" style={{ marginTop: "auto", padding: "0 1.5rem 1.5rem" }}>
-        <Link className="nav-item" href="/docs">
-          <span>Documentation</span>
+        <Link className="nav-item nav-item-cta" href="/console">
+          <span>Open Governance Console</span>
         </Link>
         <button className="nav-item" onClick={logout} type="button">
           <span>Logout</span>

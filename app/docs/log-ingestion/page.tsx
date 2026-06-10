@@ -1,11 +1,8 @@
 import Link from "next/link";
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
 
 export default function LogIngestionDocsPage() {
   return (
     <>
-      <SiteHeader />
       <main className="container section">
         <div className="section-header">
           <div>
@@ -51,7 +48,6 @@ export default function LogIngestionDocsPage() {
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }
