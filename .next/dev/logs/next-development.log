@@ -1,475 +1,84 @@
-[00:00:01.880] Server  LOG     ✓ Ready in 1591ms
-[00:00:05.350] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:08.423] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:24.908] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:36:40.236] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:36:42.079] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:38:44.660] Server  ERROR   ⨯ ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
+[00:00:01.819] Server  LOG     ✓ Ready in 1524ms
+[00:00:12.425] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:15.418] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:20.525] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:28.310] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:37.929] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:02:19.728] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:20.701] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:20.862] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
-Caused by:
-    Syntax Error
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:44.743] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-Caused by:
-    Syntax Error
+https://react.dev/link/hydration-mismatch
 
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:44.743] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
+  ...
+    <StatusPage params={Promise} searchParams={Promise}>
+      <div className="page-shell">
+        <SiteHeader>
+        <PageFrame>
+          <motion.main className={"site-main "} initial={{opacity:0,y:10}} animate={{opacity:1,y:0, ...}}>
+            <main className={"site-main "} style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+              <ProofTicker>
+              <TraceGrid>
+              <LiveBackdrop>
+              <section>
+              <section className="section-block">
+                <div className="content-wr...">
+                  <Reveal delay={0}>
+                    <motion.div className={undefined} initial="hidden" whileInView="visible" viewport={{once:true, ...}} ...>
+                      <div className={undefined} style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                        <div className="liquid-gla...">
+                          <p>
+                          <div>
+                          <p className="mt-3 text-...">
++                           17:27:58
+-                           5:27:58 PM
+                  ...
+              ...
 
-Caused by:
-    Syntax Error
+[00:02:25.904] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:27.107] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:27.234] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:45.613] Server  ERROR   ⨯ ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
-Caused by:
-    Syntax Error
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:45.789] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
+https://react.dev/link/hydration-mismatch
 
-Caused by:
-    Syntax Error
+  ...
+    <StatusPage params={Promise} searchParams={Promise}>
+      <div className="page-shell">
+        <SiteHeader>
+        <PageFrame>
+          <motion.main className={"site-main "} initial={{opacity:0,y:10}} animate={{opacity:1,y:0, ...}}>
+            <main className={"site-main "} style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+              <ProofTicker>
+              <TraceGrid>
+              <LiveBackdrop>
+              <section>
+              <section className="section-block">
+                <div className="content-wr...">
+                  <Reveal delay={0}>
+                    <motion.div className={undefined} initial="hidden" whileInView="visible" viewport={{once:true, ...}} ...>
+                      <div className={undefined} style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                        <div className="liquid-gla...">
+                          <p>
+                          <div>
+                          <p className="mt-3 text-...">
++                           17:28:05
+-                           5:28:04 PM
+                  ...
+              ...
 
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:46.122] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
-
-
-Caused by:
-    Syntax Error
-[00:38:46.556] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:46.556] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:137:1]
- 134 │       },
- 135 │       {
- 136 │         label: "2. Ingest your first log",
- 137 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 138 │   -H "X-API-Key: YOUR_API_KEY" \\
- 139 │   -H "Content-Type: application/json" \\
- 140 │   -d '{
-     ╰────
-
-Caused by:
-    Syntax Error
-[00:38:46.641] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:46.744] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:46.744] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
- 135 │       },
- 136 │       {
- 137 │         label: "2. Ingest your first log",
- 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 139 │   -H "X-API-Key: YOUR_API_KEY" \\
- 140 │   -H "Content-Type: application/json" \\
- 141 │   -d '{
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:46.847] Server  ERROR   ⨯ ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
- 135 │       },
- 136 │       {
- 137 │         label: "2. Ingest your first log",
- 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 139 │   -H "X-API-Key: YOUR_API_KEY" \\
- 140 │   -H "Content-Type: application/json" \\
- 141 │   -d '{
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:46.850] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
- 135 │       },
- 136 │       {
- 137 │         label: "2. Ingest your first log",
- 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 139 │   -H "X-API-Key: YOUR_API_KEY" \\
- 140 │   -H "Content-Type: application/json" \\
- 141 │   -d '{
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/docs/page.tsx
-[00:38:47.104] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
- 135 │       },
- 136 │       {
- 137 │         label: "2. Ingest your first log",
- 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 139 │   -H "X-API-Key: YOUR_API_KEY" \\
- 140 │   -H "Content-Type: application/json" \\
- 141 │   -d '{
-     ╰────
-
-
-Caused by:
-    Syntax Error
-[00:38:47.742] Browser ERROR   ./app/docs/page.tsx
-Error:   × Expected ',', got 'curl'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/docs/page.tsx:138:1]
- 135 │       },
- 136 │       {
- 137 │         label: "2. Ingest your first log",
- 138 │         snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
-     ·                   ────
- 139 │   -H "X-API-Key: YOUR_API_KEY" \\
- 140 │   -H "Content-Type: application/json" \\
- 141 │   -d '{
-     ╰────
-
-Caused by:
-    Syntax Error
-[00:38:48.105] Server  LOG     ○ Compiling /_error ...
-[00:38:50.398] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:50.502] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:51.196] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:38:52.000] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:43:41.194] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:43:44.239] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:54:20.674] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:54:33.461] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:56:29.260] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:56:30.011] Server  ERROR   ⨯ ReferenceError: fal is not defined
-[00:56:31.131] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:57:31.615] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:57:41.429] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:57:41.589] Server  ERROR   ⨯ ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:57:41.621] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:57:41.930] Server  ERROR   ⨯ ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:57:41.954] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:57:42.191] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-
-Caused by:
-    Syntax Error
-[00:57:42.293] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-[00:57:42.827] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-
-Caused by:
-    Syntax Error
-[00:57:42.929] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:510:1]
- 507 │             </section>
- 508 │     
- 509 │             <Footer />
- 510 │ ╭─▶       </PageFrame>
- 511 │ ╰─▶     </div>
- 512 │       );
- 513 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-[00:57:44.597] Server  LOG     ○ Compiling /_error ...
-[00:57:47.718] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:57:47.817] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:57:48.586] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:57:49.053] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:58:08.494] Server  ERROR   ⨯ ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
- 509 │             </section>
- 510 │     
- 511 │             <Footer />
- 512 │ ╭─▶       </PageFrame>
- 513 │ ╰─▶     </div>
- 514 │       );
- 515 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:58:08.515] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
- 509 │             </section>
- 510 │     
- 511 │             <Footer />
- 512 │ ╭─▶       </PageFrame>
- 513 │ ╰─▶     </div>
- 514 │       );
- 515 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:58:08.515] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
- 509 │             </section>
- 510 │     
- 511 │             <Footer />
- 512 │ ╭─▶       </PageFrame>
- 513 │ ╰─▶     </div>
- 514 │       );
- 515 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./app/pricing/page.tsx
-[00:58:08.767] Browser ERROR   uncaughtError: ModuleBuildError: Module build failed (from ./node_modules/next/dist/build/webpack/loaders/next-swc-loader.js):
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
- 509 │             </section>
- 510 │     
- 511 │             <Footer />
- 512 │ ╭─▶       </PageFrame>
- 513 │ ╰─▶     </div>
- 514 │       );
- 515 │     }
-     ╰────
-
-
-Caused by:
-    Syntax Error
-[00:58:09.741] Browser ERROR   ./app/pricing/page.tsx
-Error:   × Expected '</', got 'jsx text (
-  │     )'
-     ╭─[/Users/soumyasurana/Desktop/Blocklog Security/Frontend/app/pricing/page.tsx:512:1]
- 509 │             </section>
- 510 │     
- 511 │             <Footer />
- 512 │ ╭─▶       </PageFrame>
- 513 │ ╰─▶     </div>
- 514 │       );
- 515 │     }
-     ╰────
-
-Caused by:
-    Syntax Error
-[00:58:32.008] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:58:32.109] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:58:32.613] Server  WARN    ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:58:33.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:14.293] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
