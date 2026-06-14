@@ -15,127 +15,138 @@ import { ChevronRightIcon } from "@/components/site/icons";
 
 const tiers = [
   {
-    name: "Shadow Mode",
+    name: "Developer",
     price: "Free",
-    period: "14-day trial",
+    period: "forever",
     badge: "Start here",
     highlight: false,
     cta: "Install free",
     ctaHref: "/signup",
     ctaInverted: false,
     description:
-      "Install alongside your LangChain agent. Zero production impact. No credit card. See your first forensic replay in under 20 minutes.",
+      "Install alongside your agent. Zero production impact. No credit card. See your first forensic replay in under 20 minutes.",
     features: [
       "Forensic replay engine",
       "Stale input tracking",
       "Counterfactual analysis",
-      "LangChain integration",
+      "Python SDK",
+      "5,000 traces / month",
       "14-day decision history",
       "Community support",
     ],
-    ceiling: "History stops persisting at day 14. Upgrade to keep it.",
-  },
-  {
-    name: "Solo",
-    price: "$49",
-    period: "per month",
-    badge: "",
-    highlight: false,
-    cta: "Start Solo",
-    ctaHref: "/signup?plan=solo",
-    ctaInverted: false,
-    description:
-      "For individual engineers who want persistent replay history and never want to lose a forensic record again.",
-    features: [
-      "Everything in Shadow Mode",
-      "30-day decision history",
-      "1 engineer seat",
-      "Unlimited replays",
-      "No usage limits",
-      "Community support",
-    ],
-    ceiling: "Hit the ceiling when you need to share a replay with a teammate.",
+    ceiling:
+      "History stops persisting at day 14. Trace limit exhausted in days at production volume.",
   },
   {
     name: "Team",
-    price: "$99",
+    price: "$149",
     period: "per month",
-    badge: "Recommended",
+    badge: "Most popular",
     highlight: true,
     cta: "Start Team",
     ctaHref: "/signup?plan=team",
     ctaInverted: true,
     description:
-      "For engineering teams debugging production failures together. One upgrade covers the whole team.",
+      "For small teams shipping agents to production. Governance and audit trails without enterprise overhead.",
     features: [
-      "Everything in Solo",
+      "Everything in Developer",
+      "100,000 traces / month",
       "90-day decision history",
-      "Up to 5 engineer seats",
-      "Shareable replay links",
-      "Inline replay comments",
+      "Up to 5 agents",
+      "Approval workflows",
+      "Audit export (PDF + JSON)",
+      "3 seats",
       "48h email support",
     ],
     ceiling:
-      "Hit the ceiling when a compliance stakeholder asks to see a report.",
+      "Hit the ceiling when a compliance stakeholder asks to see a formal report.",
   },
   {
-    name: "Professional",
+    name: "Scale",
+    price: "$399",
+    period: "per month",
+    badge: "",
+    highlight: false,
+    cta: "Start Scale",
+    ctaHref: "/signup?plan=scale",
+    ctaInverted: false,
+    description:
+      "For Series A teams running multiple agents in production with real compliance requirements.",
+    features: [
+      "Everything in Team",
+      "1,000,000 traces / month",
+      "1-year tamper-resistant retention",
+      "Unlimited agents",
+      "Human-in-loop controls",
+      "Ed25519 cryptographic signing",
+      "10 seats + SSO",
+      "Priority support",
+    ],
+    ceiling:
+      "Hit the ceiling when data residency or a security review requires your infrastructure.",
+  },
+  {
+    name: "Enterprise",
     price: "$1,500",
     period: "per month",
-    badge: "Coming Soon",
+    badge: "VPC",
     highlight: false,
     cta: "Talk to us",
     ctaHref: "/contact",
     ctaInverted: true,
     description:
-      "For teams whose compliance officer has read the forensic report and needs to make it formal. Budget comes from compliance, not engineering.",
+      "For teams whose security review requires agent traces to never leave their own infrastructure. Budget comes from compliance, not engineering.",
     features: [
-      "Everything in Team",
-      "Unlimited engineer seats",
-      "12-month tamper-resistant retention",
-      "PDF compliance report with attestation",
-      "Auditor access role — read-only, no engineer needed",
-      "Quarterly report scheduling",
-      "Priority 24h support with named contact",
+      "Everything in Scale",
+      "Unlimited traces",
+      "Custom retention policy",
+      "VPC deployment (AWS / GCP)",
+      "Unlimited seats",
       "Sentinel gate add-on available",
+      "Dedicated deployment support",
+      "24h named support contact",
     ],
     ceiling: null,
   },
 ];
 
 const sentinelAddon = {
-  name: "Sentinel-(Coming Soon)",
+  name: "Sentinel — Coming Soon",
   price: "$500",
   period: "per month add-on",
   description:
-    "The human-in-the-loop authorization gate. Blocks any AI financial decision above a configurable threshold until a human approves it. Available on Professional only.",
+    "The human-in-the-loop authorization gate. Blocks any AI agent action above a configurable risk threshold until a human approves it. Available on Enterprise only.",
   note: "Sentinel is never pitched. Compliance officers who have read 30+ days of forensic reports request it themselves after seeing the decisions-near-threshold section.",
 };
 
 const faqs = [
   [
-    "Why does the trial end at 14 days instead of being free forever?",
-    "The 14-day window is long enough to see your first real production failure replayed. The moment history stops persisting is the moment the value is clearest. We deliberately chose a natural ceiling over an artificial feature gate.",
+    "Why is Developer free forever instead of a 14-day trial?",
+    "Because a perpetual free tier earns trust. You can instrument your agent, see real replays in dev and staging, and evaluate whether Blocklog is worth paying for — with no clock running. The ceiling is trace volume and retention, not time.",
   ],
   [
-    "Is the $49/$99 pricing per seat or per workspace?",
-    "Per workspace. One upgrade covers your whole team at that tier. You hit the seat limit at 1 (Solo) or 5 (Team) — the ceiling is seats, not features.",
+    "Is pricing per seat or per workspace?",
+    "Per workspace. Team covers up to 3 seats, Scale covers up to 10. The upgrade ceiling is seats and trace volume, not features — every tier gets the full feature set for that tier.",
   ],
   [
-    "Why does compliance live at $1,500 and not lower?",
-    "Because the compliance report budget lives in the compliance officer's department, not the engineering team's. $1,500/month clears procurement at most Series B-D fintechs without a committee. Pricing it lower would put it in the wrong budget line and make it harder to sign, not easier.",
+    "What counts as a trace?",
+    "One trace is one complete agent execution — a single run from start to finish, regardless of how many internal LLM calls or tool calls it makes. It is the most predictable unit to price on: you always know how many times your agent ran.",
+  ],
+  [
+    "Why does Enterprise start at $1,500?",
+    "Because VPC deployment requires real engineering time on our side — initial deployment, environment-specific debugging, upgrade support. Below $1,500 the economics do not work for a design-partnership quality deployment. LangSmith Enterprise starts at $2,000–5,000/month. We are intentionally below their floor.",
   ],
   [
     "What is Sentinel and why is it an add-on?",
-    "Sentinel is the human-in-the-loop authorization gate — it sits in the execution path and blocks AI financial decisions above a threshold until a human approves. It's an add-on because it's a fundamentally different risk conversation from observability. It's also never sold: compliance officers who have been reading forensic reports for 30+ days request it themselves.",
+    "Sentinel is the human-in-the-loop authorization gate — it sits in the execution path and blocks agent actions above a risk threshold until a human approves. It is an add-on because it is a fundamentally different risk conversation from observability. It is also never sold: compliance officers who have been reading forensic reports for 30+ days request it themselves.",
   ],
   [
-    "What does Enterprise include that Professional doesn't?",
-    "Unlimited workspaces, custom retention beyond 12 months, Traceflow for multi-agent execution chain visibility, SSO, RBAC, private cloud or on-premise deployment, SLA with uptime guarantees, dedicated TAM, and custom compliance report templates for FCA, MAS, and RBI frameworks.",
+    "What does Enterprise include that Scale does not?",
+    "VPC deployment so traces never leave your infrastructure, custom retention beyond 1 year, unlimited seats, Sentinel gate access, dedicated deployment support, and a signed pilot agreement with DPA included.",
   ],
   [
     "Is there a discount for annual billing?",
-    "Solo and Team are month-to-month. Professional is available annually with two months free. Enterprise is annual only.",
+    "Team and Scale are available annually with two months free — a 17% discount. Enterprise is annual only with a 3-month minimum pilot.",
   ],
   [
     "What happens to my forensic history if I downgrade?",
@@ -144,20 +155,21 @@ const faqs = [
 ];
 
 const comparisonRows = [
-  { feature: "Forensic replay engine", shadow: true, solo: true, team: true, pro: true },
-  { feature: "Stale input tracking", shadow: true, solo: true, team: true, pro: true },
-  { feature: "Counterfactual analysis", shadow: true, solo: true, team: true, pro: true },
-  { feature: "LangChain integration", shadow: true, solo: true, team: true, pro: true },
-  { feature: "Decision history retention", shadow: "14 days", solo: "30 days", team: "90 days", pro: "12 months" },
-  { feature: "Engineer seats", shadow: "1", solo: "1", team: "Up to 5", pro: "Unlimited" },
-  { feature: "Shareable replay links", shadow: false, solo: false, team: true, pro: true },
-  { feature: "Inline replay comments", shadow: false, solo: false, team: true, pro: true },
-  { feature: "PDF compliance report", shadow: false, solo: false, team: false, pro: true },
-  { feature: "Attestation footer", shadow: false, solo: false, team: false, pro: true },
-  { feature: "Auditor access role", shadow: false, solo: false, team: false, pro: true },
-  { feature: "Quarterly report scheduling", shadow: false, solo: false, team: false, pro: true },
-  { feature: "Sentinel gate (add-on)", shadow: false, solo: false, team: false, pro: true },
-  { feature: "Support", shadow: "Community", solo: "Community", team: "48h email", pro: "24h named" },
+  { feature: "Forensic replay engine",       dev: true,          team: true,           scale: true,        ent: true },
+  { feature: "Stale input tracking",         dev: true,          team: true,           scale: true,        ent: true },
+  { feature: "Counterfactual analysis",      dev: true,          team: true,           scale: true,        ent: true },
+  { feature: "Traces / month",               dev: "5,000",       team: "100,000",      scale: "1,000,000", ent: "Unlimited" },
+  { feature: "Decision history retention",   dev: "14 days",     team: "90 days",      scale: "1 year",    ent: "Custom" },
+  { feature: "Agents monitored",             dev: "1",           team: "Up to 5",      scale: "Unlimited", ent: "Unlimited" },
+  { feature: "Team seats",                   dev: "1",           team: "3",            scale: "10",        ent: "Unlimited" },
+  { feature: "Approval workflows",           dev: false,         team: true,           scale: true,        ent: true },
+  { feature: "Audit export (PDF + JSON)",    dev: false,         team: true,           scale: true,        ent: true },
+  { feature: "Human-in-loop controls",       dev: false,         team: false,          scale: true,        ent: true },
+  { feature: "Ed25519 cryptographic signing", dev: false,         team: false,          scale: true,        ent: true },
+  { feature: "SSO",                          dev: false,         team: false,          scale: true,        ent: true },
+  { feature: "VPC deployment",               dev: false,         team: false,          scale: false,       ent: true },
+  { feature: "Sentinel gate (add-on)",       dev: false,         team: false,          scale: false,       ent: true },
+  { feature: "Support",                      dev: "Community",   team: "48h email",    scale: "Priority",  ent: "24h named" },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -194,10 +206,10 @@ export default function PricingPage() {
               <h1 className="section-title">
                 Install free.
                 <br />
-                Pay when it saves you time.
+                Pay when it saves you.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-white/72">
-                Shadow mode is free. You pay at the exact moment the product has proven its value — when you want to keep more history, bring in a teammate, or make your compliance report formal.
+                Developer tier is free forever. You pay at the exact moment the product has proven its value — when you need more traces, longer history, approval workflows, or your own infrastructure.
                 Every upgrade is pulled by a felt need. None require a sales call below $1,500/month.
               </p>
             </Reveal>
@@ -221,9 +233,11 @@ export default function PricingPage() {
                     <p className="text-xs uppercase tracking-[0.22em] text-white/40">
                       {tier.name}
                     </p>
-                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.14em] text-white/36 whitespace-nowrap">
-                      {tier.badge}
-                    </span>
+                    {tier.badge && (
+                      <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.14em] text-white/36 whitespace-nowrap">
+                        {tier.badge}
+                      </span>
+                    )}
                   </div>
 
                   {/* Price */}
@@ -269,6 +283,17 @@ export default function PricingPage() {
           </div>
         </section>
 
+        {/* ── Overage note ── */}
+        <section className="section-block !pt-0">
+          <div className="content-wrap">
+            <Reveal>
+              <p className="text-sm text-white/36 text-center">
+                Trace overages: Team at $1.50 / 1k traces · Scale at $0.80 / 1k traces · Annual billing saves 17% on Team and Scale.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ── Sentinel add-on ── */}
         <section className="section-block">
           <div className="content-wrap">
@@ -290,7 +315,7 @@ export default function PricingPage() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-3">
                       {[
-                        ["Blocks decisions above threshold", "until a human approves"],
+                        ["Blocks actions above threshold", "until a human approves"],
                         ["Tamper-resistant gate log", "feeds into compliance report"],
                         ["Threshold configured by you", "not hardcoded by Blocklog"],
                       ].map(([title, detail]) => (
@@ -320,28 +345,28 @@ export default function PricingPage() {
             <div className="mt-12 grid gap-4 lg:grid-cols-2">
               {[
                 {
-                  trigger: "Free → Solo",
-                  moment: "Day 14. History stops persisting.",
+                  trigger: "Developer → Team",
+                  moment: "You hit 5,000 traces or day 14.",
                   detail:
-                    "You replayed a production failure three times this week. The 14-day window expires. The upgrade prompt appears. You upgrade in 30 seconds without asking anyone.",
+                    "Your agent is live in staging. You've replayed three failures this week. Trace volume runs out or history stops persisting. The upgrade prompt appears. You upgrade in 30 seconds without asking anyone.",
                 },
                 {
-                  trigger: "Solo → Team",
-                  moment: "You try to share a replay with a teammate.",
+                  trigger: "Team → Scale",
+                  moment: "Your compliance officer reads the 90-day report.",
                   detail:
-                    "A production incident happened. You found the causal chain. Your team lead needs to see it. You hit the seat limit. You upgrade the workspace. The whole team is in.",
+                    "After 90 days of Team, a forensic report is generated and forwarded internally. The compliance officer reads it and says: this answers what our regulator has been asking. They ask for a year of history. That question is the Scale conversation.",
                 },
                 {
-                  trigger: "Team → Professional",
-                  moment: "Your compliance officer reads the 30-day report.",
+                  trigger: "Scale → Enterprise",
+                  moment: "Security asks where the traces live.",
                   detail:
-                    "After 30 days of shadow mode, the forensic report is generated and forwarded. The compliance officer reads it and says: this answers what our regulator has been asking. They drive the $1,500/month conversation with your CTO.",
+                    "Your CISO or a prospective enterprise customer asks: where does this data go? The answer — our cloud — triggers a data residency requirement. That question is the Enterprise VPC conversation.",
                 },
                 {
-                  trigger: "Professional → Sentinel",
-                  moment: "The compliance officer asks the question.",
+                  trigger: "Enterprise → Sentinel",
+                  moment: "The compliance officer asks the next question.",
                   detail:
-                    "After reading two or three forensic reports, they ask: can we prevent the high-risk decisions rather than just document them? That question is the Sentinel conversation. You never pitch it.",
+                    "After reading two or three forensic reports, they ask: can we prevent the high-risk actions rather than just document them? That question is the Sentinel conversation. You never pitch it.",
                 },
               ].map((item, index) => (
                 <Reveal delay={index * 0.07} key={item.trigger}>
@@ -375,7 +400,7 @@ export default function PricingPage() {
                       <th className="p-5 text-left text-xs uppercase tracking-[0.22em] text-white/36 font-normal w-[36%]">
                         Feature
                       </th>
-                      {["Shadow", "Solo", "Team", "Pro"].map((h) => (
+                      {["Developer", "Team", "Scale", "Enterprise"].map((h) => (
                         <th
                           key={h}
                           className={`p-5 text-center text-xs uppercase tracking-[0.22em] font-normal ${
@@ -397,16 +422,16 @@ export default function PricingPage() {
                       >
                         <td className="px-5 py-4 text-white/64">{row.feature}</td>
                         <td className="px-5 py-4 text-center">
-                          <CellValue value={row.shadow} />
-                        </td>
-                        <td className="px-5 py-4 text-center">
-                          <CellValue value={row.solo} />
+                          <CellValue value={row.dev} />
                         </td>
                         <td className="px-5 py-4 text-center">
                           <CellValue value={row.team} />
                         </td>
                         <td className="px-5 py-4 text-center">
-                          <CellValue value={row.pro} />
+                          <CellValue value={row.scale} />
+                        </td>
+                        <td className="px-5 py-4 text-center">
+                          <CellValue value={row.ent} />
                         </td>
                       </tr>
                     ))}
@@ -415,11 +440,11 @@ export default function PricingPage() {
                       <td className="px-5 py-5 text-xs uppercase tracking-[0.22em] text-white/36">
                         Monthly price
                       </td>
-                      {["Free", "$49", "$99", "$1,500"].map((p, i) => (
+                      {["Free", "$149", "$399", "$1,500"].map((p, i) => (
                         <td
                           key={p}
                           className={`px-5 py-5 text-center serif-italic text-lg ${
-                            i === 2 ? "text-white" : "text-white/60"
+                            i === 1 ? "text-white" : "text-white/60"
                           }`}
                         >
                           {p}
@@ -484,10 +509,10 @@ export default function PricingPage() {
               <div className="liquid-glass-strong rounded-[2.6rem] p-8 md:p-12 flex flex-col items-center text-center gap-6">
                 <p className="eyebrow">// Start here</p>
                 <h2 className="section-title max-w-2xl">
-                  Install shadow mode. See your first forensic replay. Then decide.
+                  Install the SDK. See your first forensic replay. Then decide.
                 </h2>
                 <p className="max-w-xl text-base leading-7 text-white/62">
-                  Free. No credit card. No production impact. No procurement approval.
+                  Free forever. No credit card. No production impact. No procurement approval.
                   Under 20 minutes from install to first replay.
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row">
@@ -495,7 +520,7 @@ export default function PricingPage() {
                     href="/signup"
                     className="inline-flex items-center gap-2"
                   >
-                    Install Shadow Mode Free
+                    Get started free
                     <ArrowUpRightIcon width={14} height={14} />
                   </PrimaryButton>
                   <PrimaryButton href="/contact" inverted>
@@ -512,3 +537,4 @@ export default function PricingPage() {
     </div>
   );
 }
+

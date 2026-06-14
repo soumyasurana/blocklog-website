@@ -23,7 +23,7 @@ const docsTree = [
     items: [
       "Integrity Model",
       "Decision Logging",
-      "Anchoring",
+      "Cryptographic Signing",
       "Verification",
       "Audit Trails",
     ],
@@ -43,7 +43,7 @@ const docsTree = [
     items: [
       "Authentication",
       "Logs API",
-      "Batches & Anchoring API",
+      "Batches & Signing API",
       "Verification API",
       "Decisions API",
       "HITL Overrides API",
@@ -72,7 +72,7 @@ const docContent: Record<string, DocSection> = {
 
   Introduction: {
     title: "Introduction",
-    body: "Blocklog is a tamper-evident logging and decision-integrity platform. It records why a system took a specific action, what data it used, and who authorized it — then makes that record mathematically verifiable by anyone, at any time, without trusting Blocklog itself.\n\nEvery log is cryptographically chained to the one before it. Batches of logs are sealed into Merkle trees and anchored to a public blockchain. The result is forensic-grade evidence that survives database breaches, malicious insiders, and compliance audits alike.",
+    body: "Blocklog is a tamper-evident logging and decision-integrity platform. It records why a system took a specific action, what data it used, and who authorized it — then makes that record mathematically verifiable by anyone, at any time, without trusting Blocklog itself.\n\nEvery log is cryptographically chained to the one before it. Batches of logs are sealed into Merkle trees and signed with Ed25519 cryptographic signatures. The result is forensic-grade evidence that survives database breaches, malicious insiders, and compliance audits alike.",
     subsections: [
       {
         heading: "Who is Blocklog for?",
@@ -92,7 +92,7 @@ const docContent: Record<string, DocSection> = {
     subsections: [
       {
         heading: "Key Differentiators",
-        body: "Mathematical Certainty — every log can be independently verified via public blockchain anchors without trusting Blocklog's own infrastructure.\n\nChain of Custody — Blocklog proves not just that a log exists, but the exact sequence of events leading up to it.\n\nZero-Knowledge Proofs — prove to a third-party regulator that a specific event occurred without exposing your entire logging database, using Merkle batching.",
+        body: "Mathematical Certainty — every log can be independently verified via Ed25519 cryptographic signatures without trusting Blocklog's own infrastructure.\n\nChain of Custody — Blocklog proves not just that a log exists, but the exact sequence of events leading up to it.\n\nZero-Knowledge Proofs — prove to a third-party regulator that a specific event occurred without exposing your entire logging database, using Merkle batching.",
       },
       {
         heading: "Primary Use Cases",
@@ -118,8 +118,8 @@ const docContent: Record<string, DocSection> = {
         body: "Periodically, a set of logs is sealed into a batch. A Merkle Tree is constructed from the hashes of those logs. The resulting Merkle Root is a single 32-byte hash that mathematically represents every log in the batch. This enables zero-knowledge proofs: you can prove a specific log is part of a batch without revealing any other log in that batch.",
       },
       {
-        heading: "Layer 4 — Blockchain Anchoring",
-        body: "The Merkle Root is submitted as a transaction to a public blockchain (e.g. Ethereum). Once confirmed, the blockchain provides decentralized immutability — no single entity, including Blocklog, can rewrite the history — and cryptographic timestamping that proves the logs existed at that exact moment.",
+        heading: "Layer 4 — Cryptographic Signing",
+        body: "The Merkle Root is signed with Ed25519 cryptographic signature. Once signed, the signature provides tamper-evidence — no single entity, including Blocklog, can rewrite the history without invalidating the signature — and cryptographic timestamping that proves the logs existed at that exact moment.",
       },
     ],
   },
@@ -130,13 +130,13 @@ const docContent: Record<string, DocSection> = {
     code: [
       {
         label: "1. Install the SDK",
-        snippet: `pip install git+https://github.com/blockloghq/blocklog-python.git
+        snippet: `pip install blocklog
 # or
 pip install blocklog`,
       },
       {
         label: "2. Ingest your first log",
-        snippet: `curl -X POST "https://api.blocklog.dev/v1/logs" \\
+        snippet: `curl -X POST "https://blocklogsecurity/api/v1/logs" \\
   -H "X-API-Key: YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -151,7 +151,7 @@ pip install blocklog`,
       },
       {
         label: "3. Verify the log",
-        snippet: `curl -X GET "https://api.blocklog.dev/v1/logs/{log_id}/verify" \\
+        snippet: `curl -X GET "https://blocklogsecurity/api/v1/logs/{log_id}/verify" \\
   -H "X-API-Key: YOUR_API_KEY"`,
       },
     ],
@@ -165,7 +165,7 @@ pip install blocklog`,
 
   "Shadow Mode Setup": {
     title: "Shadow Mode Setup",
-    body: "Shadow mode lets Blocklog observe and record your decision pipeline without blocking live execution. It is the safest way to introduce Blocklog to a production environment before full enforcement is enabled.\n\nIn shadow mode, every log is ingested, hash-chained, and made eligible for Merkle batching and anchoring — but failed ingestion calls are silently swallowed rather than surfaced to your application. Once you confirm the integration is healthy, switch mode to enforce.",
+    body: "Shadow mode lets Blocklog observe and record your decision pipeline without blocking live execution. It is the safest way to introduce Blocklog to a production environment before full enforcement is enabled.\n\nIn shadow mode, every log is ingested, hash-chained, and made eligible for Merkle batching and signing — but failed ingestion calls are silently swallowed rather than surfaced to your application. Once you confirm the integration is healthy, switch mode to enforce.",
     code: [
       {
         label: "TypeScript — shadow mode",
@@ -239,11 +239,11 @@ const result = await blocklog.observe(async () => {
       },
       {
         heading: "Merkle Batching",
-        body: "Sealed batches are represented by a single 32-byte Merkle Root. This enables lightweight, zero-knowledge inclusion proofs — you can prove a single log existed in an anchored batch without revealing any other log.",
+        body: "Sealed batches are represented by a single 32-byte Merkle Root. This enables lightweight, zero-knowledge inclusion proofs — you can prove a single log existed in a signed batch without revealing any other log.",
       },
       {
-        heading: "Blockchain Anchoring",
-        body: "The Merkle Root is anchored to an EVM-compatible public blockchain. The resulting transaction hash is the permanent, decentralized timestamp for the entire batch. Even Blocklog cannot retroactively alter an anchored batch — the blockchain's own consensus mechanism prevents it.",
+        heading: "Cryptographic Signing",
+        body: "The Merkle Root is signed with Ed25519 cryptographic signature. The resulting signature is the permanent, tamper-evident timestamp for the entire batch. Even Blocklog cannot retroactively alter a signed batch — the cryptographic signature prevents it.",
       },
     ],
   },
@@ -272,33 +272,29 @@ const result = await blocklog.observe(async () => {
     ],
   },
 
-  Anchoring: {
-    title: "Anchoring",
-    body: "Anchoring gives Blocklog its tamper-evident guarantee beyond the local hash chain. It proves that an entire body of logs existed at a specific point in time and has not been rewritten from scratch.",
+  "Cryptographic Signing": {
+    title: "Cryptographic Signing",
+    body: "Cryptographic signing gives Blocklog its tamper-evident guarantee beyond the local hash chain. It proves that an entire body of logs existed at a specific point in time and has not been rewritten from scratch.",
     subsections: [
       {
-        heading: "Automatic Anchoring",
-        body: "In managed environments, Blocklog automatically seals and anchors batches based on your configured retention and security policies — typically every hour or after 10,000 logs.",
+        heading: "Automatic Signing",
+        body: "In managed environments, Blocklog automatically seals and signs batches based on your configured retention and security policies — typically every hour or after 10,000 logs.",
       },
       {
-        heading: "Manual Anchoring",
-        body: "For self-hosted deployments or high-value events, you can seal and anchor a batch on demand:",
-        code: `# 1. Seal the current batch
-curl -X POST "https://api.blocklog.dev/v1/batches/seal" \\
-  -H "X-API-Key: YOUR_API_KEY"
-
-# 2. Anchor the sealed batch
-curl -X POST "https://api.blocklog.dev/v1/batches/{batch_id}/anchor" \\
+        heading: "Manual Signing",
+        body: "For self-hosted deployments or high-value events, you can seal a batch on demand:",
+        code: `# Seal the current batch
+curl -X POST "https://blocklogsecurity/api/v1/batches/seal" \\
   -H "X-API-Key: YOUR_API_KEY"`,
       },
       {
-        heading: "Verifying an Anchor",
-        body: "Once anchored, you can retrieve the cryptographic proof bundle for any batch. The proof bundle contains the Merkle Root, the blockchain transaction hash, and the network it was anchored to. Use this bundle for offline verification without relying on the Blocklog API at all.",
-        code: `GET /api/v1/anchors/{batch_id}`,
+        heading: "Verifying a Signature",
+        body: "Once signed, you can retrieve the cryptographic proof bundle for any batch. The proof bundle contains the Merkle Root, the Ed25519 signature, and the timestamp. Use this bundle for offline verification without relying on the Blocklog API at all.",
+        code: `GET /api/v1/batches/{batch_id}/proof-bundle`,
       },
       {
-        heading: "Supported Networks",
-        body: "Blocklog supports anchoring to EVM-compatible networks. The specific network and smart contract for your tenant can be found in the Dashboard under Settings > Anchoring.",
+        heading: "Signature Algorithm",
+        body: "Blocklog uses Ed25519 for cryptographic signing. Ed25519 provides strong security guarantees with fast verification times, making it ideal for high-volume logging systems.",
       },
     ],
   },
@@ -323,8 +319,8 @@ curl -X POST "https://api.blocklog.dev/v1/batches/{batch_id}/anchor" \\
 GET /api/v1/verify/batch/{batch_id}`,
       },
       {
-        heading: "4. Blockchain Verification (Offline)",
-        body: "The gold standard for compliance audits. Export the proof bundle, calculate the SHA-256 hash of the raw log data yourself, reconstruct the Merkle Root using a standard library, then query an independent blockchain node (e.g. via Infura or Alchemy) to confirm the Merkle Root matches the anchored transaction payload. No Blocklog infrastructure required.",
+        heading: "4. Cryptographic Verification (Offline)",
+        body: "The gold standard for compliance audits. Export the proof bundle, calculate the SHA-256 hash of the raw log data yourself, reconstruct the Merkle Root using a standard library, then verify the Ed25519 signature using the public key. No Blocklog infrastructure required.",
         code: `# 1. Export the proof bundle
 GET /api/v1/logs/export-proof?from=2024-01-01T00:00:00Z&to=2024-01-02T00:00:00Z
 
@@ -372,7 +368,7 @@ GET /api/v1/public/verify/{proof_id}`,
       {
         label: "Authenticating API requests",
         snippet: `curl -H "X-API-Key: YOUR_API_KEY" \\
-     https://api.blocklog.dev/v1/logs`,
+     https://blocklogsecurity/api/v1/logs`,
       },
       {
         label: "Create an API key",
@@ -396,7 +392,7 @@ Authorization: Bearer <jwt>
 
   "Secret Handling": {
     title: "Secret Handling",
-    body: "API keys are generated using cryptographically secure random number generators (CSPRNG). Sensitive configuration values — blockchain RPC URLs, private signing keys, JWT secrets — are injected via environment variables and are never stored in source code or the operational database.\n\nEvidence signing keys are managed separately from general application secrets and are not accessible via the standard API key endpoints.",
+    body: "API keys are generated using cryptographically secure random number generators (CSPRNG). Sensitive configuration values — Ed25519 signing keys, JWT secrets — are injected via environment variables and are never stored in source code or the operational database.\n\nEvidence signing keys are managed separately from general application secrets and are not accessible via the standard API key endpoints.",
   },
 
   // ── API Reference ────────────────────────────────────────────────────────
@@ -528,9 +524,9 @@ X-API-Key: YOUR_API_KEY
     ],
   },
 
-  "Batches & Anchoring API": {
-    title: "Batches & Anchoring API",
-    body: "Batches group logs for Merkle tree construction and blockchain anchoring. In managed environments this happens automatically. In self-hosted or high-assurance environments you can drive the lifecycle manually.",
+  "Batches & Signing API": {
+    title: "Batches & Signing API",
+    body: "Batches group logs for Merkle tree construction and cryptographic signing. In managed environments this happens automatically. In self-hosted or high-assurance environments you can drive the lifecycle manually.",
     code: [
       {
         label: "Seal the current batch",
@@ -577,7 +573,7 @@ X-API-Key: YOUR_API_KEY
 X-API-Key: YOUR_API_KEY
 
 // Returns: log hash, Merkle siblings, Merkle root, batch ID,
-// blockchain transaction hash, and network.`,
+// Ed25519 signature, and signed_at timestamp.`,
       },
       {
         label: "Verify a batch",
