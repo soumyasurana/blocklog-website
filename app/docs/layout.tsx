@@ -8,7 +8,9 @@ const sidebar = [
   { label: "Core Concepts", href: "/docs/concepts" },
   { label: "Python SDK", href: "/docs/python-sdk" },
   { label: "REST API", href: "/docs/api-reference" },
+  { label: "LangChain", href: "/docs/integrations/langchain" },
   { label: "Examples", href: "/docs/incident-reconstruction" },
+  
 ];
 
 export default function DocsLayout({
