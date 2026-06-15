@@ -326,8 +326,9 @@ export function PageFrame({
   return (
     <motion.main
       className={`site-main ${className ?? ""}`}
-      initial={PAGE_TRANSITION.initial}
-      animate={PAGE_TRANSITION.animate}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <ProofTicker />
       <TraceGrid />
