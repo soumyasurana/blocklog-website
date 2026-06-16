@@ -20,7 +20,7 @@ const tiers = [
     period: "forever",
     badge: "Start here",
     highlight: false,
-    cta: "Install free",
+    cta: "Start Free",
     ctaHref: "/get-started",
     ctaInverted: false,
     description:
@@ -204,7 +204,7 @@ export default function PricingPage() {
             <Reveal className="max-w-4xl space-y-6">
               <p className="eyebrow">// Pricing</p>
               <h1 className="section-title">
-                Install free.
+                Start Free.
                 <br />
                 Pay when it saves you.
               </h1>

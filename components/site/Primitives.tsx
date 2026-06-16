@@ -503,7 +503,7 @@ export function SiteHeader({
             letterSpacing: "0.14em",
           }}
         >
-          INSTALL FREE
+          START FREE
           <ArrowUpRightIcon width={13} height={13} />
         </Link>
       </div>
@@ -536,61 +536,6 @@ export function SiteHeader({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: EASE_INST }}
           >
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 group"
-              style={{ textDecoration: "none" }}
-            >
-              {/* Mark: thin square with corner bracket motif */}
-              <div
-                style={{
-                  width: 28,
-                  height: 28,
-                  border: "1px solid rgba(255,255,255,0.20)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                  flexShrink: 0,
-                  transition: "border-color 0.2s",
-                }}
-                className="group-hover:border-white/40"
-              >
-                {/* Corner brackets */}
-                {[
-                  { top: -1, left: -1, angle: 0 },
-                  { top: -1, right: -1, angle: 90 },
-                  { bottom: -1, right: -1, angle: 180 },
-                  { bottom: -1, left: -1, angle: 270 },
-                ].map(({ angle, ...position }, i) => (
-                  <span
-                    key={i}
-                    aria-hidden
-                    style={{
-                      position: "absolute",
-                      width: 6,
-                      height: 6,
-                      border: "1.5px solid rgba(255,255,255,0.55)",
-                      borderRight: "none",
-                      borderBottom: "none",
-                      transform: `rotate(${angle}deg)`,
-                      ...position,
-                    }}
-                  />
-                ))}
-                <span
-                  style={{
-                    fontFamily: "var(--font-heading), serif",
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.80)",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  b
-                </span>
-              </div>
-
               {/* Wordmark */}
               <span
                 style={{
@@ -603,7 +548,6 @@ export function SiteHeader({
               >
                 BLOCKLOG
               </span>
-            </Link>
 
             {/* Nav — desktop */}
             <nav className="hidden items-center gap-7 md:flex">
@@ -727,7 +671,7 @@ export function SiteHeader({
                       textAlign: "center",
                     }}
                   >
-                    INSTALL FREE →
+                    START FREE →
                   </Link>
                 </div>
               </motion.div>
@@ -853,7 +797,7 @@ export function Footer() {
                   color: "rgba(255,255,255,0.75)",
                 }}
               >
-                b
+                B
               </span>
             </div>
 
@@ -870,7 +814,7 @@ export function Footer() {
             </p>
 
             {/* Trace reference */}
-            <MonoTag>REF · BL-INFRA · SOC2:TYPE-II</MonoTag>
+            <MonoTag>REPLAY · PROVENANCE · COMPLIANCE</MonoTag>
           </div>
 
           {/* Link columns */}

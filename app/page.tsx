@@ -158,7 +158,7 @@ export default function HomePage() {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
-                    Install Shadow Mode Free
+                    Get Started For Free
                     <ArrowUpRightIcon width={16} height={16} />
                   </PrimaryButton>
                   <PlayTextButton href="/#how-it-works">See how it works</PlayTextButton>
@@ -472,7 +472,7 @@ export default function HomePage() {
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.72 }}
                   >
                     <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
-                      Install Shadow Mode Free
+                      Get Started For Free
                       <ArrowUpRightIcon width={16} height={16} />
                     </PrimaryButton>
                     <PrimaryButton href="/docs" inverted>
