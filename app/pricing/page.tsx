@@ -21,7 +21,7 @@ const tiers = [
     badge: "Start here",
     highlight: false,
     cta: "Install free",
-    ctaHref: "/signup",
+    ctaHref: "/get-started",
     ctaInverted: false,
     description:
       "Install alongside your agent. Zero production impact. No credit card. See your first forensic replay in under 20 minutes.",
@@ -44,7 +44,7 @@ const tiers = [
     badge: "Most popular",
     highlight: true,
     cta: "Start Team",
-    ctaHref: "/signup?plan=team",
+    ctaHref: "/get-started",
     ctaInverted: true,
     description:
       "For small teams shipping agents to production. Governance and audit trails without enterprise overhead.",
@@ -68,7 +68,7 @@ const tiers = [
     badge: "",
     highlight: false,
     cta: "Start Scale",
-    ctaHref: "/signup?plan=scale",
+    ctaHref: "/get-started",
     ctaInverted: false,
     description:
       "For Series A teams running multiple agents in production with real compliance requirements.",
@@ -517,7 +517,7 @@ export default function PricingPage() {
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <PrimaryButton
-                    href="/signup"
+                    href="/get-started"
                     className="inline-flex items-center gap-2"
                   >
                     Get started free
@@ -537,4 +537,3 @@ export default function PricingPage() {
     </div>
   );
 }
-

@@ -497,7 +497,7 @@ export function SiteHeader({
           </span>
         </Link>
         <Link
-          href="/signup"
+          href="/get-started"
           className="flex items-center gap-2 rounded-sm px-5 py-2 text-xs font-medium transition"
           style={{
             background: "rgba(255,255,255,0.94)",
@@ -716,7 +716,7 @@ export function SiteHeader({
                     LOG IN
                   </Link>
                   <Link
-                    href="/signup"
+                    href="/get-started"
                     style={{
                       fontFamily: "var(--font-heading), serif",
                       fontSize: 10,

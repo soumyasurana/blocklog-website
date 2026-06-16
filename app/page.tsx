@@ -157,7 +157,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <PrimaryButton href="/signup" className="inline-flex items-center gap-2">
+                  <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
                     Install Shadow Mode Free
                     <ArrowUpRightIcon width={16} height={16} />
                   </PrimaryButton>
@@ -471,7 +471,7 @@ export default function HomePage() {
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.72 }}
                   >
-                    <PrimaryButton href="/signup" className="inline-flex items-center gap-2">
+                    <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
                       Install Shadow Mode Free
                       <ArrowUpRightIcon width={16} height={16} />
                     </PrimaryButton>

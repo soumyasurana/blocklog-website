@@ -2,22 +2,17 @@
 
 import { SiteHeader, Footer, PageFrame } from "@/components/site/Primitives";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const sidebar = [
-  { label: "Quickstart", href: "/docs/quickstart" },
-  { label: "Core Concepts", href: "/docs/concepts" },
-  { label: "Python SDK", href: "/docs/python-sdk" },
-  { label: "REST API", href: "/docs/api-reference" },
-  { label: "LangChain", href: "/docs/integrations/langchain" },
-  { label: "Examples", href: "/docs/incident-reconstruction" },
-  
-];
+import { docsSidebarGroups } from "./content";
 
 export default function DocsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -45,56 +40,72 @@ export default function DocsLayout({
               zIndex: 1,
             }}
           >
-            <div style={{ marginBottom: 28 }}>
-              <p
+            {docsSidebarGroups.map((group, groupIndex) => (
+              <div
+                key={group.title}
                 style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--muted)",
-                  marginBottom: 12,
+                  marginBottom: groupIndex === docsSidebarGroups.length - 1 ? 28 : 24,
                 }}
               >
-                Documentation
-              </p>
+                <p
+                  style={{
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--muted)",
+                    marginBottom: 12,
+                  }}
+                >
+                  {group.title}
+                </p>
 
-              <nav
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 4,
-                }}
-              >
-                {sidebar.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    style={{
-                      display: "block",
-                      padding: "8px 10px",
-                      borderRadius: 8,
-                      fontSize: "0.92rem",
-                      color: "var(--muted)",
-                      textDecoration: "none",
-                      transition: "background 0.15s ease, color 0.15s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(255,255,255,0.04)";
-                      e.currentTarget.style.color =
-                        "rgba(255,255,255,0.9)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "var(--muted)";
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
+                <nav
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 4,
+                  }}
+                >
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        style={{
+                          display: "block",
+                          padding: "8px 10px",
+                          borderRadius: 8,
+                          fontSize: "0.92rem",
+                          color: isActive ? "rgba(255,255,255,0.95)" : "var(--muted)",
+                          textDecoration: "none",
+                          transition: "background 0.15s ease, color 0.15s ease",
+                          background: isActive ? "rgba(255,255,255,0.06)" : "transparent",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background =
+                            "rgba(255,255,255,0.04)";
+                          e.currentTarget.style.color =
+                            "rgba(255,255,255,0.9)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = isActive
+                            ? "rgba(255,255,255,0.06)"
+                            : "transparent";
+                          e.currentTarget.style.color = isActive
+                            ? "rgba(255,255,255,0.95)"
+                            : "var(--muted)";
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            ))}
 
             <div
               style={{
