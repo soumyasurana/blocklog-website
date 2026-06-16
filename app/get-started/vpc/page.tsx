@@ -44,7 +44,7 @@ const initialState: FormState = {
   jobTitle: "",
   companySize: "",
   cloudProvider: "AWS",
-  deploymentType: "Kubernetes",
+  deploymentType: "Docker Compose",
   dailyLogVolume: "",
   ssoRequired: "Yes",
   airGapped: "No",
@@ -246,7 +246,7 @@ export default function VpcDeploymentPage() {
                         value={form.deploymentType}
                         onChange={(event) => updateField("deploymentType", event.target.value)}
                       >
-                        {["Kubernetes", "Docker Compose", "ECS", "EKS", "AKS", "GKE"].map((option) => (
+                        {["Docker Compose"].map((option) => (
                           <option key={option} value={option}>
                             {option}
                           </option>

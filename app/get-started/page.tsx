@@ -52,7 +52,7 @@ export default function GetStartedPage() {
       <SiteHeader />
       <PageFrame>
         <main className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
-          <Reveal className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Deployment</p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
               Choose Your Deployment Option
@@ -61,11 +61,11 @@ export default function GetStartedPage() {
               Start with managed SaaS for the fastest trial, or choose a private deployment path
               built for enterprise security, compliance, and data ownership.
             </p>
-          </Reveal>
+          </div>
 
           <section className="mt-10 grid gap-6 lg:grid-cols-2">
             {options.map((option, index) => (
-              <Reveal key={option.title} delay={index * 0.08}>
+              <div key={option.title} >
                 <article
                   className="liquid-glass-strong flex h-full flex-col rounded-[2rem] border p-6 sm:p-8"
                   style={{
@@ -105,11 +105,11 @@ export default function GetStartedPage() {
                     )}
                   </div>
                 </article>
-              </Reveal>
+              </div>
             ))}
           </section>
 
-          <Reveal delay={0.18} className="mt-10">
+          <div className="mt-10">
             <section className="rounded-[2rem] border border-white/10 bg-white/[0.03] px-6 py-6 sm:px-8">
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
@@ -140,7 +140,7 @@ export default function GetStartedPage() {
                 </div>
               </div>
             </section>
-          </Reveal>
+          </div>
         </main>
         <Footer />
       </PageFrame>

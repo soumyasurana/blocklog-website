@@ -324,17 +324,14 @@ export function PageFrame({
   className?: string;
 }) {
   return (
-    <motion.main
-      className={`site-main ${className ?? ""}`}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
+    <main className={`site-main ${className ?? ""}`}>
       <ProofTicker />
       <TraceGrid />
       <LiveBackdrop />
-      {children}
-    </motion.main>
+      <div style={{ position: "relative", zIndex: 1 }}>
+        {children}
+      </div>
+    </main>
   );
 }
 
@@ -353,7 +350,7 @@ export function Reveal({
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0 }}
       custom={delay}
       variants={REVEAL}
     >
