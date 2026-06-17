@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Footer,
   PageFrame,
@@ -14,46 +13,39 @@ import { ArrowUpRightIcon } from "@/components/site/icons";
 
 const timelineSteps = [
   {
-    day: "Day 0",
-    title: "Install shadow mode",
+    step: "01",
+    title: "Connect your AI system",
     detail:
-      "npm install @blocklog/sdk. One decorator on your LangChain agent. Shadow mode activates. Nothing in your execution path changes — not a single production call is affected.",
-    code: "npm install @blocklog/sdk",
+      "Deploy Blocklog alongside your agents — hosted by us or within your own VPC. No changes to production behavior. Decision capture begins immediately.",
+    code: "blocklog deploy --vpc",
   },
   {
-    day: "Days 1–7",
-    title: "First replays appear",
+    step: "02",
+    title: "Capture real decisions",
     detail:
-      "Blocklog captures every AI financial decision: which inputs the model used, how stale they were at inference time, which tools were called, which checkpoints fired or were skipped.",
-    code: "dec_9af1c18 · risk_score: 22,018ms stale",
+      "Every decision receives a permanent record containing inputs, retrievals, tool calls, approvals, and outcomes.",
+    code: "847 decisions captured",
   },
   {
-    day: "Days 7–14",
-    title: "Patterns become visible",
+    step: "03",
+    title: "Replay critical events",
     detail:
-      "Staleness patterns emerge across your agent's runs. You start to see which input fields are chronically late, which decision types are closest to flipping, which workflows have no approval checkpoint.",
-    code: "4 decisions near threshold this week",
+      "Investigate failures, customer disputes, and unexpected outcomes using complete decision reconstruction.",
+    code: "replay(dec_9af1c18)",
   },
   {
-    day: "Days 14–21",
-    title: "Root causes identified",
+    step: "04",
+    title: "Generate evidence",
     detail:
-      "The counterfactual engine shows you what specific input change would have produced a different outcome on each flagged decision. You can explain the causal chain of any failure in 30 seconds.",
-    code: "counterfactual: freshness < 5s → human review",
+      "Produce auditor-ready evidence packages directly from production decision records.",
+    code: "evidence_package.pdf",
   },
   {
-    day: "Days 21–30",
-    title: "Compliance report generated",
+    step: "05",
+    title: "Evaluate the results",
     detail:
-      "The 30-day forensic report is produced automatically from your production data. Every decision, every input, every staleness measurement, every approval gap. Formatted for EU AI Act Article 12.",
-    code: "report.pdf · 847 decisions · attestation signed",
-  },
-  {
-    day: "Day 30",
-    title: "You decide what comes next",
-    detail:
-      "You have a complete forensic record of your AI financial system. Show it to your compliance officer. Use it to tune your agent. Or just keep it running — the history is yours either way.",
-    code: "no obligation · no sales call · yours to keep",
+      "At the end of the pilot, you'll know exactly what your AI systems decided, why they decided it, and whether you can prove it later.",
+    code: "30-day pilot complete",
   },
 ];
 
@@ -68,11 +60,11 @@ const qualifications = [
   },
   {
     label: "At least one engineer with 3–4 hours",
-    detail: "For integration and feedback. The install itself takes under 20 minutes.",
+    detail: "For integration and feedback. The deployment itself takes under 20 minutes.",
   },
   {
     label: "A compliance stakeholder who will read the report",
-    detail: "Not required for the install — but the pilot produces its most useful output when a compliance officer reviews the 30-day report.",
+    detail: "Not required for deployment — but the pilot produces its most useful output when a compliance officer reviews the 30-day report.",
   },
 ];
 
@@ -87,77 +79,36 @@ const disqualifications = [
   },
   {
     label: "Test environment only",
-    detail: "Shadow mode produces meaningful output only from production traffic. Synthetic or test data produces a synthetic report.",
+    detail: "Blocklog produces meaningful output only from production traffic. Synthetic or test data produces a synthetic report.",
   },
 ];
 
 const whatYouGet = [
   {
-    heading: "A forensic replay of every decision",
-    body: "Every AI financial decision your system made in 30 days, reconstructed with inputs, staleness measurements, tool calls, policy version, and approval chain status. Replayable in 30 seconds per decision.",
+    heading: "Every AI decision, preserved",
+    body:
+      "A permanent system of record containing the evidence behind every AI decision your organization made during the pilot.",
   },
   {
-    heading: "Counterfactual analysis on flagged decisions",
-    body: "For every decision that was close to flipping, the specific input change that would have changed the outcome. Not a dashboard. A causal explanation.",
+    heading: "Every decision, explainable",
+    body:
+      "Replay and investigate decisions using the exact context, actions, approvals, and governance controls that existed at the time.",
   },
   {
-    heading: "A compliance report your regulator can read",
-    body: "PDF export with attestation, formatted for EU AI Act Article 12. Generated from your own production data. No engineer required in the room when your compliance officer presents it.",
+    heading: "Every decision, provable",
+    body:
+      "Generate evidence packages suitable for auditors, regulators, customers, and internal investigations.",
   },
   {
-    heading: "The data to make the next decision",
-    body: "After 30 days you will know exactly how many decisions would have required human review under any threshold you choose. No estimate. Your own production numbers.",
+    heading: "A decision infrastructure strategy",
+    body:
+      "Know whether your organization can explain, verify, and govern AI decisions at production scale before broader deployment.",
   },
-];
-
-// ─── Form ─────────────────────────────────────────────────────────────────────
-
-type FormState = {
-  company: string;
-  role: string;
-  framework: string;
-  decisions: string;
-  urgency: string;
-  email: string;
-};
-
-const initialForm: FormState = {
-  company: "",
-  role: "",
-  framework: "LangChain",
-  decisions: "",
-  urgency: "",
-  email: "",
-};
-
-const urgencyOptions = [
-  "Production failure I cannot explain",
-  "EU AI Act deadline in August",
-  "Upcoming compliance audit",
-  "New agent about to deploy",
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PilotPage() {
-  const [form, setForm] = useState<FormState>(initialForm);
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Partial<FormState>>({});
-
-  function validate(): boolean {
-    const e: Partial<FormState> = {};
-    if (!form.company.trim()) e.company = "Required";
-    if (!form.role.trim()) e.role = "Required";
-    if (!form.decisions.trim()) e.decisions = "Required";
-    if (!form.email.trim() || !form.email.includes("@")) e.email = "Valid email required";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  }
-
-  function handleSubmit() {
-    if (validate()) setSubmitted(true);
-  }
-
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -169,15 +120,15 @@ export default function PilotPage() {
             <Reveal className="max-w-4xl space-y-6">
               <p className="eyebrow">// 30-Day Pilot</p>
               <h1 className="section-title">
-                Install in 20 minutes.
+                Deploy in 20 minutes.
                 <br />
                 Understand your agent in 30 days.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-white/72">
-                Shadow mode runs alongside your LangChain agent without touching production. After 30 days, you have a forensic record of every AI financial decision your system made — what it decided, which inputs it used, how stale they were, and what would have changed the outcome.
+                Blocklog runs alongside your LangChain agent without touching production behavior — deployed hosted or within your own VPC. After 30 days, you have a forensic record of every AI financial decision your system made: what it decided, which inputs it used, how stale they were, and what would have changed the outcome.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <PrimaryButton href="#apply" className="inline-flex items-center gap-2">
+                <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
                   Apply for the pilot
                   <ArrowUpRightIcon width={14} height={14} />
                 </PrimaryButton>
@@ -221,14 +172,13 @@ export default function PilotPage() {
             <div className="mt-12 grid gap-4">
               {timelineSteps.map((step, index) => (
                 <Reveal
-                  key={step.day}
+                  key={step.step}
                   delay={index * 0.06}
                   className="grid gap-4 md:grid-cols-[110px_1px_1fr]"
                 >
                   {/* Day label */}
                   <div className="pt-5 space-y-1">
                     <p className="text-xs uppercase tracking-[0.26em] text-white/30">
-                      {step.day}
                     </p>
                   </div>
 
@@ -311,7 +261,7 @@ export default function PilotPage() {
                 <div className="space-y-4">
                   <p className="eyebrow">// The deal</p>
                   <h2 className="text-3xl serif-italic text-white leading-tight">
-                    You run shadow mode for 30 days and give candid feedback.
+                    You run Blocklog for 30 days and give candid feedback.
                     We give you a complete forensic report of your own agent's decisions — free, no obligation.
                   </h2>
                 </div>
@@ -336,143 +286,26 @@ export default function PilotPage() {
           </div>
         </section>
 
-        {/* ── Application form ── */}
-        <section className="section-block" id="apply">
+        {/* ── CTA ── */}
+        <section className="section-block">
           <div className="content-wrap">
-            <Reveal className="mx-auto max-w-2xl">
-              <div className="liquid-glass-strong rounded-[2.5rem] p-6 md:p-10">
-                <p className="eyebrow">// Application</p>
-                <h2 className="mt-3 text-3xl serif-italic text-white">
-                  Apply for the 30-day pilot
-                </h2>
-                <p className="mt-3 text-sm text-white/50 leading-relaxed">
-                  We review every application personally. Reply within 48 hours.
-                  Not a form that routes to a SDR — the founder reads these.
-                </p>
-
-                {submitted ? (
-                  <div className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.02] p-8 text-center space-y-4">
-                    <div className="text-3xl serif-italic text-white">Application received.</div>
-                    <p className="text-sm leading-7 text-white/60">
-                      We'll reply within 48 hours. If you're clearly a fit, we'll send the SDK and a short onboarding doc. You can be in shadow mode the same day.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="mt-8 space-y-4">
-
-                    {/* Company + role */}
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="space-y-2">
-                        <input
-                          className={`liquid-glass w-full rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28 outline-none focus:ring-1 focus:ring-white/20 ${errors.company ? "ring-1 ring-red-400/40" : ""}`}
-                          placeholder="Company name"
-                          value={form.company}
-                          onChange={(e) => setForm({ ...form, company: e.target.value })}
-                        />
-                        {errors.company && <p className="px-4 text-xs text-red-400/70">{errors.company}</p>}
-                      </div>
-                      <div className="space-y-2">
-                        <input
-                          className={`liquid-glass w-full rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28 outline-none focus:ring-1 focus:ring-white/20 ${errors.role ? "ring-1 ring-red-400/40" : ""}`}
-                          placeholder="Your role (e.g. Staff Engineer, VP Eng)"
-                          value={form.role}
-                          onChange={(e) => setForm({ ...form, role: e.target.value })}
-                        />
-                        {errors.role && <p className="px-4 text-xs text-red-400/70">{errors.role}</p>}
-                      </div>
-                    </div>
-
-                    {/* Framework */}
-                    <div>
-                      <p className="mb-3 px-1 text-xs uppercase tracking-[0.22em] text-white/34">
-                        AI framework
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                        {["LangChain", "OpenAI Agents SDK", "CrewAI", "Temporal", "Custom / Other"].map((value) => (
-                          <button
-                            key={value}
-                            type="button"
-                            onClick={() => setForm({ ...form, framework: value })}
-                            className={`rounded-full border px-4 py-2 text-sm transition-all ${
-                              form.framework === value
-                                ? "border-white/30 text-white bg-white/8"
-                                : "border-white/10 text-white/46 hover:border-white/20 hover:text-white/60"
-                            }`}
-                          >
-                            {value}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Decisions */}
-                    <div className="space-y-2">
-                      <textarea
-                        className={`liquid-glass w-full min-h-28 rounded-[1.8rem] px-5 py-4 bg-transparent text-white placeholder:text-white/28 outline-none focus:ring-1 focus:ring-white/20 resize-none ${errors.decisions ? "ring-1 ring-red-400/40" : ""}`}
-                        placeholder="What financial decisions does your AI agent make autonomously? Be specific — refunds above $X, fraud adjudications, chargeback approvals, etc."
-                        value={form.decisions}
-                        onChange={(e) => setForm({ ...form, decisions: e.target.value })}
-                      />
-                      {errors.decisions && <p className="px-4 text-xs text-red-400/70">{errors.decisions}</p>}
-                    </div>
-
-                    {/* Urgency */}
-                    <div>
-                      <p className="mb-3 px-1 text-xs uppercase tracking-[0.22em] text-white/34">
-                        What's driving this now? (optional)
-                      </p>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {urgencyOptions.map((value) => (
-                          <button
-                            key={value}
-                            type="button"
-                            onClick={() =>
-                              setForm({
-                                ...form,
-                                urgency: form.urgency === value ? "" : value,
-                              })
-                            }
-                            className={`rounded-[1.4rem] border px-4 py-3 text-sm text-left transition-all ${
-                              form.urgency === value
-                                ? "border-white/30 text-white bg-white/8"
-                                : "border-white/10 text-white/46 hover:border-white/18 hover:text-white/60"
-                            }`}
-                          >
-                            {value}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="space-y-2">
-                      <input
-                        className={`liquid-glass w-full rounded-full px-5 py-4 bg-transparent text-white placeholder:text-white/28 outline-none focus:ring-1 focus:ring-white/20 ${errors.email ? "ring-1 ring-red-400/40" : ""}`}
-                        placeholder="Work email"
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      />
-                      {errors.email && <p className="px-4 text-xs text-red-400/70">{errors.email}</p>}
-                    </div>
-
-                    {/* Submit */}
-                    <button
-                      type="button"
-                      onClick={handleSubmit}
-                      className="w-full rounded-full bg-white px-5 py-4 text-sm font-medium text-black hover:bg-white/90 transition-colors inline-flex items-center justify-center gap-2"
-                    >
-                      Apply for the pilot
-                      <ArrowUpRightIcon width={14} height={14} />
-                    </button>
-
-                    <p className="text-center text-xs text-white/32 leading-relaxed">
-                      No sales follow-up during the 30 days. No obligation at the end.
-                      The forensic report is yours regardless of what you decide next.
-                    </p>
-                  </div>
-                )}
-              </div>
+            <Reveal className="mx-auto max-w-2xl text-center space-y-6">
+              <p className="eyebrow">// Get started</p>
+              <h2 className="text-3xl serif-italic text-white leading-tight">
+                Ready to see what your agent actually decided?
+              </h2>
+              <p className="text-sm text-white/50 leading-relaxed max-w-lg mx-auto">
+                We review every application personally and reply within 48 hours.
+                If you're a fit, you can be live the same day — hosted or in your own VPC.
+              </p>
+              <PrimaryButton href="/get-started" className="inline-flex items-center gap-2 mx-auto">
+                Apply for the pilot
+                <ArrowUpRightIcon width={14} height={14} />
+              </PrimaryButton>
+              <p className="text-xs text-white/32 leading-relaxed">
+                No sales follow-up during the 30 days. No obligation at the end.
+                The forensic report is yours regardless of what you decide next.
+              </p>
             </Reveal>
           </div>
         </section>

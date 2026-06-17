@@ -17,87 +17,150 @@ import { ArrowUpRightIcon } from "@/components/site/icons";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const stalenessRows = [
-  { field: "risk_score", value: "22,018 ms", state: "stale", highlight: true },
-  { field: "fraud_signal_count", value: "0 ms", state: "fresh", highlight: false },
-  { field: "customer_tier", value: "391 ms", state: "fresh", highlight: false },
-  { field: "prior_disputes", value: "5,220 ms", state: "warning", highlight: false },
+const decisionLayers = [
+{
+label: "Inputs",
+code: "risk_score · customer_tier · fraud_signals",
+detail:
+"The exact information available when the decision was made, including freshness and provenance.",
+},
+{
+label: "Retrievals",
+code: "policy-doc-v17.3 · kb_chunk_9af1",
+detail:
+"The documents, knowledge sources, and context the model actually used.",
+},
+{
+label: "Tool Calls",
+code: "GET /credit-api · POST /flag-review",
+detail:
+"Every external action, response, and dependency involved in the workflow.",
+},
+{
+label: "Governance",
+code: "policy-v17.3 · threshold: $2,500",
+detail:
+"The rules, controls, and requirements active at the moment of evaluation.",
+},
+{
+label: "Approvals",
+code: "checkpoint [3] skipped · [1][2][4] passed",
+detail:
+"Human reviews, overrides, escalations, and approval lineage.",
+},
+{
+label: "Decision",
+code: "DENY · confidence: 0.91 · routed: auto",
+detail:
+"The final outcome preserved with its complete evidence trail.",
+},
+];
+
+
+const audienceCards = [
+  {
+    eyebrow: "For Engineers",
+    title: "Replay any failure in 30 seconds.",
+    body: "The decision that surfaced at step 12 was caused at step 3. Blocklog shows you the causal chain across the entire workflow — not a stack trace, not a log dump. Which input was stale. Which policy was active. What would have changed the outcome.",
+    tags: ["Causal Graph", "Counterfactual Replay", "Input Freshness"],
+  },
+  {
+    eyebrow: "For Compliance",
+    title: "Prove what happened. Without asking engineering.",
+    body: "The same evidence your engineer used to debug the failure is formatted as a signed forensic report. Decision ID, agent fingerprint, policy version, approval lineage, regulatory mapping. Readable by an auditor without a technical translation layer.",
+    tags: ["Audit Trail", "Regulatory Mapping", "Signed Evidence"],
+  },
+  {
+    eyebrow: "For Executives",
+    title: "Govern AI systems you cannot currently see into.",
+    body: "Every AI decision your company has made is now searchable, explainable, and attributable. Not as a debugging tool. As infrastructure. The permanent evidence layer behind every outcome your AI systems produce.",
+    tags: ["AI Governance", "Decision Accountability", "Evidence Layer"],
+  },
 ];
 
 const replaySteps = [
+{
+label: "Inputs",
+code: "customer_profile · risk_score · transaction_history",
+detail:
+"The exact data available when the decision was made.",
+},
+{
+label: "Execution",
+code: "retrievals · tools · model calls",
+detail:
+"Every action taken by the AI system during evaluation.",
+},
+{
+label: "Governance",
+code: "policy-v17.3 · approval-required",
+detail:
+"Policies, thresholds, and human approvals that influenced the outcome.",
+},
+{
+label: "Outcome",
+code: "decision approved",
+detail:
+"The final decision, preserved with its complete evidence trail.",
+},
+];
+
+
+const whyExistingToolsFail = [
   {
-    label: "Input snapshot",
-    code: "risk_score: 22018ms stale",
-    detail: "Exact inputs at inference time, not fetch time",
+    tool: "Observability",
+    whatTheyDo:
+    "Show how systems execute. Traces, logs, metrics, latency, failures, and performance.",
+    whatTheyMiss:
+    "They were built for software systems. AI systems make decisions. Observability explains execution. It does not preserve accountability.",
   },
   {
-    label: "Policy version",
-    code: "refund-policy-v17.3",
-    detail: "Which rules were active when the agent decided",
+    tool: "AI Tracing",
+    whatTheyDo:
+    "Capture prompts, completions, tool calls, and agent workflows during development and production.",
+    whatTheyMiss:
+    "They help teams understand what happened today. They were not designed to prove what happened six months later to an auditor, regulator, or customer.",
   },
   {
-    label: "Causal delta",
-    code: "counterfactual: +$180k",
-    detail: "What one input change would have flipped the outcome",
-  },
-  {
-    label: "Approval lineage",
-    code: "checkpoint [3] skipped",
-    detail: "Every human gate — completed or skipped",
+    tool: "Logs & Data Lakes",
+    whatTheyDo:
+    "Store large volumes of operational data and make it searchable.",
+    whatTheyMiss:
+    "The evidence required to explain an AI decision is fragmented across systems. Reconstructing the decision later becomes a manual investigation.",
   },
 ];
 
-const debuggingCards = [
-  {
-    eyebrow: "Stale Input Detection",
-    title: "Know which inputs were actually in context.",
-    body: "LangSmith shows what happened. Blocklog shows which inputs the model was working with at the exact millisecond it decided — and how old each one was. A 22-second staleness difference can be the entire causal factor.",
-    tags: ["Input Freshness", "Inference Snapshot", "Staleness Delta"],
-  },
-  {
-    eyebrow: "Counterfactual Replay",
-    title: "Find the exact change that flips the decision.",
-    body: "Not just what the agent did — but what it would have done if one input had been fresher, one signal had arrived, one checkpoint had fired. Replay in 30 seconds. Not two hours.",
-    tags: ["Counterfactual", "Decision Boundary", "Root Cause"],
-  },
-  {
-    eyebrow: "Multi-Step Causation",
-    title: "Trace failures across a 15-step workflow.",
-    body: "The failure that surfaces at step 12 was caused at step 3. Standard traces show you the stack. Blocklog shows you the causal chain — which upstream decision produced which downstream failure.",
-    tags: ["Causal Graph", "Workflow Tracing", "Cross-Step Lineage"],
-  },
-];
 
 const expansionSteps = [
   {
-    step: "01",
-    who: "Engineer",
-    action: "Installs shadow mode",
-    detail: "npm install @blocklog/sdk — zero production impact, free trial, 14 days.",
+    who: "Step 01",
+    action: "Capture the decision",
+    detail:
+      "Blocklog records the complete evidence trail behind every AI decision.",
   },
   {
-    step: "02",
-    who: "Engineer",
-    action: "Replays the first failure",
-    detail: "Stale inputs, causal chain, counterfactual — all visible in 30 seconds.",
+    who: "Step 02",
+    action: "Replay what happened",
+    detail:
+      "Reconstruct the exact decision, inputs, approvals, and execution path in seconds.",
   },
   {
-    step: "03",
-    who: "Blocklog",
-    action: "Generates 30-day forensic report",
-    detail: "Every AI financial decision, inputs, staleness, approval status. Automatically.",
+    who: "Step 03",
+    action: "Understand why",
+    detail:
+      "See the causal chain, policy evaluations, and factors that influenced the outcome.",
   },
   {
-    step: "04",
-    who: "Compliance officer",
-    action: "Reads the report",
-    detail: "The same data the engineer used for debugging, formatted for a regulator.",
+    who: "Step 04",
+    action: "Prove it later",
+    detail:
+      "Generate regulator-ready evidence months after the decision occurred.",
   },
   {
-    step: "05",
-    who: "CTO",
-    action: "Signs the contract",
-    detail: "The compliance officer asks to make it formal. The engineer confirms it works.",
+    who: "Step 05",
+    action: "Govern AI at scale",
+    detail:
+      "Turn every AI decision into a permanent, auditable system of record.",
   },
 ];
 
@@ -108,6 +171,20 @@ const regulatoryPills = [
   "Colorado AI Act · June 2026",
 ];
 
+const decisionRecord = [
+"Decision ID · dec_9af1c18",
+"Agent Fingerprint · agt_f84e1a2",
+"Timestamp · 2026-06-17T14:22:11Z",
+"Inputs · 4 captured",
+"Retrievals · 3 documents",
+"Tool Calls · 2 executed",
+"Governance · refund-policy-v17.3",
+"Approvals · 3/4 completed",
+"Decision · DENY",
+"Evidence Status · Complete",
+];
+
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
@@ -116,7 +193,7 @@ export default function HomePage() {
       <SiteHeader />
       <PageFrame>
 
-        {/* ── Hero: Engineer-first ── */}
+        {/* ── Hero ── */}
         <section className="relative min-h-screen overflow-hidden">
           <HeroVideo />
           <div className="bg-grid" />
@@ -131,7 +208,7 @@ export default function HomePage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                   >
-                    // Forensic debugging for AI financial agents
+                    // The system of record for AI decisions
                   </motion.p>
                   <motion.h1
                     className="max-w-4xl --font-heading text-6xl italic leading-[0.82] tracking-[-4px] text-white md:text-7xl lg:text-[5.5rem]"
@@ -139,11 +216,11 @@ export default function HomePage() {
                     animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
                     transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    Finally understand
+                    Every AI decision
                     <br />
-                    why your AI agent
+                    your company makes
                     <br />
-                    did that.
+                    is evidence.
                   </motion.h1>
                   <motion.p
                     className="max-w-xl text-sm font-light leading-relaxed text-white/78 md:text-base"
@@ -151,23 +228,24 @@ export default function HomePage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    Replay any AI financial decision. See which inputs were stale at inference time.
-                    Understand the causal chain. Install in 5 minutes — free, zero production impact.
+                    Blocklog captures the complete evidence trail behind every AI decision —
+                    inputs, retrievals, tool calls, policies, approvals, outputs.
+                    Explainable to engineers. Auditable by compliance. Governable by executives.
                   </motion.p>
                 </div>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
-                    Get Started For Free
+                    Start Recording Decisions
                     <ArrowUpRightIcon width={16} height={16} />
                   </PrimaryButton>
-                  <PlayTextButton href="/#how-it-works">See how it works</PlayTextButton>
+                  <PlayTextButton href="/#what-blocklog-captures">See what gets captured</PlayTextButton>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   {[
-                    ["Reconstruction time", "30 sec", "vs. 2–4 hours in logs"],
-                    ["Install time", "< 20 min", "LangChain, zero config"],
+                    ["Decisions recorded", "Permanent", "Signed, immutable, replayable"],
+                    ["Time to first record", "< 20 min", "Shadow mode, zero production changes"],
                   ].map(([label, value, detail], index) => (
                     <Reveal delay={index * 0.08} key={label}>
                       <div className="liquid-glass rounded-[2rem] p-5">
@@ -180,83 +258,69 @@ export default function HomePage() {
                 </div>
 
                 <div className="liquid-glass inline-flex rounded-full px-4 py-3 text-sm text-white/68">
-                  Works alongside LangChain — no changes to your agent, no production risk.
+                  Shadow mode — parallel to your agent. No production risk. No code changes.
                 </div>
               </Reveal>
 
-              {/* Hero card: staleness table as the opening visual */}
+              {/* Hero card: decision record */}
               <div className="liquid-glass-strong rounded-[2.4rem] p-6">
-                  <div className="flex items-center justify-between">
-                    <p className="eyebrow">Input staleness at inference time</p>
-                    <span className="text-xs uppercase tracking-[0.24em] text-white/38">dec_9af1c18</span>
-                  </div>
-                  <p className="mt-3 text-sm text-white/54 leading-relaxed">
-                    These are the inputs your model was actually using when it decided.
-                    Not when they were fetched — when they were in context.
-                  </p>
-
-                  <div className="mt-6 space-y-3">
-                    {stalenessRows.map((row) => (
-                      <div
-                        key={row.field}
-                        className={`flex items-center justify-between rounded-full border px-4 py-3 text-sm ${
-                          row.highlight
-                            ? "border-white/24 bg-white/[0.06]"
-                            : "border-white/8 bg-transparent"
-                        }`}
-                      >
-                        <span className={`mono ${row.highlight ? "text-white" : "text-white/78"}`}>
-                          {row.field}
-                        </span>
-                        <span className="mono text-white/54">{row.value}</span>
-                        <span
-                          className={`text-xs uppercase tracking-[0.18em] ${
-                            row.state === "stale"
-                              ? "text-white/90"
-                              : row.state === "warning"
-                              ? "text-white/58"
-                              : "text-white/34"
-                          }`}
-                        >
-                          {row.state}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-black/30 px-5 py-4 text-sm text-white/68 leading-relaxed">
-                    <span className="mono text-white/42">counterfactual → </span>
-                    Decision would have routed to human review if{" "}
-                    <span className="mono text-white">risk_score</span> freshness were below 5s.
-                  </div>
-
-                  <div className="mt-4 rounded-[1.2rem] border border-white/8 px-4 py-3 text-xs uppercase tracking-[0.18em] text-white/38">
-                    Blocklog · shadow mode · zero production impact
-                  </div>
+                <div className="flex items-center justify-between">
+                  <p className="eyebrow">Decision record</p>
+                  <span className="text-xs uppercase tracking-[0.24em] text-white/38">dec_9af1c18</span>
                 </div>
+                <p className="mt-3 text-sm text-white/54 leading-relaxed">
+                  Every field that existed when this decision was made.
+                  Signed. Permanent. Replayable on demand.
+                </p>
+
+                <div className="mt-6 space-y-2">
+                  {decisionRecord.map((row, i) => (
+                    <div
+                      key={row}
+                      className={`flex items-center rounded-full border px-4 py-3 text-sm ${
+                        i === 7
+                          ? "border-white/24 bg-white/[0.06]"
+                          : "border-white/8 bg-transparent"
+                      }`}
+                    >
+                      <span className={`mono text-xs ${i === 7 ? "text-white" : "text-white/68"}`}>
+                        {row}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 rounded-[1.4rem] border border-white/10 bg-black/30 px-5 py-4 text-xs uppercase tracking-[0.18em] text-white/40">
+                  Signed hash 7a8e1b · chain position 2281184 · PDF export with attestation
+                </div>
+              </div>
 
             </div>
           </div>
         </section>
 
-        {/* ── The debugging problem ── */}
+        {/* ── The Problem ── */}
         <section className="section-block" id="how-it-works">
           <div className="content-wrap">
             <Reveal className="max-w-3xl space-y-4">
-              <p className="eyebrow">// The Problem</p>
+              <p className="eyebrow">// The Accountability Gap</p>
               <h2 className="section-title">
-                You can see what your agent did. You cannot see why.
+                Traditional software creates records.
+                AI systems create decisions.
+                Most companies have no record of those decisions.
               </h2>
               <p className="section-copy">
-                LangSmith shows you the trace. It does not show you which inputs the model was
-                actually using at inference time, how stale they were, or what would have changed the
-                outcome. When something breaks in production, you spend hours reconstructing a
-                30-second execution from fragmented logs. That cost is real and it is happening today.
+                Every database write is logged. Every API call has a trace. Every code change has a
+                commit. Software infrastructure has spent thirty years building accountability into
+                every layer of the stack. Then AI arrived — and the most consequential outputs
+                your systems now produce have no permanent evidence layer behind them.
+                A customer complains. A regulator asks. An auditor requests documentation.
+                Nobody can prove what happened.
               </p>
             </Reveal>
 
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
-              {debuggingCards.map((card, index) => (
+              {audienceCards.map((card, index) => (
                 <Reveal delay={index * 0.08} key={card.eyebrow}>
                   <article className="liquid-glass-strong flex h-full flex-col rounded-[2rem] p-6">
                     <p className="eyebrow">{card.eyebrow}</p>
@@ -279,33 +343,33 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Replay engine walkthrough ── */}
-        <section className="section-block relative overflow-hidden">
+        {/* ── What Blocklog Captures ── */}
+        <section className="section-block relative overflow-hidden" id="what-blocklog-captures">
           <div className="video-shell">
             <HeroVideo src={SYSTEM_VIDEO} objectClassName="opacity-90" />
           </div>
           <div className="content-wrap relative">
             <Reveal className="max-w-3xl">
-              <p className="eyebrow">// Forensic Replay</p>
+              <p className="eyebrow">// What Gets Captured</p>
               <h2 className="section-title">
-                Every decision. Reconstructed. In 30 seconds.
+                Every layer of a decision.
+                Preserved as evidence.
               </h2>
               <p className="section-copy">
-                Blocklog runs in shadow mode — parallel to your agent, touching nothing in production.
-                It captures the complete causal record of every decision so you never have to
-                reconstruct one manually again.
+                Blocklog runs in shadow mode — parallel to your agent, touching nothing in
+                production. It captures every layer of every decision: not just what the agent
+                output, but what it was working with, which policies were active, which humans
+                approved, and what would have changed the outcome.
               </p>
             </Reveal>
 
             <div className="mt-14 grid gap-5 lg:grid-cols-2">
-              {replaySteps.map((item, index) => (
+              {decisionLayers.map((item, index) => (
                 <Reveal delay={index * 0.07} key={item.label}>
                   <div className="liquid-glass rounded-[2rem] p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1">
-                        <p className="text-xs uppercase tracking-[0.24em] text-white/38">{item.label}</p>
-                        <p className="text-sm text-white/68 leading-relaxed mt-2">{item.detail}</p>
-                      </div>
+                    <div className="space-y-1">
+                      <p className="text-xs uppercase tracking-[0.24em] text-white/38">{item.label}</p>
+                      <p className="text-sm text-white/68 leading-relaxed mt-2">{item.detail}</p>
                     </div>
                     <div className="mt-5 rounded-[1.4rem] border border-white/10 bg-black/30 px-4 py-3">
                       <span className="mono text-sm text-white/86">{item.code}</span>
@@ -317,26 +381,61 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Compliance bridge — surfaced naturally, not led with ── */}
+        {/* ── Replay ── */}
+        <section className="section-block">
+          <div className="content-wrap">
+            <Reveal className="max-w-3xl space-y-4">
+              <p className="eyebrow">// Forensic Replay</p>
+              <h2 className="section-title">
+                Any decision. Reconstructed completely. In 30 seconds.
+              </h2>
+              <p className="section-copy">
+                The failure that surfaced at step 12 was caused at step 3. A 22-second input
+                staleness difference was the entire causal factor. Blocklog shows you the complete
+                causal chain — not a stack trace, not a log grep. The exact reconstruction of what
+                the model was working with when it decided.
+              </p>
+            </Reveal>
+
+            <div className="mt-14 grid gap-5 lg:grid-cols-2">
+              {replaySteps.map((item, index) => (
+                <Reveal delay={index * 0.07} key={item.label}>
+                  <div className="liquid-glass rounded-[2rem] p-6">
+                    <div className="space-y-1">
+                      <p className="text-xs uppercase tracking-[0.24em] text-white/38">{item.label}</p>
+                      <p className="text-sm text-white/68 leading-relaxed mt-2">{item.detail}</p>
+                    </div>
+                    <div className="mt-5 rounded-[1.4rem] border border-white/10 bg-black/30 px-4 py-3">
+                      <span className="mono text-sm text-white/86">{item.code}</span>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Prove what happened ── */}
         <section className="section-block">
           <div className="content-wrap">
             <Reveal className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
               <div className="space-y-6">
-                <p className="eyebrow">// What Engineers Discover</p>
+                <p className="eyebrow">// Prove What Happened</p>
                 <h2 className="section-title">
-                  The same data your engineer debugs with is the evidence your regulator needs.
+                  The same evidence your engineer debugs with is what your regulator needs.
                 </h2>
                 <p className="section-copy">
-                  After 30 days of shadow mode, Blocklog generates a forensic report from your
-                  production data. The engineer uses it to understand decisions. The compliance
-                  officer uses the same report to satisfy their auditor. No second tool. No
-                  second integration. No second data collection.
+                  Blocklog does not generate compliance reports separately from debugging data.
+                  They are the same record. The engineer uses it to understand the failure.
+                  The compliance officer uses it to respond to the auditor. The executive uses it
+                  to demonstrate governance. One system of record. Three audiences. No duplication.
                 </p>
                 <div className="liquid-glass rounded-[2rem] p-5 text-sm leading-7 text-white/68">
-                  EU AI Act enforcement begins August 2, 2026 — approximately 54 days from now.
-                  Article 12 requires tamper-resistant logs of every AI financial decision.
-                  Your production data already contains what auditors will ask for.
-                  Blocklog makes it readable.
+                  EU AI Act enforcement begins August 2, 2026. Article 12 requires tamper-resistant
+                  logs of every high-risk AI decision. SR 11-7 requires model governance documentation
+                  for every AI system touching credit or risk. DORA requires operational resilience
+                  evidence for EU financial entities. Your AI systems are already producing the
+                  decisions regulators will ask about. Blocklog makes that evidence permanent.
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {regulatoryPills.map((pill) => (
@@ -350,33 +449,25 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Compliance report preview */}
               <Reveal delay={0.1}>
                 <div className="liquid-glass-strong rounded-[2.4rem] p-6">
                   <div className="flex items-center justify-between">
-                    <p className="eyebrow">Forensic compliance report</p>
-                    <span className="text-xs uppercase tracking-[0.22em] text-white/36">30-day output</span>
+                    <p className="eyebrow">Forensic decision report</p>
+                    <span className="text-xs uppercase tracking-[0.22em] text-white/36">auto-generated</span>
                   </div>
                   <div className="mt-6 space-y-3 text-sm text-white/72">
-                    {[
-                      "Decision ID · dec_9af1c18",
-                      "Agent fingerprint · agt_f84e1a2",
-                      "Policy version · refund-policy-v17.3",
-                      "Input staleness · 4 fields analyzed · 1 stale",
-                      "Approval lineage · 3/4 checkpoints completed",
-                      "Counterfactual · stale risk_score flipped review path",
-                      "Regulatory mapping · EU AI Act Art. 12 ✓ · SR 11-7 ✓ · CFPB ✓",
-                    ].map((item) => (
+                    {decisionRecord.map((item) => (
                       <div className="rounded-full border border-white/8 px-4 py-3" key={item}>
                         {item}
                       </div>
                     ))}
                   </div>
                   <div className="mt-5 rounded-[1.4rem] border border-white/10 px-4 py-3 text-xs uppercase tracking-[0.18em] text-white/40">
-                    Signed hash 7a8e1b... · chain position 2281184 · PDF export with attestation
+                    Signed hash 7a8e1b · chain position 2281184 · PDF export with attestation
                   </div>
                   <p className="mt-4 text-xs text-white/40 leading-relaxed">
-                    Generated automatically. No engineer in the room. Readable by compliance without a technical translation layer.
+                    Generated automatically from production data. No engineer in the room.
+                    Readable by compliance without a technical translation layer.
                   </p>
                 </div>
               </Reveal>
@@ -384,21 +475,60 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── How the motion works ── */}
+        {/* ── Why existing tools fail ── */}
+        <section className="section-block">
+          <div className="content-wrap">
+            <Reveal className="max-w-3xl space-y-4">
+              <p className="eyebrow">// Why Existing Tools Fall Short</p>
+              <h2 className="section-title">
+                Observability tools show execution.
+                Blocklog preserves accountability.
+              </h2>
+              <p className="section-copy">
+                Traces and logs were designed for debugging distributed systems — not for proving
+                what an AI system was working with when it made a consequential decision. They are
+                different problems. Blocklog is not a better trace. It is a different category.
+              </p>
+            </Reveal>
+
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+              {whyExistingToolsFail.map((item, index) => (
+                <Reveal delay={index * 0.08} key={item.tool}>
+                  <div className="liquid-glass-strong flex h-full flex-col rounded-[2rem] p-6">
+                    <p className="eyebrow">{item.tool}</p>
+                    <div className="mt-5 space-y-4 flex-1">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.18em] text-white/36 mb-2">What they do</p>
+                        <p className="text-sm leading-7 text-white/68">{item.whatTheyDo}</p>
+                      </div>
+                      <div className="border-t border-white/8 pt-4">
+                        <p className="text-xs uppercase tracking-[0.18em] text-white/36 mb-2">What they miss</p>
+                        <p className="text-sm leading-7 text-white/68">{item.whatTheyMiss}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── How it expands ── */}
         <section className="section-block">
           <div className="video-shell">
             <HeroVideo src={ADOPTION_VIDEO} objectClassName="opacity-90" />
           </div>
           <div className="content-wrap">
             <Reveal className="max-w-3xl">
-              <p className="eyebrow">// How It Expands</p>
+              <p className="eyebrow">// How Adoption Works</p>
               <h2 className="section-title">
-                Engineer installs. Compliance officer reads. CTO pays.
+                Engineer installs. Compliance reads. Executive governs.
               </h2>
               <p className="section-copy">
-                No procurement approval required to install. No sales call required to upgrade to
-                the first paid tier. The path from shadow mode to Enterprise contract runs through
-                the value of the product, not a sales process.
+                No procurement approval required to start. No sales call required to see value.
+                The path from shadow mode to enterprise contract runs through the product itself —
+                because the same data that makes engineers faster makes compliance teams defensible
+                and executives accountable.
               </p>
             </Reveal>
 
@@ -407,10 +537,12 @@ export default function HomePage() {
                 <Reveal
                   className="grid gap-4 md:grid-cols-[100px_1px_1fr]"
                   delay={index * 0.07}
-                  key={item.step}
+                  key={item.action}
                 >
                   <div className="space-y-1 pt-1">
-                    <p className="text-xs uppercase tracking-[0.26em] text-white/28">{item.step}</p>
+                    <p className="text-xs uppercase tracking-[0.26em] text-white/28">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
                     <p className="text-xs uppercase tracking-[0.18em] text-white/50">{item.who}</p>
                   </div>
                   <div className="trace-line hidden min-h-20 md:block" />
@@ -425,65 +557,75 @@ export default function HomePage() {
         </section>
 
         {/* ── CTA ── */}
-          <section className="section-block min-h-[80vh] relative overflow-hidden">
-            {(() => {
-              const ref = useRef(null);
-              const inView = useInView(ref, { once: true, margin: "-100px" });
+        <section className="section-block min-h-[80vh] relative overflow-hidden">
+          {(() => {
+            const ref = useRef(null);
+            const inView = useInView(ref, { once: true, margin: "-100px" });
 
-              return (
-                <div ref={ref} className="content-wrap relative z-10 flex min-h-[60vh] flex-col items-center justify-center text-center">
+            return (
+              <div ref={ref} className="content-wrap relative z-10 flex min-h-[60vh] flex-col items-center justify-center text-center">
 
-                  {/* Scanline */}
-                  <motion.div
-                    className="pointer-events-none absolute inset-0 z-0"
-                    style={{
-                      background: "linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.06) 50%, transparent 52%)",
-                    }}
-                    initial={{ x: "-100%" }}
-                    animate={inView ? { x: "100%" } : { x: "-100%" }}
-                    transition={{ duration: 1.8, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-                  />
+                {/* Scanline */}
+                <motion.div
+                  className="pointer-events-none absolute inset-0 z-0"
+                  style={{
+                    background: "linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.06) 50%, transparent 52%)",
+                  }}
+                  initial={{ x: "-100%" }}
+                  animate={inView ? { x: "100%" } : { x: "-100%" }}
+                  transition={{ duration: 1.8, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
+                />
 
-                  <motion.h2
-                    className="section-title max-w-4xl"
-                    initial={{ opacity: 0, filter: "blur(8px)", y: 18 }}
-                    animate={inView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-                  >
-                    Your agent made a decision you cannot explain.
-                    <br />
-                    Install Blocklog and replay it in.
-                  </motion.h2>
+                <motion.h2
+                  className="section-title max-w-4xl"
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 18 }}
+                  animate={inView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                >
+                  Your AI systems are making decisions.
+                  <br />
+                  Start recording them.
+                </motion.h2>
 
-                  <motion.p
-                    className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/68"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
-                  >
-                    Free shadow mode. No production impact. No procurement approval.
-                    First forensic replay in under 20 minutes.
-                  </motion.p>
+                <motion.p
+                  className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/68"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
+                >
+                  Shadow mode. Zero production impact. No procurement approval.
+                  Every decision becomes explainable, replayable, and auditable
+                  from the moment you install.
+                </motion.p>
 
-                  <motion.div
-                    className="mt-10 flex flex-col gap-4 sm:flex-row"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.72 }}
-                  >
-                    <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
-                      Get Started For Free
-                      <ArrowUpRightIcon width={16} height={16} />
-                    </PrimaryButton>
-                    <PrimaryButton href="/docs" inverted>
-                      Read the Docs
-                    </PrimaryButton>
-                  </motion.div>
+                <motion.div
+                  className="mt-10 flex flex-col gap-4 sm:flex-row"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.72 }}
+                >
+                  <PrimaryButton href="/get-started" className="inline-flex items-center gap-2">
+                    Start Recording Decisions
+                    <ArrowUpRightIcon width={16} height={16} />
+                  </PrimaryButton>
+                  <PrimaryButton href="/docs" inverted>
+                    Read the Architecture
+                  </PrimaryButton>
+                </motion.div>
 
-                </div>
-              );
-            })()}
-          </section>
+                <motion.p
+                  className="mt-8 text-xs uppercase tracking-[0.22em] text-white/30"
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 1.0 }}
+                >
+                  The system of record for AI decisions.
+                </motion.p>
+
+              </div>
+            );
+          })()}
+        </section>
 
         <Footer />
       </PageFrame>

@@ -46,7 +46,6 @@ export const ADOPTION_VIDEO =
 const navLinks = [
   { href: "/",         label: "Platform" },
   { href: "/pilot",    label: "Pilot"    },
-  { href: "/pricing",  label: "Pricing"  },
   { href: "/docs",     label: "Docs"     },
   { href: "/status",   label: "Status"   },
 ];
@@ -78,7 +77,6 @@ const footerColumns = [
     links: [
       ["About",        "/"],
       ["Pilot Program","/pilot"],
-      ["Pricing",      "/pricing"],
       ["Contact",      "/contact"],
     ],
   },
@@ -88,7 +86,6 @@ const footerColumns = [
       ["Privacy Policy",    "/privacy_policy"],
       ["Terms of Service",  "/terms_of_service"],
       ["Security",          "/docs"],
-      ["SOC2",              "/"],
     ],
   },
 ];
