@@ -10,6 +10,7 @@ const sidebar = [
   { label: "REST API", href: "/docs/api-reference" },
   { label: "Examples", href: "/docs/incident-reconstruction" },
   { label: "VPC Deployment", href:"/docs/vpc-deployment"},
+  { label: "Opentelemetry", href:"docs/otel"},
 ];
 
 export default function DocsLayout({
