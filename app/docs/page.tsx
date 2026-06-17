@@ -1,7 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { docsIndexGroups } from "./content";
+
+const docGroups = [
+  {
+    title: "Getting Started",
+    items: [
+      { eyebrow: "Quickstart", title: "5 Minutes to First Log", description: "Install the SDK, configure credentials, and send your first cryptographically anchored audit log.", href: "/docs/quickstart" },
+      { eyebrow: "Core Concepts", title: "Decisions, Cryptography & Accountability", description: "Understand the cryptographic foundations of tamper-evident logging and why Blocklog exists.", href: "/docs/concepts" },
+    ],
+  },
+  {
+    title: "References",
+    items: [
+      { eyebrow: "Python SDK", title: "Python SDK Reference", description: "Method signatures, parameter schemas, return types, and runnable examples for the Python client.", href: "/docs/python-sdk" },
+      { eyebrow: "REST API", title: "REST API Reference", description: "Ingest logs, verify integrity, manage incidents, and trigger human review via HTTPS.", href: "/docs/api-reference" },
+    ],
+  },
+  {
+    title: "Examples",
+    items: [
+      { eyebrow: "End-to-End Example", title: "AI Agent Incident Reconstruction", description: "Walkthrough of a multi-agent workflow where a risk limit violation triggers forensic replay.", href: "/docs/incident-reconstruction" },
+    ],
+  },
+];
 
 export default function DocsIndexPage() {
   return (
@@ -13,11 +35,11 @@ export default function DocsIndexPage() {
             Blocklog Docs
           </h1>
           <p style={{ fontSize: "1rem", color: "var(--muted)", lineHeight: 1.75, maxWidth: 680, margin: 0 }}>
-            Production documentation for the Blocklog backend, SDKs, API surface, ownership model, incident workflows, and troubleshooting paths.
+            Tamper-evident audit logging and AI forensic infrastructure. Start with the quickstart, then move into concepts, SDK usage, and API workflows.
           </p>
         </section>
 
-        <Link href="/docs/getting-started/introduction" style={{ textDecoration: "none", display: "block" }}>
+        <Link href="/docs/quickstart" style={{ textDecoration: "none", display: "block" }}>
           <section style={{ border: "1px solid rgba(var(--accent-rgb), 0.22)", background: "rgba(var(--accent-rgb), 0.06)", borderRadius: 14, padding: "22px 24px", marginBottom: 36 }}>
             <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
               Start Here
@@ -25,10 +47,10 @@ export default function DocsIndexPage() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
               <div>
                 <h2 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "0 0 6px", color: "var(--foreground)" }}>
-                  Introduction — Platform Orientation
+                  Quickstart — 5 Minutes to First Log
                 </h2>
                 <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.93rem", lineHeight: 1.7 }}>
-                  Learn how the backend, SDKs, teams, incidents, notifications, and governance pieces fit together.
+                  Set up credentials, install the SDK, and anchor your first audit event.
                 </p>
               </div>
               <span style={{ color: "var(--accent)", fontSize: "1.15rem" }}>→</span>
@@ -37,7 +59,7 @@ export default function DocsIndexPage() {
         </Link>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
-          {docsIndexGroups.map((group) => (
+          {docGroups.map((group) => (
             <section key={group.title}>
               <h2 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "0 0 14px", letterSpacing: "-0.01em" }}>
                 {group.title}

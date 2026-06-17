@@ -2,17 +2,21 @@
 
 import { SiteHeader, Footer, PageFrame } from "@/components/site/Primitives";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-import { docsSidebarGroups } from "./content";
+const sidebar = [
+  { label: "Quickstart", href: "/docs/quickstart" },
+  { label: "Core Concepts", href: "/docs/concepts" },
+  { label: "Python SDK", href: "/docs/python-sdk" },
+  { label: "REST API", href: "/docs/api-reference" },
+  { label: "Examples", href: "/docs/incident-reconstruction" },
+  { label: "VPC Deployment", href:"/docs/vpc-deployment"},
+];
 
 export default function DocsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -40,72 +44,56 @@ export default function DocsLayout({
               zIndex: 1,
             }}
           >
-            {docsSidebarGroups.map((group, groupIndex) => (
-              <div
-                key={group.title}
+            <div style={{ marginBottom: 28 }}>
+              <p
                 style={{
-                  marginBottom: groupIndex === docsSidebarGroups.length - 1 ? 28 : 24,
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "var(--muted)",
+                  marginBottom: 12,
                 }}
               >
-                <p
-                  style={{
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "var(--muted)",
-                    marginBottom: 12,
-                  }}
-                >
-                  {group.title}
-                </p>
+                Documentation
+              </p>
 
-                <nav
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 4,
-                  }}
-                >
-                  {group.items.map((item) => {
-                    const isActive = pathname === item.href;
-
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        style={{
-                          display: "block",
-                          padding: "8px 10px",
-                          borderRadius: 8,
-                          fontSize: "0.92rem",
-                          color: isActive ? "rgba(255,255,255,0.95)" : "var(--muted)",
-                          textDecoration: "none",
-                          transition: "background 0.15s ease, color 0.15s ease",
-                          background: isActive ? "rgba(255,255,255,0.06)" : "transparent",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background =
-                            "rgba(255,255,255,0.04)";
-                          e.currentTarget.style.color =
-                            "rgba(255,255,255,0.9)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = isActive
-                            ? "rgba(255,255,255,0.06)"
-                            : "transparent";
-                          e.currentTarget.style.color = isActive
-                            ? "rgba(255,255,255,0.95)"
-                            : "var(--muted)";
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-              </div>
-            ))}
+              <nav
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
+                }}
+              >
+                {sidebar.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    style={{
+                      display: "block",
+                      padding: "8px 10px",
+                      borderRadius: 8,
+                      fontSize: "0.92rem",
+                      color: "var(--muted)",
+                      textDecoration: "none",
+                      transition: "background 0.15s ease, color 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background =
+                        "rgba(255,255,255,0.04)";
+                      e.currentTarget.style.color =
+                        "rgba(255,255,255,0.9)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "var(--muted)";
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
             <div
               style={{
@@ -136,7 +124,12 @@ export default function DocsLayout({
                 {[
                   {
                     label: "PyPI ↗",
-                    href: "https://pypi.org/project/blocklog-python",
+                    href: "https://pypi.org/project/blocklog",
+                    external: true,
+                  },
+                  {
+                    label: "npm ↗",
+                    href: "https://www.npmjs.com/package/@blocklog/sdk",
                     external: true,
                   },
                   {
@@ -146,7 +139,7 @@ export default function DocsLayout({
                   },
                   {
                     label: "Support ↗",
-                    href: "mailto:founder@blocklogsecurity.com",
+                    href: "/contact",
                     external: false,
                   },
                 ].map((item) => (
