@@ -12,6 +12,7 @@ import {
   MenuIcon,
   PlayIcon,
 } from "@/components/site/icons";
+import { buildDashboardUrl } from "@/lib/platform";
 
 // ─── Motion Presets ────────────────────────────────────────────────────────
 const EASE_INST = [0.16, 1, 0.3, 1] as const; 
@@ -477,7 +478,7 @@ export function SiteHeader({
     return (
       <div className="hidden items-center gap-3 md:flex">
         <Link
-          href="/login"
+          href={buildDashboardUrl("/auth/login")}
           style={glassStyle(scrolled)}
           className="rounded-sm px-4 py-2 text-xs text-white/60 transition hover:text-white/90"
         >

@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://blocklog.ai",
+    url: "https://blocklogsecurity.com",
     siteName: "Blocklog",
     title: "Replay Every AI Decision. Understand Every Failure.",
     description:
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://blocklog.ai",
+    canonical: "https://blocklogsecurity.com",
   },
 };
 
