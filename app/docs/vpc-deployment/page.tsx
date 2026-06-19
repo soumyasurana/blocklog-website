@@ -24,10 +24,7 @@ REDIS_URL=redis://redis_host:6379/0
 
 # CORS — add your dashboard domain here
 CORS_ORIGINS=http://localhost:3000,https://your-dashboard-domain.com
-
-# Blockchain Anchoring (optional — leave blank to disable)
-ANCHORING_ENABLED=false
-RPC_URL=`;
+`;
 
 const startBackendCmd = `# Run database migrations
 make migrate
@@ -65,10 +62,6 @@ docker-compose up -d`;
 const awsSecretCmd = `aws secretsmanager create-secret \\
   --name blocklog/jwt-secret \\
   --secret-string "your_jwt_secret"`;
-
-const anchoringEnvConfig = `ANCHORING_ENABLED=true
-RPC_URL=https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY
-# Store your wallet private key in a secrets manager — never in .env`;
 
 const corsConfig = `CORS_ORIGINS=http://localhost:3000,https://your-dashboard-domain.com`;
 
@@ -305,12 +298,6 @@ export default function SelfHostingDocsPage() {
               </div>
             ))}
           </div>
-          <InfoBox label="Blockchain anchoring (optional)">
-            If you enable anchoring, you will additionally need an EVM-compatible
-            RPC URL (e.g., Infura or Alchemy) and a funded Ethereum wallet for gas
-            fees. Anchoring is off by default — your audit trails are cryptographically
-            verifiable via hash chaining regardless.
-          </InfoBox>
         </section>
 
         {/* ── Architecture ── */}
@@ -359,7 +346,7 @@ export default function SelfHostingDocsPage() {
           <StepCard
             step="Step 2"
             title="Configure the backend environment"
-            description="Edit .env and fill in the required values. The license key, JWT secret, database URL, and Redis URL are mandatory. Blockchain anchoring fields are optional."
+            description="Edit .env and fill in the required values. The license key, JWT secret, database URL, and Redis URL are mandatory."
           >
             <CodeBlock code={backendEnvConfig} />
             <div className="mt-4">
@@ -386,7 +373,7 @@ export default function SelfHostingDocsPage() {
                 },
                 {
                   svc: "beat",
-                  desc: "Celery scheduler for periodic batch sealing and anchoring",
+                  desc: "Celery scheduler for periodic batch sealing",
                 },
                 {
                   svc: "nginx",
