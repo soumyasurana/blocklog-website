@@ -36,13 +36,9 @@ const REVEAL = {
 };
 
 // ─── Video Sources ─────────────────────────────────────────────────────────
-export const HERO_VIDEO =
-  "https://www.pexels.com/download/video/29874954/";
-export const SYSTEM_VIDEO =
-  "https://www.pexels.com/download/video/3141207/";
-export const ADOPTION_VIDEO =
-  "https://www.pexels.com/download/video/2792370/"
-
+export const HERO_VIDEO = "/videos/hero.mp4";
+export const SYSTEM_VIDEO = "/videos/systems.mp4";
+export const ADOPTION_VIDEO = "/videos/adoption.mp4";
 // ─── Nav ───────────────────────────────────────────────────────────────────
 const navLinks = [
   { href: "/",         label: "Platform" },
