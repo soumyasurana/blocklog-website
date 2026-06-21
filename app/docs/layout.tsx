@@ -7,6 +7,7 @@ const sidebar = [
   { label: "Quickstart", href: "/docs/quickstart" },
   { label: "Core Concepts", href: "/docs/concepts" },
   { label: "Python SDK", href: "/docs/python-sdk" },
+  { label: "Typescript SDK", href: "/docs/ts-sdk" },
   { label: "REST API", href: "/docs/api-reference" },
   { label: "Examples", href: "/docs/incident-reconstruction" },
   { label: "VPC Deployment", href:"/docs/vpc-deployment"},
