@@ -32,26 +32,16 @@ export default function FadingVideo({
     const video = videoRef.current;
 
     if (!video) return;
-
-    // -----------------------------------
     // Reset state on src change
-    // -----------------------------------
-
     startedRef.current = false;
     previousTimeRef.current = 0;
     isFadedOutRef.current = false;
 
-    // -----------------------------------
     // Safari autoplay hardening
-    // -----------------------------------
-
     video.defaultMuted = true;
     video.muted = muted;
 
-    // -----------------------------------
     // Styling
-    // -----------------------------------
-
     video.style.opacity = "0";
 
     video.style.transition =
@@ -63,10 +53,7 @@ export default function FadingVideo({
 
     video.style.transform = "translateZ(0)";
 
-    // -----------------------------------
     // Helpers
-    // -----------------------------------
-
     const cancelMonitor = () => {
       if (monitorRafRef.current !== null) {
         cancelAnimationFrame(
@@ -93,10 +80,7 @@ export default function FadingVideo({
       video.style.opacity = "0";
     };
 
-    // -----------------------------------
     // Loop monitor
-    // -----------------------------------
-
     const monitorLoop = () => {
       if (!video.duration || video.paused) {
         monitorRafRef.current =
@@ -134,10 +118,7 @@ export default function FadingVideo({
         requestAnimationFrame(monitorLoop);
     };
 
-    // -----------------------------------
     // Playback
-    // -----------------------------------
-
     const startPlayback = async () => {
       try {
         await video.play();
@@ -154,10 +135,7 @@ export default function FadingVideo({
       }
     };
 
-    // -----------------------------------
     // Events
-    // -----------------------------------
-
     const handleLoadedData = () => {
       if (startedRef.current) return;
 
@@ -174,10 +152,7 @@ export default function FadingVideo({
       }
     };
 
-    // -----------------------------------
     // Listeners
-    // -----------------------------------
-
     video.addEventListener(
       "loadeddata",
       handleLoadedData
@@ -188,18 +163,12 @@ export default function FadingVideo({
       handleVisibilityChange
     );
 
-    // -----------------------------------
     // Immediate start fallback
-    // -----------------------------------
-
     if (video.readyState >= 2) {
       handleLoadedData();
     }
 
-    // -----------------------------------
     // Cleanup
-    // -----------------------------------
-
     return () => {
       cancelMonitor();
 

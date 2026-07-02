@@ -147,7 +147,7 @@ function ProofTicker() {
   );
 }
 
-// ─── Live Backdrop ─────────────────────────────────────────────────────────
+// Live Backdrop
 export function LiveBackdrop({ minimal = false }: { minimal?: boolean }) {
   const traces = minimal
     ? [
@@ -309,7 +309,7 @@ export function LiveBackdrop({ minimal = false }: { minimal?: boolean }) {
   );
 }
 
-// ─── Page Frame ────────────────────────────────────────────────────────────
+// Page Frame
 export function PageFrame({
   children,
   className,
@@ -329,7 +329,7 @@ export function PageFrame({
   );
 }
 
-// ─── Reveal ────────────────────────────────────────────────────────────────
+// Reveal
 export function Reveal({
   children,
   delay = 0,
@@ -353,8 +353,7 @@ export function Reveal({
   );
 }
 
-// ─── Mono label ────────────────────────────────────────────────────────────
-// Reusable uppercase monospace tag for trace IDs, status labels, timestamps.
+// Mono label
 export function MonoTag({
   children,
   accent = false,
@@ -373,7 +372,7 @@ export function MonoTag({
         letterSpacing: "0.18em",
         textTransform: "uppercase",
         color: accent
-          ? "rgba(196,166,118,0.9)"   // bronze accent
+          ? "rgba(196,166,118,0.9)"   
           : "rgba(255,255,255,0.32)",
         padding: "2px 6px",
         border: accent
@@ -387,7 +386,7 @@ export function MonoTag({
   );
 }
 
-// ─── Verification Badge ────────────────────────────────────────────────────
+// Verification Badge
 export function VerificationBadge({ label = "VERIFIED" }: { label?: string }) {
   return (
     <span
@@ -418,7 +417,7 @@ export function VerificationBadge({ label = "VERIFIED" }: { label?: string }) {
   );
 }
 
-// ─── Site Header ───────────────────────────────────────────────────────────
+// Site Header
 export function SiteHeader({
   consoleMode = false,
   workspaceName = "Meridian Risk Ops",
@@ -677,9 +676,9 @@ export function SiteHeader({
   );
 }
 
-// ─── Footer ────────────────────────────────────────────────────────────────
+// Footer 
 export function Footer() {
-  // Authorization lineage indicator — purely decorative status strip
+  // Authorization lineage indicator 
   const STATUS_NODES = [
     { label: "AUTH", state: "VERIFIED"  },
     { label: "CHAIN", state: "INTACT"   },
@@ -889,7 +888,7 @@ export function Footer() {
   );
 }
 
-// ─── Primary Button ────────────────────────────────────────────────────────
+// Primary Button
 export function PrimaryButton({
   href,
   children,
@@ -935,7 +934,7 @@ export function PrimaryButton({
   );
 }
 
-// ─── Secondary Link ────────────────────────────────────────────────────────
+// Secondary Link
 export function SecondaryLink({
   href,
   children,
@@ -962,9 +961,8 @@ export function SecondaryLink({
   );
 }
 
-// ─── Hero Video ────────────────────────────────────────────────────────────
-// Heavily desaturated and darkened to read as institutional surveillance
-// rather than consumer lifestyle video.
+// Hero Video 
+// Heavily desaturated and darkened 
 export function HeroVideo({
   src = HERO_VIDEO,
   objectClassName,
@@ -985,7 +983,7 @@ export function HeroVideo({
   );
 }
 
-// ─── Play Text Button ──────────────────────────────────────────────────────
+// Play Text Button
 export function PlayTextButton({
   href,
   children,
@@ -1029,7 +1027,7 @@ export function PlayTextButton({
   );
 }
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
+// Helpers
 function glassStyle(solid: boolean): React.CSSProperties {
   return {
     background: solid

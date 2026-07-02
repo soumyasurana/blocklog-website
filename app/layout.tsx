@@ -21,7 +21,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://blocklog.ai"),
+  metadataBase: new URL("https://blocklogsecurity.com"),
 
   title: {
     default:

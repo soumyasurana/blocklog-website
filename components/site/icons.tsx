@@ -1,9 +1,5 @@
 import type { SVGProps } from "react";
 
-// ─── Base ────────────────────────────────────────────────────────────────────
-// Stroke-based icons with a refined 2px weight, crisp caps, and a subtle
-// accent fill layer for visual depth on select icons.
-
 type IconProps = SVGProps<SVGSVGElement> & {
   /** Accent color used for secondary fills on duotone icons. Defaults to currentColor at 15% opacity. */
   accent?: string;
@@ -26,8 +22,7 @@ function IconBase({ children, ...props }: SVGProps<SVGSVGElement>) {
   );
 }
 
-// ─── Icons ───────────────────────────────────────────────────────────────────
-
+// Icons
 export function ArrowUpRightIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props}>
@@ -138,122 +133,5 @@ export function ChevronRightIcon(props: SVGProps<SVGSVGElement>) {
     <IconBase {...props}>
       <path d="m9 18 6-6-6-6" strokeWidth="2.2" />
     </IconBase>
-  );
-}
-
-// ─── Demo ────────────────────────────────────────────────────────────────────
-// Remove everything below this line when integrating into your project.
-
-const icons = [
-  { label: "ArrowUpRight", C: ArrowUpRightIcon },
-  { label: "Play",         C: PlayIcon },
-  { label: "Menu",         C: MenuIcon },
-  { label: "Close",        C: CloseIcon },
-  { label: "Bell",         C: BellIcon },
-  { label: "Search",       C: SearchIcon },
-  { label: "Download",     C: DownloadIcon },
-  { label: "Shield",       C: ShieldIcon },
-  { label: "ChevronRight", C: ChevronRightIcon },
-] as const;
-
-export default function IconDemo() {
-  return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#0f1117",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      fontFamily: "'DM Sans', sans-serif",
-      padding: "48px 24px",
-      gap: "48px",
-    }}>
-      <div style={{ textAlign: "center" }}>
-        <p style={{ margin: 0, fontSize: 11, letterSpacing: "0.18em", color: "#6b7280", textTransform: "uppercase", marginBottom: 10 }}>
-          Icon System
-        </p>
-        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 600, color: "#f3f4f6", letterSpacing: "-0.02em" }}>
-          Refined Stroke Icons
-        </h1>
-      </div>
-
-      {/* On dark */}
-      <div>
-        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.12em", color: "#4b5563", textTransform: "uppercase", marginBottom: 20 }}>Dark surface</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-          {icons.map(({ label, C }) => (
-            <div key={label} style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-              padding: "20px 16px",
-              background: "#1c1f2b",
-              border: "1px solid #2d3144",
-              borderRadius: 14,
-              width: 88,
-              cursor: "default",
-              transition: "background 0.15s",
-            }}
-              onMouseEnter={e => (e.currentTarget.style.background = "#232740")}
-              onMouseLeave={e => (e.currentTarget.style.background = "#1c1f2b")}
-            >
-              <C
-                style={{ width: 28, height: 28, color: "#e2e8f0" }}
-                accent="#60a5fa"
-              />
-              <span style={{ fontSize: 10, color: "#6b7280", letterSpacing: "0.04em" }}>{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* On light */}
-      <div>
-        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.12em", color: "#9ca3af", textTransform: "uppercase", marginBottom: 20 }}>Light surface</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-          {icons.map(({ label, C }) => (
-            <div key={label} style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-              padding: "20px 16px",
-              background: "#ffffff",
-              border: "1px solid #e5e7eb",
-              borderRadius: 14,
-              width: 88,
-              boxShadow: "0 1px 3px rgba(0,0,0,0.07)",
-              cursor: "default",
-              transition: "box-shadow 0.15s",
-            }}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.12)")}
-              onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.07)")}
-            >
-              <C
-                style={{ width: 28, height: 28, color: "#1e293b" }}
-                accent="#2563eb"
-              />
-              <span style={{ fontSize: 10, color: "#94a3b8", letterSpacing: "0.04em" }}>{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Size scale */}
-      <div>
-        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.12em", color: "#4b5563", textTransform: "uppercase", marginBottom: 20 }}>Size scale</p>
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          {[14, 18, 24, 32, 40].map(size => (
-            <ShieldIcon
-              key={size}
-              style={{ width: size, height: size, color: "#94a3b8" }}
-              accent="#60a5fa"
-            />
-          ))}
-        </div>
-      </div>
-    </div>
   );
 }
