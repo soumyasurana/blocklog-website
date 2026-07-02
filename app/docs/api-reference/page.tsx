@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Reveal } from "@/components/site/Primitives";
 
 type EndpointProps = {
   method: "GET" | "POST" | "PUT" | "DELETE";

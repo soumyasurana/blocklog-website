@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 
-// ─── Code snippets ────────────────────────────────────────────────────────────
-
+// Code snippets
 const cloneBackendCmd = `# You will receive the Docker image via email after license activation.
 # Load the image, then set up your environment:
 docker load -i blocklog-backend.tar
@@ -78,7 +77,7 @@ docker compose restart api`,
 mem_limit: 512m`,
 };
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+// Sub-components
 
 function CodeBlock({ code }: { code: string }) {
   return (
@@ -209,7 +208,7 @@ function TroubleshootItem({
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// Page
 
 export default function SelfHostingDocsPage() {
   return (

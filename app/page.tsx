@@ -15,45 +15,44 @@ import {
 } from "@/components/site/Primitives";
 import { ArrowUpRightIcon } from "@/components/site/icons";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
-
+// Data
 const decisionLayers = [
-{
-label: "Inputs",
-code: "risk_score · customer_tier · fraud_signals",
-detail:
-"The exact information available when the decision was made, including freshness and provenance.",
-},
-{
-label: "Retrievals",
-code: "policy-doc-v17.3 · kb_chunk_9af1",
-detail:
-"The documents, knowledge sources, and context the model actually used.",
-},
-{
-label: "Tool Calls",
-code: "GET /credit-api · POST /flag-review",
-detail:
-"Every external action, response, and dependency involved in the workflow.",
-},
-{
-label: "Governance",
-code: "policy-v17.3 · threshold: $2,500",
-detail:
-"The rules, controls, and requirements active at the moment of evaluation.",
-},
-{
-label: "Approvals",
-code: "checkpoint [3] skipped · [1][2][4] passed",
-detail:
-"Human reviews, overrides, escalations, and approval lineage.",
-},
-{
-label: "Decision",
-code: "DENY · confidence: 0.91 · routed: auto",
-detail:
-"The final outcome preserved with its complete evidence trail.",
-},
+  {
+    label: "Inputs",
+    code: "risk_score · customer_tier · fraud_signals",
+    detail:
+      "The exact information available when the decision was made, including freshness and provenance.",
+  },
+  {
+    label: "Retrievals",
+    code: "policy-doc-v17.3 · kb_chunk_9af1",
+    detail:
+      "The documents, knowledge sources, and context the model actually used.",
+  },
+  {
+    label: "Tool Calls",
+    code: "GET /credit-api · POST /flag-review",
+    detail:
+      "Every external action, response, and dependency involved in the workflow.",
+  },
+  {
+    label: "Governance",
+    code: "policy-v17.3 · threshold: $2,500",
+    detail:
+      "The rules, controls, and requirements active at the moment of evaluation.",
+  },
+  {
+    label: "Approvals",
+    code: "checkpoint [3] skipped · [1][2][4] passed",
+    detail:
+      "Human reviews, overrides, escalations, and approval lineage.",
+  },
+  {
+    label: "Decision",
+    code: "DENY · confidence: 0.91 · routed: auto",
+    detail:
+      "The final outcome preserved with its complete evidence trail.",
+  },
 ];
 
 
@@ -79,30 +78,30 @@ const audienceCards = [
 ];
 
 const replaySteps = [
-{
-label: "Inputs",
-code: "customer_profile · risk_score · transaction_history",
-detail:
-"The exact data available when the decision was made.",
-},
-{
-label: "Execution",
-code: "retrievals · tools · model calls",
-detail:
-"Every action taken by the AI system during evaluation.",
-},
-{
-label: "Governance",
-code: "policy-v17.3 · approval-required",
-detail:
-"Policies, thresholds, and human approvals that influenced the outcome.",
-},
-{
-label: "Outcome",
-code: "decision approved",
-detail:
-"The final decision, preserved with its complete evidence trail.",
-},
+  {
+    label: "Inputs",
+    code: "customer_profile · risk_score · transaction_history",
+    detail:
+    "The exact data available when the decision was made.",
+  },
+  {
+    label: "Execution",
+    code: "retrievals · tools · model calls",
+    detail:
+      "Every action taken by the AI system during evaluation.",
+  },
+  {
+    label: "Governance",
+    code: "policy-v17.3 · approval-required",
+    detail:
+      "Policies, thresholds, and human approvals that influenced the outcome.",
+  },
+  {
+    label: "Outcome",
+    code: "decision approved",
+    detail:
+      "The final decision, preserved with its complete evidence trail.",
+  },
 ];
 
 
@@ -110,23 +109,23 @@ const whyExistingToolsFail = [
   {
     tool: "Observability",
     whatTheyDo:
-    "Show how systems execute. Traces, logs, metrics, latency, failures, and performance.",
+      "Show how systems execute. Traces, logs, metrics, latency, failures, and performance.",
     whatTheyMiss:
-    "They were built for software systems. AI systems make decisions. Observability explains execution. It does not preserve accountability.",
+      "They were built for software systems. AI systems make decisions. Observability explains execution. It does not preserve accountability.",
   },
   {
     tool: "AI Tracing",
     whatTheyDo:
-    "Capture prompts, completions, tool calls, and agent workflows during development and production.",
+      "Capture prompts, completions, tool calls, and agent workflows during development and production.",
     whatTheyMiss:
-    "They help teams understand what happened today. They were not designed to prove what happened six months later to an auditor, regulator, or customer.",
+      "They help teams understand what happened today. They were not designed to prove what happened six months later to an auditor, regulator, or customer.",
   },
   {
     tool: "Logs & Data Lakes",
     whatTheyDo:
-    "Store large volumes of operational data and make it searchable.",
+      "Store large volumes of operational data and make it searchable.",
     whatTheyMiss:
-    "The evidence required to explain an AI decision is fragmented across systems. Reconstructing the decision later becomes a manual investigation.",
+      "The evidence required to explain an AI decision is fragmented across systems. Reconstructing the decision later becomes a manual investigation.",
   },
 ];
 
@@ -172,21 +171,20 @@ const regulatoryPills = [
 ];
 
 const decisionRecord = [
-"Decision ID · dec_9af1c18",
-"Agent Fingerprint · agt_f84e1a2",
-"Timestamp · 2026-06-17T14:22:11Z",
-"Inputs · 4 captured",
-"Retrievals · 3 documents",
-"Tool Calls · 2 executed",
-"Governance · refund-policy-v17.3",
-"Approvals · 3/4 completed",
-"Decision · DENY",
-"Evidence Status · Complete",
+  "Decision ID · dec_9af1c18",
+  "Agent Fingerprint · agt_f84e1a2",
+  "Timestamp · 2026-06-17T14:22:11Z",
+  "Inputs · 4 captured",
+  "Retrievals · 3 documents",
+  "Tool Calls · 2 executed",
+  "Governance · refund-policy-v17.3",
+  "Approvals · 3/4 completed",
+  "Decision · DENY",
+  "Evidence Status · Complete",
 ];
 
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
+// Page
 export default function HomePage() {
   return (
     <div className="page-shell">
@@ -626,7 +624,6 @@ export default function HomePage() {
             );
           })()}
         </section>
-
         <Footer />
       </PageFrame>
     </div>

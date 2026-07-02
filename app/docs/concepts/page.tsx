@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Reveal } from "@/components/site/Primitives";
 
 function ConceptCard({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) {
   return (

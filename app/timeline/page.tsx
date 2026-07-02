@@ -41,16 +41,18 @@ const layerDetails = [
       "Cryptographic attestation chains",
     ],
     status: "Core Layer",
-    code: `decision_id: string
-timestamp_us: bigint
-agent_id: string
-policy_version: string
-input_staleness_ms: Record<string, number>
-approval_lineage: ApprovalCheckpoint[]
-counterfactual_delta: string
-execution_token_id: string
-chain_position: bigint`,
+    code: 
+    ` decision_id: string
+      timestamp_us: bigint
+      agent_id: string
+      policy_version: string
+      input_staleness_ms: Record<string, number>
+      approval_lineage: ApprovalCheckpoint[]
+      counterfactual_delta: string
+      execution_token_id: string
+      chain_position: bigint `,
   },
+  
   {
     name: "Traceflow — Execution + Orchestration",
     question: "What exactly did the agent do?",

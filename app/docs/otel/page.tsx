@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-// ── Code samples ──────────────────────────────────────────────────────────────
+// Code samples
 
 const envConfig = `OTEL_ENABLED=true
 OTEL_EXPORTER_OTLP_ENDPOINT=http://your-collector:4317`;
@@ -70,7 +70,7 @@ service:
       receivers: [otlp]
       exporters: [otlp/jaeger]`;
 
-// ── Sub-components ─────────────────────────────────────────────────────────────
+// Sub-components
 
 function CodeBlock({ code, filename }: { code: string; filename?: string }) {
   return (
@@ -161,7 +161,7 @@ function Callout({
   );
 }
 
-// ── Telemetry that ships ──────────────────────────────────────────────────────
+// Telemetry that ships
 
 const signals = [
   {
@@ -187,7 +187,7 @@ const signalTable = [
   { signal: "Logs", exporter: "OTLPLogExporter", processor: "BatchLogRecordProcessor", interval: "On flush / 5 s max", color: "#fb923c" },
 ];
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+// Page 
 
 export default function OtelDocsPage() {
   return (

@@ -9,7 +9,7 @@ import {
 } from "@/components/site/Primitives";
 import { ArrowUpRightIcon } from "@/components/site/icons";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+// Data
 
 const timelineSteps = [
   {
@@ -106,7 +106,7 @@ const whatYouGet = [
   },
 ];
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// Page
 
 export default function PilotPage() {
   return (
