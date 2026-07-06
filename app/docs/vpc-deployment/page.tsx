@@ -605,19 +605,19 @@ export default function SelfHostingDocsPage() {
           <p className="text-sm leading-7 text-muted sm:text-[15px]">
             For deployment help, email{" "}
             <a
-              href="mailto:support@blocklog.dev"
+              href="mailto:founder@blocklogsecurity.com"
               className="text-zinc-200 underline underline-offset-2 hover:text-white"
             >
-              support@blocklog.dev
+              founder@blocklogsecurity.com
             </a>{" "}
             or open an issue at{" "}
             <a
-              href="https://github.com/blocklog-sec/blocklog-dashboard"
+              href="https://github.com/soumyasurana/blocklog-dashboard"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-200 underline underline-offset-2 hover:text-white"
             >
-              github.com/blocklog-sec/blocklog-dashboard
+              github.com/soumyasurana/blocklog-dashboard
             </a>
             .
           </p>

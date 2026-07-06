@@ -136,7 +136,7 @@ export default function DocsLayout({
                   },
                   {
                     label: "GitHub ↗",
-                    href: "https://github.com/blockloghq",
+                    href: "https://github.com/soumyasurana",
                     external: true,
                   },
                   {
